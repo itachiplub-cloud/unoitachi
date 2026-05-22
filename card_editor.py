@@ -1,4 +1,4 @@
-import json
+﻿import json
 import time
 from telegram import Update
 from telegram.ext import ContextTypes
@@ -18,17 +18,17 @@ from database import get_conn
 async def uploadcard(update, context):
     uid = update.effective_user.id
     if uid not in admin_ids:
-        return await update.message.reply_text("🚫 Admins only.")
+        return await update.message.reply_text("ðŸš« Admins only.")
 
     reply = update.message.reply_to_message
     if not reply or not reply.photo or not reply.caption:
-        return await update.message.reply_text("📸 Reply to a photo with caption.\n📝 Format:\nname | power | value | rarity | cost")
+        return await update.message.reply_text("ðŸ“¸ Reply to a photo with caption.\nðŸ“ Format:\nname | power | value | rarity | cost")
 
     file_id = reply.photo[-1].file_id
     parts = [p.strip() for p in reply.caption.split("|")]
 
     if len(parts) != 5:
-        return await update.message.reply_text("⚠️ Invalid format.\nUse: name | power | value | rarity | cost")
+        return await update.message.reply_text("âš ï¸ Invalid format.\nUse: name | power | value | rarity | cost")
 
     name, power, value, rarity, cost = parts
 
@@ -42,13 +42,13 @@ async def uploadcard(update, context):
             "file_id": file_id
         })
     except:
-        return await update.message.reply_text("🚫 Invalid values. Power, value, and cost must be numbers.")
+        return await update.message.reply_text("ðŸš« Invalid values. Power, value, and cost must be numbers.")
 
     with get_conn() as conn:
         conn.execute("INSERT OR REPLACE INTO deck (file_id, json) VALUES (?, ?)", (file_id, card_json))
         conn.commit()
 
-    await update.message.reply_text(f"✅ Card '{name}' uploaded to deck for drawing.")
+    await update.message.reply_text(f"âœ… Card '{name}' uploaded to deck for drawing.")
 
 
 from database import get_conn
@@ -67,12 +67,12 @@ async def draw(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     cost = 100
     if coins < cost:
-        return await update.message.reply_text("💸 Not enough coins to draw a card.")
+        return await update.message.reply_text("ðŸ’¸ Not enough coins to draw a card.")
 
     card = draw_card()
 
     if not card["file_id"] or card["file_id"] == "None" or len(card["file_id"]) < 10:
-        return await update.message.reply_text("⚠️ This card has a broken image. Please contact admin or use /deckclean.")
+        return await update.message.reply_text("âš ï¸ This card has a broken image. Please contact admin or use /deckclean.")
 
     now = int(time.time())
     with get_conn() as conn:
@@ -103,13 +103,13 @@ async def draw(update: Update, context: ContextTypes.DEFAULT_TYPE):
         new_balance = row[0] if row else 0
 
     caption = (
-        f"🎴 Card Drawn by <b>{name}</b>\n"
-        f"🪄 Name: <b>{card['name']}</b>\n"
-        f"🔥 Power: {card['power']}\n"
-        f"💥 Value: {card['value']} coins\n"
-        f"💠 Rarity: {card['rarity'].title()}\n"
-        f"💸 Cost: {cost}\n"
-        f"💰 Remaining: {new_balance}"
+        f"ðŸŽ´ Card Drawn by <b>{name}</b>\n"
+        f"ðŸª„ Name: <b>{card['name']}</b>\n"
+        f"ðŸ”¥ Power: {card['power']}\n"
+        f"ðŸ’¥ Value: {card['value']} coins\n"
+        f"ðŸ’  Rarity: {card['rarity'].title()}\n"
+        f"ðŸ’¸ Cost: {cost}\n"
+        f"ðŸ’° Remaining: {new_balance}"
     )
 
     await update.message.reply_photo(photo=card["file_id"], caption=caption, parse_mode="HTML")
@@ -124,12 +124,12 @@ import json
 def build_card_keyboard(index, total):
     return InlineKeyboardMarkup([
         [
-            InlineKeyboardButton("◀️ Prev", callback_data=f"card_prev"),
-            InlineKeyboardButton("Next ▶️", callback_data=f"card_next")
+            InlineKeyboardButton("â—€ï¸ Prev", callback_data=f"card_prev"),
+            InlineKeyboardButton("Next â–¶ï¸", callback_data=f"card_next")
         ],
         [
-            InlineKeyboardButton("📜 View Collection", callback_data="card_collection"),
-            InlineKeyboardButton("🆔 Card ID", callback_data="card_id")
+            InlineKeyboardButton("ðŸ“œ View Collection", callback_data="card_collection"),
+            InlineKeyboardButton("ðŸ†” Card ID", callback_data="card_id")
         ]
     ])
 
@@ -151,7 +151,7 @@ async def mycards(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """, (uid,)).fetchall()
 
     if not rows:
-        return await update.message.reply_text("📭 You have no cards.")
+        return await update.message.reply_text("ðŸ“­ You have no cards.")
 
     cards = []
     for file_id, raw_json in rows:
@@ -168,21 +168,21 @@ async def mycards(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 "id": card.get("id", "Unknown")
             })
         except Exception as e:
-            print(f"⚠️ Failed to load card: {e}")
+            print(f"âš ï¸ Failed to load card: {e}")
             continue
 
     if not cards:
-        return await update.message.reply_text("📭 You have no valid cards.")
+        return await update.message.reply_text("ðŸ“­ You have no valid cards.")
 
     context.user_data["cards"] = cards
     context.user_data["card_index"] = 0
 
     card = cards[0]
     caption = (
-        f"🃏 <b>{card['name']}</b>\n"
-        f"🔮 Power: {card['power']}\n"
-        f"🎴 Rarity: {card['rarity']}\n"
-        f"💰 Value: {card['value']}"
+        f"ðŸƒ <b>{card['name']}</b>\n"
+        f"ðŸ”® Power: {card['power']}\n"
+        f"ðŸŽ´ Rarity: {card['rarity']}\n"
+        f"ðŸ’° Value: {card['value']}"
     )
     keyboard = build_card_keyboard(0, len(cards))
 
@@ -194,9 +194,9 @@ async def mycards(update: Update, context: ContextTypes.DEFAULT_TYPE):
             parse_mode=ParseMode.HTML
         )
     except Exception as e:
-        print(f"⚠️ Failed to send card photo: {e}")
+        print(f"âš ï¸ Failed to send card photo: {e}")
         await update.message.reply_text(
-            f"{caption}\n\n⚠️ Image not available.",
+            f"{caption}\n\nâš ï¸ Image not available.",
             reply_markup=keyboard,
             parse_mode=ParseMode.HTML
         )
@@ -214,9 +214,9 @@ async def card_callback(update: Update, context: CallbackContext):
 
     if not cards:
         try:
-            await query.edit_message_caption("📭 No cards loaded.")
+            await query.edit_message_caption("ðŸ“­ No cards loaded.")
         except Exception:
-            await query.edit_message_text("📭 No cards loaded.")
+            await query.edit_message_text("ðŸ“­ No cards loaded.")
         return
 
     data = query.data
@@ -226,24 +226,24 @@ async def card_callback(update: Update, context: CallbackContext):
         index = (index - 1) % len(cards)
     elif data == "card_collection":
         collection_text = "\n\n".join([
-            f"🃏 <b>{c['name']}</b>\n🔮 Power: {c['power']}\n🎴 Rarity: {c['rarity']}\n💰 Value: {c['value']}"
+            f"ðŸƒ <b>{c['name']}</b>\nðŸ”® Power: {c['power']}\nðŸŽ´ Rarity: {c['rarity']}\nðŸ’° Value: {c['value']}"
             for c in cards
         ])
         return await query.edit_message_text(collection_text, parse_mode=ParseMode.HTML)
     elif data == "card_id":
         card = cards[index]
         return await query.edit_message_text(
-            f"🆔 Card ID: <code>{card['id']}</code>",
+            f"ðŸ†” Card ID: <code>{card['id']}</code>",
             parse_mode=ParseMode.HTML
         )
 
     context.user_data["card_index"] = index
     card = cards[index]
     caption = (
-        f"🃏 <b>{card['name']}</b>\n"
-        f"🔮 Power: {card['power']}\n"
-        f"🎴 Rarity: {card['rarity']}\n"
-        f"💰 Value: {card['value']}"
+        f"ðŸƒ <b>{card['name']}</b>\n"
+        f"ðŸ”® Power: {card['power']}\n"
+        f"ðŸŽ´ Rarity: {card['rarity']}\n"
+        f"ðŸ’° Value: {card['value']}"
     )
     keyboard = build_card_keyboard(index, len(cards))
 
@@ -257,7 +257,7 @@ async def card_callback(update: Update, context: CallbackContext):
             reply_markup=keyboard
         )
     except Exception as e:
-        print(f"⚠️ Failed to update card media: {e}")
+        print(f"âš ï¸ Failed to update card media: {e}")
         try:
             await query.edit_message_caption(
                 caption=caption,
@@ -265,11 +265,11 @@ async def card_callback(update: Update, context: CallbackContext):
                 parse_mode=ParseMode.HTML
             )
         except Exception as e2:
-            print(f"⚠️ Failed to update caption fallback: {e2}")
+            print(f"âš ï¸ Failed to update caption fallback: {e2}")
             try:
-                await query.edit_message_text("❌ Failed to display card.")
+                await query.edit_message_text("âŒ Failed to display card.")
             except Exception as e3:
-                print(f"🧨 Final fallback failed: {e3}")
+                print(f"ðŸ§¨ Final fallback failed: {e3}")
 
 def get_card_handlers():
     return [
@@ -288,7 +288,7 @@ async def mycardstats(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """, (uid,)).fetchall()
 
     if not rows:
-        return await update.message.reply_text("📭 You have no cards.")
+        return await update.message.reply_text("ðŸ“­ You have no cards.")
 
     rarity_count = {}
     total = 0
@@ -302,9 +302,9 @@ async def mycardstats(update: Update, context: ContextTypes.DEFAULT_TYPE):
         except:
             continue
 
-    lines = [f"📊 <b>Your Card Stats:</b>\nTotal Cards: {total}"]
+    lines = [f"ðŸ“Š <b>Your Card Stats:</b>\nTotal Cards: {total}"]
     for rarity, count in sorted(rarity_count.items(), key=lambda x: x[1], reverse=True):
-        lines.append(f"🎴 {rarity.title()}: {count}")
+        lines.append(f"ðŸŽ´ {rarity.title()}: {count}")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -314,7 +314,7 @@ admin_card_cache = {}
 async def admincards(update, context):
     uid = update.effective_user.id
     if uid not in admin_ids:
-        return await update.message.reply_text("🚫 Admins only.")
+        return await update.message.reply_text("ðŸš« Admins only.")
 
     from database import get_conn
     with get_conn() as conn:
@@ -327,8 +327,8 @@ async def admincards(update, context):
         try:
             card = json.loads(raw_json)
             messages.append(
-                f"{i+1}. 🃏 <b>{card.get('name', 'Unknown')}</b>\n"
-                f"🔥 Power: {card.get('power')}, 💰 Value: {card.get('value')}, 💠 Rarity: {card.get('rarity')}, 💸 Cost: {card.get('cost')}"
+                f"{i+1}. ðŸƒ <b>{card.get('name', 'Unknown')}</b>\n"
+                f"ðŸ”¥ Power: {card.get('power')}, ðŸ’° Value: {card.get('value')}, ðŸ’  Rarity: {card.get('rarity')}, ðŸ’¸ Cost: {card.get('cost')}"
             )
         except:
             continue
@@ -338,22 +338,22 @@ async def admincards(update, context):
 async def purgecard(update, context):
     uid = update.effective_user.id
     if uid not in admin_ids:
-        return await update.message.reply_text("⛔ Only admins can purge cards.")
+        return await update.message.reply_text("â›” Only admins can purge cards.")
 
     if not context.args or not context.args[0].isdigit():
-        return await update.message.reply_text("🗑️ Usage: /purgecard <index_number>")
+        return await update.message.reply_text("ðŸ—‘ï¸ Usage: /purgecard <index_number>")
 
     index = int(context.args[0]) - 1
 
     if uid not in admin_card_cache or index >= len(admin_card_cache[uid]):
-        return await update.message.reply_text("❌ Invalid index. Use /admincards first.")
+        return await update.message.reply_text("âŒ Invalid index. Use /admincards first.")
 
     file_id, raw_json = admin_card_cache[uid][index]
     try:
         card = json.loads(raw_json)
         name = card.get("name", "Unknown")
     except:
-        return await update.message.reply_text("⚠️ Failed to parse card.")
+        return await update.message.reply_text("âš ï¸ Failed to parse card.")
 
     with get_conn() as conn:
         conn.execute("DELETE FROM deck WHERE file_id = ?", (file_id,))
@@ -362,7 +362,7 @@ async def purgecard(update, context):
         conn.commit()
 
     await update.message.reply_text(
-        f"🧨 Card <b>{name}</b> purged from all known bot tables.",
+        f"ðŸ§¨ Card <b>{name}</b> purged from all known bot tables.",
         parse_mode="HTML"
     )
 
@@ -370,27 +370,27 @@ async def purgecard(update, context):
 async def editcard(update, context):
     uid = update.effective_user.id
     if uid not in admin_ids:
-        return await update.message.reply_text("🚫 Admins only.")
+        return await update.message.reply_text("ðŸš« Admins only.")
 
     args = context.args
     if len(args) < 3:
-        return await update.message.reply_text("📝 Format: /editcard <index> <field> <new_value>")
+        return await update.message.reply_text("ðŸ“ Format: /editcard <index> <field> <new_value>")
 
     try:
         index = int(args[0]) - 1
         field = args[1].lower()
         new_value = " ".join(args[2:])
     except:
-        return await update.message.reply_text("⚠️ Invalid input format.")
+        return await update.message.reply_text("âš ï¸ Invalid input format.")
 
     if uid not in admin_card_cache or index >= len(admin_card_cache[uid]):
-        return await update.message.reply_text("❌ Invalid index. Use /admincards first.")
+        return await update.message.reply_text("âŒ Invalid index. Use /admincards first.")
 
     file_id, raw_json = admin_card_cache[uid][index]
     try:
         card = json.loads(raw_json)
         if field not in card:
-            return await update.message.reply_text(f"⚠️ Field '{field}' not found in card.")
+            return await update.message.reply_text(f"âš ï¸ Field '{field}' not found in card.")
 
         if field in ["power", "value", "cost"]:
             new_value = int(new_value)
@@ -402,10 +402,10 @@ async def editcard(update, context):
             conn.execute("UPDATE deck SET json = ? WHERE file_id = ?", (json.dumps(card), file_id))
             conn.commit()
 
-        await update.message.reply_text(f"✅ Updated card '{card['name']}' → {field} = {new_value}")
+        await update.message.reply_text(f"âœ… Updated card '{card['name']}' â†’ {field} = {new_value}")
     except Exception as e:
-        print(f"⚠️ Error: {e}")
-        await update.message.reply_text("❌ Failed to update card.")
+        print(f"âš ï¸ Error: {e}")
+        await update.message.reply_text("âŒ Failed to update card.")
 
 
 
@@ -416,10 +416,10 @@ from database import get_conn
 async def editcardbyindex(update, context):
     uid = update.effective_user.id
     if uid not in admin_ids:
-        return await update.message.reply_text("🚫 Admins only.")
+        return await update.message.reply_text("ðŸš« Admins only.")
 
     if len(context.args) < 3:
-        return await update.message.reply_text("✏️ Usage: /editcardbyindex <index> <field> <new_value>")
+        return await update.message.reply_text("âœï¸ Usage: /editcardbyindex <index> <field> <new_value>")
 
     index = context.args[0]
     field = context.args[1].lower()
@@ -427,12 +427,12 @@ async def editcardbyindex(update, context):
     allowed_fields = ["name", "power", "value", "rarity", "cost"]
 
     if field not in allowed_fields:
-        return await update.message.reply_text(f"⚠️ Invalid field. Allowed: {', '.join(allowed_fields)}")
+        return await update.message.reply_text(f"âš ï¸ Invalid field. Allowed: {', '.join(allowed_fields)}")
 
     with get_conn() as conn:
         rows = conn.execute("SELECT file_id, json FROM deck ORDER BY rowid").fetchall()
         if not rows or not index.isdigit() or int(index) < 1 or int(index) > len(rows):
-            return await update.message.reply_text("❌ Invalid index. Use /admincards to see valid indexes.")
+            return await update.message.reply_text("âŒ Invalid index. Use /admincards to see valid indexes.")
 
         file_id, raw_json = rows[int(index) - 1]
         try:
@@ -443,9 +443,9 @@ async def editcardbyindex(update, context):
             updated_json = json.dumps(card)
             conn.execute("UPDATE deck SET json = ? WHERE file_id = ?", (updated_json, file_id))
             conn.commit()
-            await update.message.reply_text(f"✅ Updated card #{index}: {field} → {new_value}")
+            await update.message.reply_text(f"âœ… Updated card #{index}: {field} â†’ {new_value}")
         except Exception as e:
-            await update.message.reply_text(f"❌ Failed to update card: {e}")
+            await update.message.reply_text(f"âŒ Failed to update card: {e}")
 
 
 import json
@@ -454,7 +454,7 @@ from database import get_conn
 async def decksync(update, context):
     uid = update.effective_user.id
     if uid not in admin_ids:
-        return await update.message.reply_text("🚫 Admins only.")
+        return await update.message.reply_text("ðŸš« Admins only.")
 
     with get_conn() as conn:
         rows = conn.execute("SELECT file_id, name, power, value, rarity FROM user_cards").fetchall()
@@ -476,7 +476,7 @@ async def decksync(update, context):
                 conn.commit()
             added += 1
 
-    await update.message.reply_text(f"✅ Synced {added} missing cards into deck.")
+    await update.message.reply_text(f"âœ… Synced {added} missing cards into deck.")
 
 
 import time
@@ -498,15 +498,15 @@ async def draw(update, context):
 
         if now - last_draw < COOLDOWN_SECONDS:
             remaining = COOLDOWN_SECONDS - (now - last_draw)
-            return await update.message.reply_text(f"⏳ Please wait {remaining} seconds before drawing again.")
+            return await update.message.reply_text(f"â³ Please wait {remaining} seconds before drawing again.")
 
         if coins < DRAW_COST:
-            return await update.message.reply_text("💸 Not enough coins to draw a card.")
+            return await update.message.reply_text("ðŸ’¸ Not enough coins to draw a card.")
 
     card = draw_card_by_rarity()
 
     if not card["file_id"] or card["file_id"] == "None" or len(card["file_id"]) < 10:
-        return await update.message.reply_text("⚠️ This card has a broken image. Please contact admin or use /deckclean.")
+        return await update.message.reply_text("âš ï¸ This card has a broken image. Please contact admin or use /deckclean.")
 
     with get_conn() as conn:
         conn.execute("""
@@ -535,13 +535,13 @@ async def draw(update, context):
         new_balance = row[0] if row else 0
 
     caption = (
-        f"🎴 Card Drawn by <b>{name}</b>\n"
-        f"🪄 Name: <b>{card['name']}</b>\n"
-        f"🔥 Power: {card['power']}\n"
-        f"💥 Value: {card['value']} coins\n"
-        f"💠 Rarity: {card['rarity'].title()}\n"
-        f"💸 Cost: {DRAW_COST}\n"
-        f"💰 Remaining: {new_balance}"
+        f"ðŸŽ´ Card Drawn by <b>{name}</b>\n"
+        f"ðŸª„ Name: <b>{card['name']}</b>\n"
+        f"ðŸ”¥ Power: {card['power']}\n"
+        f"ðŸ’¥ Value: {card['value']} coins\n"
+        f"ðŸ’  Rarity: {card['rarity'].title()}\n"
+        f"ðŸ’¸ Cost: {DRAW_COST}\n"
+        f"ðŸ’° Remaining: {new_balance}"
     )
 
     await update.message.reply_photo(photo=card["file_id"], caption=caption, parse_mode="HTML")
@@ -552,7 +552,7 @@ from database import get_conn
 async def deckclean(update, context):
     uid = update.effective_user.id
     if uid not in admin_ids:
-        return await update.message.reply_text("🚫 Admins only.")
+        return await update.message.reply_text("ðŸš« Admins only.")
 
     with get_conn() as conn:
         rows = conn.execute("SELECT file_id, json FROM deck").fetchall()
@@ -568,7 +568,7 @@ async def deckclean(update, context):
         else:
             seen.add(file_id)
 
-    await update.message.reply_text(f"🧹 Removed {removed} broken or duplicate cards from deck.")
+    await update.message.reply_text(f"ðŸ§¹ Removed {removed} broken or duplicate cards from deck.")
 
 from database import get_conn
 import json
@@ -586,21 +586,21 @@ async def drawpreview(update, context):
         """, (uid,)).fetchone()
 
     if not row:
-        return await update.message.reply_text("📭 You haven’t drawn any cards yet.")
+        return await update.message.reply_text("ðŸ“­ You havenâ€™t drawn any cards yet.")
 
     file_id, raw_json = row
     try:
         card = json.loads(raw_json)
         caption = (
-            f"🎴 <b>Last Drawn Card</b>\n"
-            f"🪄 Name: <b>{card.get('name', 'Unknown')}</b>\n"
-            f"🔥 Power: {card.get('power', 'None')}\n"
-            f"💥 Value: {card.get('value', 0)} coins\n"
-            f"🎴 Rarity: {card.get('rarity', 'Common').title()}"
+            f"ðŸŽ´ <b>Last Drawn Card</b>\n"
+            f"ðŸª„ Name: <b>{card.get('name', 'Unknown')}</b>\n"
+            f"ðŸ”¥ Power: {card.get('power', 'None')}\n"
+            f"ðŸ’¥ Value: {card.get('value', 0)} coins\n"
+            f"ðŸŽ´ Rarity: {card.get('rarity', 'Common').title()}"
         )
         await update.message.reply_photo(photo=file_id, caption=caption, parse_mode="HTML")
     except:
-        await update.message.reply_text("⚠️ Failed to load card preview.")
+        await update.message.reply_text("âš ï¸ Failed to load card preview.")
 
 from database import get_conn
 import json
@@ -619,7 +619,7 @@ async def mycards_preview(update, context):
         """, (uid,)).fetchall()
 
     if not rows:
-        return await update.message.reply_text("📭 You have no cards.")
+        return await update.message.reply_text("ðŸ“­ You have no cards.")
 
     for file_id, raw_json in rows:
         if not file_id or file_id == "None" or len(file_id) < 10:
@@ -628,10 +628,10 @@ async def mycards_preview(update, context):
         try:
             card = json.loads(raw_json)
             caption = (
-                f"🃏 <b>{card.get('name', 'Unknown')}</b>\n"
-                f"🔮 Power: {card.get('power', 'None')}\n"
-                f"🎴 Rarity: {card.get('rarity', 'Common').title()}\n"
-                f"💰 Value: {card.get('value', 0)}"
+                f"ðŸƒ <b>{card.get('name', 'Unknown')}</b>\n"
+                f"ðŸ”® Power: {card.get('power', 'None')}\n"
+                f"ðŸŽ´ Rarity: {card.get('rarity', 'Common').title()}\n"
+                f"ðŸ’° Value: {card.get('value', 0)}"
             )
             await update.message.reply_photo(photo=file_id, caption=caption, parse_mode="HTML")
         except:
@@ -644,7 +644,7 @@ from database import get_conn
 async def fixcards(update, context):
     uid = update.effective_user.id
     if uid not in admin_ids:
-        return await update.message.reply_text("🚫 Admins only.")
+        return await update.message.reply_text("ðŸš« Admins only.")
 
     with get_conn() as conn:
         broken = conn.execute("""
@@ -656,25 +656,25 @@ async def fixcards(update, context):
             conn.execute("DELETE FROM user_cards WHERE file_id = ?", (row[0],))
         conn.commit()
 
-    await update.message.reply_text(f"🧹 Removed {len(broken)} broken card entries.")
+    await update.message.reply_text(f"ðŸ§¹ Removed {len(broken)} broken card entries.")
 
 
 async def uploadbulk(update, context):
     uid = update.effective_user.id
     if uid not in admin_ids:
-        return await update.message.reply_text("🚫 Admins only.")
+        return await update.message.reply_text("ðŸš« Admins only.")
 
     bulk_upload_sessions.add(uid)
-    await update.message.reply_text("📸 Bulk upload started. Send card images with captions like:\n\n<name> | <power> | <value> | <rarity>\n\nType /endbulk when done.")
+    await update.message.reply_text("ðŸ“¸ Bulk upload started. Send card images with captions like:\n\n<name> | <power> | <value> | <rarity>\n\nType /endbulk when done.")
 
 
 async def endbulk(update, context):
     uid = update.effective_user.id
     if uid in bulk_upload_sessions:
         bulk_upload_sessions.remove(uid)
-        await update.message.reply_text("✅ Bulk upload ended.")
+        await update.message.reply_text("âœ… Bulk upload ended.")
     else:
-        await update.message.reply_text("ℹ️ You’re not in bulk upload mode.")
+        await update.message.reply_text("â„¹ï¸ Youâ€™re not in bulk upload mode.")
 
 
 async def handle_bulk_photo(update, context):
@@ -688,7 +688,7 @@ async def handle_bulk_photo(update, context):
 
     if not caption or caption.count("|") != 4:
         return await update.message.reply_text(
-            "❌ Failed to add card.\n\n📝 Caption must be in format:\n<name> | <power> | <value> | <rarity> | <cost>"
+            "âŒ Failed to add card.\n\nðŸ“ Caption must be in format:\n<name> | <power> | <value> | <rarity> | <cost>"
         )
 
     try:
@@ -710,9 +710,9 @@ async def handle_bulk_photo(update, context):
             ))
             conn.commit()
 
-        await update.message.reply_text(f"✅ Card '{name}' added.")
+        await update.message.reply_text(f"âœ… Card '{name}' added.")
     except Exception as e:
-        print(f"⚠️ Error: {e}")
+        print(f"âš ï¸ Error: {e}")
         await update.message.reply_text(
-            "❌ Failed to add card. Make sure all values are correct numbers and format is:\n<name> | <power> | <value> | <rarity> | <cost>"
+            "âŒ Failed to add card. Make sure all values are correct numbers and format is:\n<name> | <power> | <value> | <rarity> | <cost>"
         )

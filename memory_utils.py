@@ -1,4 +1,4 @@
-from database import get_conn
+﻿from database import get_conn
 
 def add_memory(uid: int, role: str, content: str):
     """
@@ -15,7 +15,7 @@ def add_memory(uid: int, role: str, content: str):
 def get_memory(uid: int, limit: int = 5) -> list[dict]:
     """
     Retrieve the last `limit` memory items for uid,
-    ordered oldest→newest.
+    ordered oldestâ†’newest.
     Returns a list of {"role": ..., "content": ...}.
     """
     with get_conn() as conn:

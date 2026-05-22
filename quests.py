@@ -1,4 +1,4 @@
-
+﻿
 QUESTS = [
     {
         "name": "Daily Training",
@@ -17,7 +17,7 @@ QUESTS = [
     },
     {
         "name": "Karma Giver",
-        "description": "Give karma to someone using +1 or 👍.",
+        "description": "Give karma to someone using +1 or ðŸ‘.",
         "reward": 50
     },
     {

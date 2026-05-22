@@ -1,5 +1,5 @@
-"""
-Database layer for managing your sticker‑pool.
+﻿"""
+Database layer for managing your stickerâ€‘pool.
 This module ensures the `stickers` table exists on import
 and provides CRUD functions for file_ids.
 """
@@ -15,7 +15,7 @@ DB_PATH = "stickers.db"
 @contextmanager
 def _get_connection():
     """
-    Opens a thread‐safe connection to the SQLite database with auto-recovery.
+    Opens a threadâ€safe connection to the SQLite database with auto-recovery.
     """
     conn = None
     try:
@@ -26,7 +26,7 @@ def _get_connection():
         yield conn
         conn.commit()
     except sqlite3.DatabaseError as e:
-        print(f"⚠️ Database error on {DB_PATH}: {e}")
+        print(f"âš ï¸ Database error on {DB_PATH}: {e}")
         if conn:
             try:
                 conn.rollback()
@@ -36,7 +36,7 @@ def _get_connection():
             conn = None
         
         if "file is not a database" in str(e) or "corrupt" in str(e).lower():
-            print(f"⚠️ Database {DB_PATH} is corrupted. Attempting auto-recovery...")
+            print(f"âš ï¸ Database {DB_PATH} is corrupted. Attempting auto-recovery...")
             
             # Wait a bit to ensure file handles are released
             time.sleep(1)
@@ -46,14 +46,14 @@ def _get_connection():
                 try:
                     # Try to copy first, then delete (more reliable than rename on Windows)
                     shutil.copy2(DB_PATH, backup_path)
-                    print(f"📦 Backed up corrupted database to {backup_path}")
+                    print(f"ðŸ“¦ Backed up corrupted database to {backup_path}")
                     
                     # Try to remove the corrupted file
                     try:
                         os.remove(DB_PATH)
-                        print(f"🗑️ Removed corrupted database file")
+                        print(f"ðŸ—‘ï¸ Removed corrupted database file")
                     except PermissionError:
-                        print(f"⚠️ Could not remove {DB_PATH}, will try to create new one with different name")
+                        print(f"âš ï¸ Could not remove {DB_PATH}, will try to create new one with different name")
                         # Use a temporary name for new database
                         temp_db_path = f"{DB_PATH}.temp"
                         DB_PATH_GLOBAL = temp_db_path
@@ -70,22 +70,22 @@ def _get_connection():
                             pass
                         
                 except Exception as backup_err:
-                    print(f"❌ Failed to backup corrupted database: {backup_err}")
+                    print(f"âŒ Failed to backup corrupted database: {backup_err}")
                     # Try to just remove the file
                     try:
                         os.remove(DB_PATH)
-                        print(f"🗑️ Force removed corrupted database file")
+                        print(f"ðŸ—‘ï¸ Force removed corrupted database file")
                     except:
                         pass
             
             try:
-                print(f"🔄 Creating new database {DB_PATH}...")
+                print(f"ðŸ”„ Creating new database {DB_PATH}...")
                 conn = sqlite3.connect(DB_PATH, timeout=10, check_same_thread=False)
                 conn.row_factory = sqlite3.Row
                 yield conn
                 conn.commit()
             except Exception as retry_err:
-                print(f"❌ Auto-recovery failed: {retry_err}")
+                print(f"âŒ Auto-recovery failed: {retry_err}")
                 if conn:
                     try:
                         conn.close()
@@ -116,9 +116,9 @@ def init_db() -> None:
                     file_id   TEXT UNIQUE NOT NULL
                 )
             """)
-            print("✅ Stickers database initialized successfully")
+            print("âœ… Stickers database initialized successfully")
     except Exception as e:
-        print(f"❌ Failed to initialize stickers database: {e}")
+        print(f"âŒ Failed to initialize stickers database: {e}")
         raise
 
 
@@ -137,7 +137,7 @@ def add_file_id(file_id: str) -> bool:
             )
             return cursor.rowcount > 0
     except Exception as e:
-        print(f"⚠️ Failed to add file_id: {e}")
+        print(f"âš ï¸ Failed to add file_id: {e}")
         return False
 
 
@@ -151,7 +151,7 @@ def list_file_ids() -> list[str]:
             cursor.execute("SELECT file_id FROM stickers ORDER BY id")
             return [row[0] for row in cursor.fetchall()]
     except Exception as e:
-        print(f"⚠️ Failed to list file_ids: {e}")
+        print(f"âš ï¸ Failed to list file_ids: {e}")
         return []
 
 
@@ -169,7 +169,7 @@ def remove_file_id(file_id: str) -> bool:
             )
             return cursor.rowcount > 0
     except Exception as e:
-        print(f"⚠️ Failed to remove file_id: {e}")
+        print(f"âš ï¸ Failed to remove file_id: {e}")
         return False
 
 
@@ -184,7 +184,7 @@ def clear_pool() -> bool:
             cursor.execute("DELETE FROM stickers")
             return True
     except Exception as e:
-        print(f"⚠️ Failed to clear pool: {e}")
+        print(f"âš ï¸ Failed to clear pool: {e}")
         return False
 
 
@@ -198,7 +198,7 @@ def get_sticker_count() -> int:
             cursor.execute("SELECT COUNT(*) FROM stickers")
             return cursor.fetchone()[0]
     except Exception as e:
-        print(f"⚠️ Failed to get sticker count: {e}")
+        print(f"âš ï¸ Failed to get sticker count: {e}")
         return 0
 
 
@@ -214,7 +214,7 @@ def get_random_sticker() -> str | None:
             row = cursor.fetchone()
             return row[0] if row else None
     except Exception as e:
-        print(f"⚠️ Failed to get random sticker: {e}")
+        print(f"âš ï¸ Failed to get random sticker: {e}")
         return None
 
 
@@ -228,7 +228,7 @@ def sticker_exists(file_id: str) -> bool:
             cursor.execute("SELECT 1 FROM stickers WHERE file_id = ?", (file_id,))
             return cursor.fetchone() is not None
     except Exception as e:
-        print(f"⚠️ Failed to check sticker existence: {e}")
+        print(f"âš ï¸ Failed to check sticker existence: {e}")
         return False
 
 
@@ -238,7 +238,7 @@ def repair_database():
     """
     global DB_PATH
     
-    print(f"🔧 Attempting to repair database: {DB_PATH}")
+    print(f"ðŸ”§ Attempting to repair database: {DB_PATH}")
     
     # Close any existing connections (garbage collection)
     import gc
@@ -251,9 +251,9 @@ def repair_database():
     if os.path.exists(DB_PATH):
         try:
             os.remove(DB_PATH)
-            print(f"🗑️ Removed corrupted {DB_PATH}")
+            print(f"ðŸ—‘ï¸ Removed corrupted {DB_PATH}")
         except PermissionError:
-            print(f"⚠️ Cannot remove {DB_PATH} - file is locked")
+            print(f"âš ï¸ Cannot remove {DB_PATH} - file is locked")
             print("Please:")
             print("1. Close your bot completely")
             print("2. Close any SQLite browsers")
@@ -261,16 +261,16 @@ def repair_database():
             print("4. Restart your bot")
             return False
         except Exception as e:
-            print(f"❌ Failed to remove {DB_PATH}: {e}")
+            print(f"âŒ Failed to remove {DB_PATH}: {e}")
             return False
     
     # Reinitialize the database
     try:
         init_db()
-        print(f"✅ Successfully repaired {DB_PATH}")
+        print(f"âœ… Successfully repaired {DB_PATH}")
         return True
     except Exception as e:
-        print(f"❌ Failed to repair database: {e}")
+        print(f"âŒ Failed to repair database: {e}")
         return False
 
 
@@ -283,13 +283,13 @@ def _safe_init():
             init_db()
             return
         except Exception as e:
-            print(f"⚠️ Initialization attempt {attempt + 1} failed: {e}")
+            print(f"âš ï¸ Initialization attempt {attempt + 1} failed: {e}")
             if attempt < max_retries - 1:
                 print("Retrying...")
                 time.sleep(2)
                 repair_database()
             else:
-                print(f"❌ Failed to initialize stickers database after {max_retries} attempts")
+                print(f"âŒ Failed to initialize stickers database after {max_retries} attempts")
                 raise
 
 

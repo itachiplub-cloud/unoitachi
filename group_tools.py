@@ -1,4 +1,4 @@
-from telegram import Update
+﻿from telegram import Update
 from telegram.ext import ContextTypes
 from database import get_conn
 import time
@@ -21,7 +21,7 @@ async def track_group(update: Update, context: ContextTypes.DEFAULT_TYPE):
         chat_id = chat.id
         title = chat.title or "Unnamed"
 
-        print(f"✅ Bot seen in group: {title} ({chat_id})")  # Optional debug print
+        print(f"âœ… Bot seen in group: {title} ({chat_id})")  # Optional debug print
 
         with get_conn() as conn:
             conn.execute("""
@@ -40,17 +40,17 @@ async def track_group(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def mygroups(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if uid not in admin_ids:
-        return await update.message.reply_text("⛔ Only admins can view group list.")
+        return await update.message.reply_text("â›” Only admins can view group list.")
 
     with get_conn() as conn:
         rows = conn.execute("SELECT chat_id, title FROM known_groups ORDER BY title ASC").fetchall()
 
     if not rows:
-        return await update.message.reply_text("📭 Bot is not added to any groups yet.")
+        return await update.message.reply_text("ðŸ“­ Bot is not added to any groups yet.")
 
-    message = "<b>📋 Groups where bot is added:</b>\n\n"
+    message = "<b>ðŸ“‹ Groups where bot is added:</b>\n\n"
     for i, (chat_id, title) in enumerate(rows):
-        message += f"{i+1}. <b>{title}</b>\n🆔 <code>{chat_id}</code>\n\n"
+        message += f"{i+1}. <b>{title}</b>\nðŸ†” <code>{chat_id}</code>\n\n"
 
     await update.message.reply_text(message.strip(), parse_mode="HTML")
 
@@ -59,10 +59,10 @@ async def mygroups(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def groupcount(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if uid not in admin_ids:
-        return await update.message.reply_text("⛔ Only admins can use this command.")
+        return await update.message.reply_text("â›” Only admins can use this command.")
 
     with get_conn() as conn:
         row = conn.execute("SELECT COUNT(*) FROM known_groups").fetchone()
         total = row[0] if row else 0
 
-    await update.message.reply_text(f"📊 Bot is currently added to <b>{total}</b> groups.", parse_mode="HTML")
+    await update.message.reply_text(f"ðŸ“Š Bot is currently added to <b>{total}</b> groups.", parse_mode="HTML")

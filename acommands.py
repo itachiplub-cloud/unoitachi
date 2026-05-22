@@ -1,4 +1,4 @@
-import sys
+﻿import sys
 import os
 import time
 import json
@@ -19,7 +19,7 @@ def load_admin_ids():
             config = json.load(f)
         return config.get("ADMIN_IDS", [])
     except Exception as e:
-        print(f"⚠️ Error loading config.json: {e}")
+        print(f"âš ï¸ Error loading config.json: {e}")
         return []
 
 def get_logger_chat_id():
@@ -28,10 +28,10 @@ def get_logger_chat_id():
         from logger import LOGGER_GC_ID
         return LOGGER_GC_ID
     except ImportError:
-        print("⚠️ Could not import LOGGER_GC_ID from logger.py")
+        print("âš ï¸ Could not import LOGGER_GC_ID from logger.py")
         return None
     except Exception as e:
-        print(f"⚠️ Error getting logger ID: {e}")
+        print(f"âš ï¸ Error getting logger ID: {e}")
         return None
 
 # Global variables
@@ -207,7 +207,7 @@ async def get_bot_statistics(context: ContextTypes.DEFAULT_TYPE) -> dict:
         stats['platform'] = platform.system()
         stats['platform_release'] = platform.release()
     except Exception as e:
-        print(f"⚠️ Error getting system stats: {e}")
+        print(f"âš ï¸ Error getting system stats: {e}")
         stats['cpu_percent'] = 0
         stats['memory_percent'] = 0
         stats['ram_used'] = 0
@@ -223,7 +223,7 @@ async def get_bot_statistics(context: ContextTypes.DEFAULT_TYPE) -> dict:
 
 
 def register_admin_commands(application):
-    print("✅ Admin commands registered")
+    print("âœ… Admin commands registered")
 # =========================================================
 # BOT RESTART COMMAND (Admin Only)
 # =========================================================
@@ -235,7 +235,7 @@ async def bot_restart(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Check if user is admin
     if user_id not in ADMIN_IDS:
         await update.message.reply_text(
-            "❌ <b>Access Denied!</b>\n\n"
+            "âŒ <b>Access Denied!</b>\n\n"
             "This command is only available for bot administrators.",
             parse_mode="HTML"
         )
@@ -243,11 +243,11 @@ async def bot_restart(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     # Send restart message
     await update.message.reply_text(
-        f"🔄 <b>Bot is restarting...</b>\n\n"
+        f"ðŸ”„ <b>Bot is restarting...</b>\n\n"
         f"Please wait a few seconds.\n"
         f"The bot will reconnect automatically.\n\n"
-        f"⏰ Restart initiated at: <code>{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</code>\n"
-        f"👤 Requested by: <code>{update.effective_user.first_name}</code>",
+        f"â° Restart initiated at: <code>{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</code>\n"
+        f"ðŸ‘¤ Requested by: <code>{update.effective_user.first_name}</code>",
         parse_mode="HTML"
     )
     
@@ -256,10 +256,10 @@ async def bot_restart(update: Update, context: ContextTypes.DEFAULT_TYPE):
         try:
             await context.bot.send_message(
                 chat_id=LOGGER_GC_ID,
-                text=f"🔴 <b>BOT RESTART INITIATED</b>\n\n"
-                     f"👤 Admin: <code>{update.effective_user.first_name}</code>\n"
-                     f"⏰ Time: <code>{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</code>\n"
-                     f"🆔 User ID: <code>{user_id}</code>",
+                text=f"ðŸ”´ <b>BOT RESTART INITIATED</b>\n\n"
+                     f"ðŸ‘¤ Admin: <code>{update.effective_user.first_name}</code>\n"
+                     f"â° Time: <code>{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</code>\n"
+                     f"ðŸ†” User ID: <code>{user_id}</code>",
                 parse_mode="HTML"
             )
         except:
@@ -279,7 +279,7 @@ async def bot_status(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Check if user is admin
     if user_id not in ADMIN_IDS:
         await update.message.reply_text(
-            "❌ <b>Access Denied!</b>\n\n"
+            "âŒ <b>Access Denied!</b>\n\n"
             "This command is only available for bot administrators.",
             parse_mode="HTML"
         )
@@ -297,82 +297,82 @@ async def bot_status(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Create top 5 users text
     top_users_text = ""
     for i, (name, coins) in enumerate(stats['top_5_users'], 1):
-        top_users_text += f"{i}. <code>{name}</code> — ₹{format_number(coins)}\n"
+        top_users_text += f"{i}. <code>{name}</code> â€” â‚¹{format_number(coins)}\n"
     
     # Create stats message
     stats_message = f"""
-📊 <b>BOT FULL STATUS REPORT</b>
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ðŸ“Š <b>BOT FULL STATUS REPORT</b>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 
-🤖 <b>BOT INFORMATION</b>
-• Bot Name: <code>{context.bot.first_name}</code>
-• Bot Username: @{context.bot.username}
-• Bot ID: <code>{context.bot.id}</code>
-• Uptime: <code>{stats['uptime']}</code>
-• Started: <code>{stats['start_time_str']}</code>
+ðŸ¤– <b>BOT INFORMATION</b>
+â€¢ Bot Name: <code>{context.bot.first_name}</code>
+â€¢ Bot Username: @{context.bot.username}
+â€¢ Bot ID: <code>{context.bot.id}</code>
+â€¢ Uptime: <code>{stats['uptime']}</code>
+â€¢ Started: <code>{stats['start_time_str']}</code>
 
-👥 <b>USER STATISTICS</b>
-• Total Users: <code>{format_number(stats['total_users'])}</code>
-• Total Groups: <code>{format_number(stats['total_groups'])}</code>
-• Active Users (24h): <code>{format_number(stats['active_users'])}</code>
-• New Users (Today): <code>{format_number(stats['new_users_today'])}</code>
+ðŸ‘¥ <b>USER STATISTICS</b>
+â€¢ Total Users: <code>{format_number(stats['total_users'])}</code>
+â€¢ Total Groups: <code>{format_number(stats['total_groups'])}</code>
+â€¢ Active Users (24h): <code>{format_number(stats['active_users'])}</code>
+â€¢ New Users (Today): <code>{format_number(stats['new_users_today'])}</code>
 
-💰 <b>ECONOMY STATISTICS</b>
-• Total Coins: <code>₹{format_number(stats['total_coins'])}</code>
-• Total Bank Balance: <code>₹{format_number(stats['total_bank'])}</code>
-• Average Balance: <code>₹{format_number(stats['avg_balance'])}</code>
-• Richest User: <code>{stats['richest_name']}</code> (₹{format_number(stats['richest_user'])})
-• Tax Pool: <code>₹{format_number(stats['total_tax_pool'])}</code>
-• Referral Reward: <code>₹{stats['ref_reward']}</code>
+ðŸ’° <b>ECONOMY STATISTICS</b>
+â€¢ Total Coins: <code>â‚¹{format_number(stats['total_coins'])}</code>
+â€¢ Total Bank Balance: <code>â‚¹{format_number(stats['total_bank'])}</code>
+â€¢ Average Balance: <code>â‚¹{format_number(stats['avg_balance'])}</code>
+â€¢ Richest User: <code>{stats['richest_name']}</code> (â‚¹{format_number(stats['richest_user'])})
+â€¢ Tax Pool: <code>â‚¹{format_number(stats['total_tax_pool'])}</code>
+â€¢ Referral Reward: <code>â‚¹{stats['ref_reward']}</code>
 
-🏆 <b>TOP 5 RICHEST USERS</b>
+ðŸ† <b>TOP 5 RICHEST USERS</b>
 {top_users_text}
 
-🎴 <b>CARD & GAME STATISTICS</b>
-• Total Cards in Deck: <code>{format_number(stats['total_cards'])}</code>
-• Total Cards Owned: <code>{format_number(stats['total_owned_cards'])}</code>
-• Total Duels Fought: <code>{format_number(stats['total_duels'])}</code>
-• Total Referrals: <code>{format_number(stats['total_referrals'])}</code>
+ðŸŽ´ <b>CARD & GAME STATISTICS</b>
+â€¢ Total Cards in Deck: <code>{format_number(stats['total_cards'])}</code>
+â€¢ Total Cards Owned: <code>{format_number(stats['total_owned_cards'])}</code>
+â€¢ Total Duels Fought: <code>{format_number(stats['total_duels'])}</code>
+â€¢ Total Referrals: <code>{format_number(stats['total_referrals'])}</code>
 
-🏦 <b>BANK SYSTEM STATISTICS</b>
-• Total Banks Created: <code>{format_number(stats['total_banks'])}</code>
-• Total Bank Members: <code>{format_number(stats['total_bank_members'])}</code>
-• Total Bank Reserves: <code>₹{format_number(stats['total_bank_reserves'])}</code>
+ðŸ¦ <b>BANK SYSTEM STATISTICS</b>
+â€¢ Total Banks Created: <code>{format_number(stats['total_banks'])}</code>
+â€¢ Total Bank Members: <code>{format_number(stats['total_bank_members'])}</code>
+â€¢ Total Bank Reserves: <code>â‚¹{format_number(stats['total_bank_reserves'])}</code>
 
-💻 <b>SYSTEM STATISTICS</b>
-• CPU Usage: <code>{stats['cpu_percent']}%</code>
-• RAM Usage: <code>{stats['memory_percent']}%</code>
-• RAM Used: <code>{stats['ram_used']} MB</code> / <code>{stats['ram_total']} MB</code>
-• Disk Usage: <code>{stats['disk_percent']}%</code>
-• Disk Used: <code>{stats['disk_used']} GB</code> / <code>{stats['disk_total']} GB</code>
+ðŸ’» <b>SYSTEM STATISTICS</b>
+â€¢ CPU Usage: <code>{stats['cpu_percent']}%</code>
+â€¢ RAM Usage: <code>{stats['memory_percent']}%</code>
+â€¢ RAM Used: <code>{stats['ram_used']} MB</code> / <code>{stats['ram_total']} MB</code>
+â€¢ Disk Usage: <code>{stats['disk_percent']}%</code>
+â€¢ Disk Used: <code>{stats['disk_used']} GB</code> / <code>{stats['disk_total']} GB</code>
 
-📦 <b>ENVIRONMENT</b>
-• Python Version: <code>{stats['python_version']}</code>
-• Platform: <code>{stats['platform']} {stats['platform_release']}</code>
+ðŸ“¦ <b>ENVIRONMENT</b>
+â€¢ Python Version: <code>{stats['python_version']}</code>
+â€¢ Platform: <code>{stats['platform']} {stats['platform_release']}</code>
 
-📈 <b>COMMAND USAGE</b>
-• Total Admin Commands: <code>{command_stats['total_commands']}</code>
-• Restarts: <code>{command_stats['restart_count']}</code>
-• Status Checks: <code>{command_stats['status_count']}</code>
-• Health Checks: <code>{command_stats['health_count']}</code>
+ðŸ“ˆ <b>COMMAND USAGE</b>
+â€¢ Total Admin Commands: <code>{command_stats['total_commands']}</code>
+â€¢ Restarts: <code>{command_stats['restart_count']}</code>
+â€¢ Status Checks: <code>{command_stats['status_count']}</code>
+â€¢ Health Checks: <code>{command_stats['health_count']}</code>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🕐 <i>Report generated: {stats['current_time']}</i>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+ðŸ• <i>Report generated: {stats['current_time']}</i>
 """
     
     # Add inline buttons for admin actions
     keyboard = [
         [
-            InlineKeyboardButton("🔄 Refresh", callback_data="refresh_status"),
-            InlineKeyboardButton("📊 Full Report", callback_data="full_stats_report")
+            InlineKeyboardButton("ðŸ”„ Refresh", callback_data="refresh_status"),
+            InlineKeyboardButton("ðŸ“Š Full Report", callback_data="full_stats_report")
         ],
         [
-            InlineKeyboardButton("🏆 Leaderboard", callback_data="admin_leaderboard"),
-            InlineKeyboardButton("💰 Tax Pool", callback_data="admin_tax_pool")
+            InlineKeyboardButton("ðŸ† Leaderboard", callback_data="admin_leaderboard"),
+            InlineKeyboardButton("ðŸ’° Tax Pool", callback_data="admin_tax_pool")
         ],
         [
-            InlineKeyboardButton("📜 Transfer Logs", callback_data="admin_transfer_logs"),
-            InlineKeyboardButton("🔄 Restart Bot", callback_data="admin_restart")
+            InlineKeyboardButton("ðŸ“œ Transfer Logs", callback_data="admin_transfer_logs"),
+            InlineKeyboardButton("ðŸ”„ Restart Bot", callback_data="admin_restart")
         ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
@@ -394,7 +394,7 @@ async def status_callback_handler(update: Update, context: ContextTypes.DEFAULT_
     # Check if user is admin
     if user_id not in ADMIN_IDS:
         await query.edit_message_text(
-            "❌ <b>Access Denied!</b>\n\n"
+            "âŒ <b>Access Denied!</b>\n\n"
             "You are not authorized to use admin features.",
             parse_mode="HTML"
         )
@@ -402,20 +402,20 @@ async def status_callback_handler(update: Update, context: ContextTypes.DEFAULT_
     
     if query.data == "refresh_status":
         # Refresh stats
-        await query.edit_message_text("🔄 Refreshing statistics...", parse_mode="HTML")
+        await query.edit_message_text("ðŸ”„ Refreshing statistics...", parse_mode="HTML")
         stats = await get_bot_statistics(context)
         
         stats_message = f"""
-📊 <b>BOT STATISTICS (Updated)</b>
-━━━━━━━━━━━━━━━━━━━━━━
+ðŸ“Š <b>BOT STATISTICS (Updated)</b>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 
-👥 <b>Users:</b> <code>{format_number(stats['total_users'])}</code>
-💬 <b>Groups:</b> <code>{format_number(stats['total_groups'])}</code>
-💰 <b>Total Coins:</b> <code>₹{format_number(stats['total_coins'])}</code>
-🏦 <b>Tax Pool:</b> <code>₹{format_number(stats['total_tax_pool'])}</code>
-🕐 <b>Uptime:</b> <code>{stats['uptime']}</code>
+ðŸ‘¥ <b>Users:</b> <code>{format_number(stats['total_users'])}</code>
+ðŸ’¬ <b>Groups:</b> <code>{format_number(stats['total_groups'])}</code>
+ðŸ’° <b>Total Coins:</b> <code>â‚¹{format_number(stats['total_coins'])}</code>
+ðŸ¦ <b>Tax Pool:</b> <code>â‚¹{format_number(stats['total_tax_pool'])}</code>
+ðŸ• <b>Uptime:</b> <code>{stats['uptime']}</code>
 
-⏰ <i>Updated: {stats['current_time']}</i>
+â° <i>Updated: {stats['current_time']}</i>
 """
         await query.edit_message_text(stats_message, parse_mode="HTML")
         
@@ -423,33 +423,33 @@ async def status_callback_handler(update: Update, context: ContextTypes.DEFAULT_
         stats = await get_bot_statistics(context)
         
         report = f"""
-📋 <b>FULL BOT REPORT</b>
-━━━━━━━━━━━━━━━━━━━━━━
+ðŸ“‹ <b>FULL BOT REPORT</b>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 
-📊 <b>USAGE STATISTICS</b>
-• Total Admin Commands: <code>{command_stats['total_commands']}</code>
-• Bot Uptime: <code>{stats['uptime']}</code>
+ðŸ“Š <b>USAGE STATISTICS</b>
+â€¢ Total Admin Commands: <code>{command_stats['total_commands']}</code>
+â€¢ Bot Uptime: <code>{stats['uptime']}</code>
 
-💎 <b>TOP STATISTICS</b>
-• Richest User: <code>{stats['richest_name']}</code>
-• Richest Balance: <code>₹{format_number(stats['richest_user'])}</code>
-• Total Cards: <code>{format_number(stats['total_cards'])}</code>
-• Total Users: <code>{format_number(stats['total_users'])}</code>
+ðŸ’Ž <b>TOP STATISTICS</b>
+â€¢ Richest User: <code>{stats['richest_name']}</code>
+â€¢ Richest Balance: <code>â‚¹{format_number(stats['richest_user'])}</code>
+â€¢ Total Cards: <code>{format_number(stats['total_cards'])}</code>
+â€¢ Total Users: <code>{format_number(stats['total_users'])}</code>
 
-━━━━━━━━━━━━━━━━━━━━━━
-📅 <i>Report generated: {stats['current_time']}</i>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+ðŸ“… <i>Report generated: {stats['current_time']}</i>
 """
         await query.edit_message_text(report, parse_mode="HTML")
         
     elif query.data == "admin_restart":
         keyboard = [
             [
-                InlineKeyboardButton("✅ Yes", callback_data="confirm_restart"),
-                InlineKeyboardButton("❌ No", callback_data="cancel_restart")
+                InlineKeyboardButton("âœ… Yes", callback_data="confirm_restart"),
+                InlineKeyboardButton("âŒ No", callback_data="cancel_restart")
             ]
         ]
         await query.edit_message_text(
-            "⚠️ <b>Confirm Bot Restart?</b>\n\n"
+            "âš ï¸ <b>Confirm Bot Restart?</b>\n\n"
             "This will restart the bot immediately.",
             parse_mode="HTML",
             reply_markup=InlineKeyboardMarkup(keyboard)
@@ -462,11 +462,11 @@ async def status_callback_handler(update: Update, context: ContextTypes.DEFAULT_
                 "SELECT username, coins FROM users ORDER BY coins DESC LIMIT 10"
             ).fetchall()
         
-        leaderboard = "🏆 <b>TOP 10 RICHEST USERS</b>\n━━━━━━━━━━━━━━━━━━━━━━\n"
+        leaderboard = "ðŸ† <b>TOP 10 RICHEST USERS</b>\nâ”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”\n"
         for i, row in enumerate(top_users, 1):
             username = row[0] if row[0] else f"User {i}"
             coins = row[1] if row[1] else 0
-            leaderboard += f"{i}. {username} — <code>₹{format_number(coins)}</code>\n"
+            leaderboard += f"{i}. {username} â€” <code>â‚¹{format_number(coins)}</code>\n"
         
         await query.edit_message_text(leaderboard, parse_mode="HTML")
         
@@ -474,9 +474,9 @@ async def status_callback_handler(update: Update, context: ContextTypes.DEFAULT_
         from database import get_tax_pool
         tax_pool = get_tax_pool()
         await query.edit_message_text(
-            f"💰 <b>TAX POOL BALANCE</b>\n━━━━━━━━━━━━━━━━━━━━━━\n\n"
-            f"Total Tax Collected: <code>₹{format_number(tax_pool)}</code>\n\n"
-            f"💡 Use <code>/distributetax</code> to distribute to top users.",
+            f"ðŸ’° <b>TAX POOL BALANCE</b>\nâ”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”\n\n"
+            f"Total Tax Collected: <code>â‚¹{format_number(tax_pool)}</code>\n\n"
+            f"ðŸ’¡ Use <code>/distributetax</code> to distribute to top users.",
             parse_mode="HTML"
         )
         
@@ -485,13 +485,13 @@ async def status_callback_handler(update: Update, context: ContextTypes.DEFAULT_
         logs = get_transfer_logs(limit=10)
         
         if not logs:
-            await query.edit_message_text("📭 No recent transfers found.", parse_mode="HTML")
+            await query.edit_message_text("ðŸ“­ No recent transfers found.", parse_mode="HTML")
             return
         
-        log_text = "📜 <b>RECENT TRANSFERS (Last 10)</b>\n━━━━━━━━━━━━━━━━━━━━━━\n"
+        log_text = "ðŸ“œ <b>RECENT TRANSFERS (Last 10)</b>\nâ”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”\n"
         for sender, receiver, amount, ts in logs:
             time_str = datetime.fromtimestamp(ts).strftime('%H:%M:%S')
-            log_text += f"💸 {sender} → {receiver}: <code>₹{format_number(amount)}</code> <i>({time_str})</i>\n"
+            log_text += f"ðŸ’¸ {sender} â†’ {receiver}: <code>â‚¹{format_number(amount)}</code> <i>({time_str})</i>\n"
         
         await query.edit_message_text(log_text, parse_mode="HTML")
 
@@ -505,7 +505,7 @@ async def bot_health(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     if user_id not in ADMIN_IDS:
         await update.message.reply_text(
-            "❌ <b>Access Denied!</b>",
+            "âŒ <b>Access Denied!</b>",
             parse_mode="HTML"
         )
         return
@@ -514,7 +514,7 @@ async def bot_health(update: Update, context: ContextTypes.DEFAULT_TYPE):
     command_stats['total_commands'] += 1
     
     # Check database connection
-    db_status = "✅ Connected"
+    db_status = "âœ… Connected"
     db_details = ""
     try:
         from database import get_conn
@@ -524,21 +524,21 @@ async def bot_health(update: Update, context: ContextTypes.DEFAULT_TYPE):
             import os
             if os.path.exists("uno.db"):
                 size = os.path.getsize("uno.db") / (1024 * 1024)
-                db_details = f"\n• DB Size: <code>{size:.2f} MB</code>"
+                db_details = f"\nâ€¢ DB Size: <code>{size:.2f} MB</code>"
     except Exception as e:
-        db_status = f"❌ Error: {str(e)[:50]}"
+        db_status = f"âŒ Error: {str(e)[:50]}"
     
     # Check bot status
     health_message = f"""
-🩺 <b>BOT HEALTH CHECK</b>
-━━━━━━━━━━━━━━━━━━━━━━
+ðŸ©º <b>BOT HEALTH CHECK</b>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 
-📡 <b>Bot Status:</b> 🟢 Online
-💾 <b>Database:</b> {db_status}{db_details}
-🔄 <b>Uptime:</b> <code>{get_uptime()}</code>
-⏰ <b>Current Time:</b> <code>{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</code>
+ðŸ“¡ <b>Bot Status:</b> ðŸŸ¢ Online
+ðŸ’¾ <b>Database:</b> {db_status}{db_details}
+ðŸ”„ <b>Uptime:</b> <code>{get_uptime()}</code>
+â° <b>Current Time:</b> <code>{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</code>
 
-✅ <b>All systems operational</b>
+âœ… <b>All systems operational</b>
 """
     
     await update.message.reply_text(health_message, parse_mode="HTML")

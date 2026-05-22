@@ -1,4 +1,4 @@
-import sqlite3
+﻿import sqlite3
 import time
 import random
 import json
@@ -18,24 +18,24 @@ def get_conn():
         conn.execute("SELECT 1")
         return conn
     except sqlite3.DatabaseError as e:
-        print(f"⚠️ Database error on {DB_NAME}: {e}")
+        print(f"âš ï¸ Database error on {DB_NAME}: {e}")
         if "file is not a database" in str(e) or "corrupt" in str(e).lower():
-            print(f"⚠️ Database {DB_NAME} is corrupted. Attempting auto-recovery...")
+            print(f"âš ï¸ Database {DB_NAME} is corrupted. Attempting auto-recovery...")
             if os.path.exists(DB_NAME):
                 backup_path = f"{DB_NAME}.corrupted.{int(time.time())}"
                 try:
                     os.rename(DB_NAME, backup_path)
-                    print(f"📦 Backed up corrupted database to {backup_path}")
+                    print(f"ðŸ“¦ Backed up corrupted database to {backup_path}")
                 except Exception as rename_err:
-                    print(f"❌ Failed to rename corrupted database: {rename_err}")
+                    print(f"âŒ Failed to rename corrupted database: {rename_err}")
                     raise e
             
             try:
-                print(f"🔄 Creating new database {DB_NAME}...")
+                print(f"ðŸ”„ Creating new database {DB_NAME}...")
                 conn = sqlite3.connect(DB_NAME)
                 return conn
             except Exception as retry_err:
-                print(f"❌ Auto-recovery failed: {retry_err}")
+                print(f"âŒ Auto-recovery failed: {retry_err}")
                 raise
         else:
             raise
@@ -270,21 +270,21 @@ def update_karma(uid, new_value):
 
 def format_karma(k):
     if k < 100:
-        return f"⭐ {k}"
+        return f"â­ {k}"
     elif k < 1_000:
-        return f"🌟 {k}"
+        return f"ðŸŒŸ {k}"
     elif k < 1_000_000:
-        return f"🔥 {k // 1_000}K"
+        return f"ðŸ”¥ {k // 1_000}K"
     else:
-        return f"⚡ {k:.2e}"
+        return f"âš¡ {k:.2e}"
 
 def ensure_karma_column():
     with get_conn() as conn:
         try:
             conn.execute("ALTER TABLE users ADD COLUMN karma INTEGER DEFAULT 0")
-            print("✅ karma column added.")
+            print("âœ… karma column added.")
         except sqlite3.OperationalError:
-            print("⚠️ karma column already exists or failed.")
+            print("âš ï¸ karma column already exists or failed.")
         conn.commit()
 
 def get_balance(uid):
@@ -381,7 +381,7 @@ def list_all_cards():
         for file_id, raw_json in rows:
             try:
                 card = json.loads(raw_json)
-                card["file_id"] = file_id  # ✅ Preserve file_id for editing
+                card["file_id"] = file_id  # âœ… Preserve file_id for editing
                 cards.append(card)
             except:
                 continue
@@ -554,9 +554,9 @@ def ensure_last_active_column():
     with get_conn() as conn:
         try:
             conn.execute("ALTER TABLE users ADD COLUMN last_active INTEGER DEFAULT 0")
-            print("✅ last_active column added.")
+            print("âœ… last_active column added.")
         except sqlite3.OperationalError:
-            print("⚠️ last_active column already exists or failed.")
+            print("âš ï¸ last_active column already exists or failed.")
         conn.commit()
 
 
@@ -685,7 +685,7 @@ def distribute_tax_rewards() -> str:
     with get_conn() as conn:
         total = conn.execute("SELECT SUM(amount) FROM tax_bank").fetchone()[0] or 0
         if total == 0:
-            return "🚫 Tax pool is empty."
+            return "ðŸš« Tax pool is empty."
 
         all_ids = get_all_user_ids()
         board = sorted(
@@ -694,7 +694,7 @@ def distribute_tax_rewards() -> str:
             reverse=True
         )[:5]
         if not board:
-            return "🚫 No users to reward."
+            return "ðŸš« No users to reward."
 
         share = total // len(board)
         for uid, _ in board:
@@ -703,7 +703,7 @@ def distribute_tax_rewards() -> str:
         conn.execute("DELETE FROM tax_bank")
         conn.commit()
 
-    return f"🏆 Distributed {total} coins: {share} each to top {len(board)} users."
+    return f"ðŸ† Distributed {total} coins: {share} each to top {len(board)} users."
 
 
 def get_tax_pool():
@@ -728,7 +728,7 @@ def add_to_tax_pool(amount: int):
     conn.commit()
     conn.close()
 
-    print(f"✅ Added ₹{amount} to tax pool")
+    print(f"âœ… Added â‚¹{amount} to tax pool")
 
 
 def init_tax_pool():
@@ -835,7 +835,7 @@ def distribute_tax_rewards() -> str:
     with get_conn() as conn:
         total = conn.execute("SELECT SUM(amount) FROM tax_bank").fetchone()[0] or 0
         if total == 0:
-            return "🚫 Tax pool is empty."
+            return "ðŸš« Tax pool is empty."
 
         # find top 5 by balance
         uids = get_all_user_ids()
@@ -845,7 +845,7 @@ def distribute_tax_rewards() -> str:
             reverse=True
         )[:5]
         if not board:
-            return "🚫 No users to reward."
+            return "ðŸš« No users to reward."
 
         share = total // len(board)
         for uid, _ in board:
@@ -855,7 +855,7 @@ def distribute_tax_rewards() -> str:
         conn.execute("DELETE FROM tax_bank")
         conn.commit()
 
-    return f"🏆 Distributed {total} coins: {share} each to top {len(board)} users."
+    return f"ðŸ† Distributed {total} coins: {share} each to top {len(board)} users."
 
 
 def get_user_inventory(uid: int):

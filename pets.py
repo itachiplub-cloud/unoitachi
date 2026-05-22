@@ -1,4 +1,4 @@
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+﻿from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes, CallbackQueryHandler
 from database import get_conn, db_lock, get_balance, add_earnings
 from utils import check_cooldown, update_cooldown
@@ -11,7 +11,7 @@ async def adoptpet(update: Update, context: ContextTypes.DEFAULT_TYPE):
     with get_conn() as conn:
         existing = conn.execute("SELECT 1 FROM user_pets WHERE uid = ?", (uid,)).fetchone()
         if existing:
-            return await update.message.reply_text("🐾 You already have a pet! Use /mypet to view it.")
+            return await update.message.reply_text("ðŸ¾ You already have a pet! Use /mypet to view it.")
 
         names = ["Shadow", "Bolt", "Mochi", "Nova", "Luna", "Echo"]
         types = ["Dog", "Cat", "Fox", "Penguin", "Dragon"]
@@ -22,19 +22,19 @@ async def adoptpet(update: Update, context: ContextTypes.DEFAULT_TYPE):
         conn.execute("INSERT INTO pet_battles (uid) VALUES (?)", (uid,))
         conn.commit()
 
-    await update.message.reply_text(f"🎉 You adopted a {type_} named {name}!\nUse /feedpet and /petbattle to train it.")
+    await update.message.reply_text(f"ðŸŽ‰ You adopted a {type_} named {name}!\nUse /feedpet and /petbattle to train it.")
 
 async def feedpet(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     remaining = check_cooldown(uid, "feedpet")
     if remaining > 0:
-        return await update.message.reply_text(f"⏳ You can feed your pet again in {remaining//60}m {remaining%60}s.")
+        return await update.message.reply_text(f"â³ You can feed your pet again in {remaining//60}m {remaining%60}s.")
 
     with db_lock:
         with get_conn() as conn:
             pet = conn.execute("SELECT hunger FROM user_pets WHERE uid = ?", (uid,)).fetchone()
             if not pet:
-                return await update.message.reply_text("❌ You don’t have a pet. Use /adoptpet.")
+                return await update.message.reply_text("âŒ You donâ€™t have a pet. Use /adoptpet.")
 
             new_hunger = min(100, pet[0] + 20)
             conn.execute("UPDATE user_pets SET hunger = ? WHERE uid = ?", (new_hunger, uid))
@@ -43,7 +43,7 @@ async def feedpet(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     update_cooldown(uid, "feedpet")
     add_earnings(uid, 100)
-    await update.message.reply_text("🍖 Your pet feels loved! You earned ₹100.")
+    await update.message.reply_text("ðŸ– Your pet feels loved! You earned â‚¹100.")
 
 async def mypet(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
@@ -54,12 +54,12 @@ async def mypet(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """, (uid,)).fetchone()
 
     if not pet:
-        return await update.message.reply_text("🫥 You have no pet. Use /adoptpet to find a companion.")
+        return await update.message.reply_text("ðŸ«¥ You have no pet. Use /adoptpet to find a companion.")
 
     name, type_, level, hunger = pet
-    mood = "😊 Happy" if hunger > 60 else "😐 Okay" if hunger > 30 else "😢 Hungry"
+    mood = "ðŸ˜Š Happy" if hunger > 60 else "ðŸ˜ Okay" if hunger > 30 else "ðŸ˜¢ Hungry"
     await update.message.reply_text(
-        f"🐾 <b>Your Pet:</b>\nName: {name}\nType: {type_}\nLevel: {level}\nHunger: {hunger}/100 ({mood})",
+        f"ðŸ¾ <b>Your Pet:</b>\nName: {name}\nType: {type_}\nLevel: {level}\nHunger: {hunger}/100 ({mood})",
         parse_mode="HTML"
     )
 
@@ -68,7 +68,7 @@ from telegram.constants import ParseMode
 
 async def petbattle(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not update.message.reply_to_message:
-        return await update.message.reply_text("⚠️ You must reply to someone's message to challenge them.")
+        return await update.message.reply_text("âš ï¸ You must reply to someone's message to challenge them.")
 
     challenger_id = update.effective_user.id
     target_user = update.message.reply_to_message.from_user
@@ -79,15 +79,15 @@ async def petbattle(update: Update, context: ContextTypes.DEFAULT_TYPE):
         target_pet = conn.execute("SELECT pet_name, pet_type FROM user_pets WHERE uid = ?", (target_id,)).fetchone()
 
     if not challenger_pet or not target_pet:
-        return await update.message.reply_text("❌ Both players must have a pet to battle.")
+        return await update.message.reply_text("âŒ Both players must have a pet to battle.")
 
     keyboard = InlineKeyboardMarkup([
-        [InlineKeyboardButton("✅ Accept", callback_data=f"accept_battle:{challenger_id}"),
-         InlineKeyboardButton("❌ Decline", callback_data=f"decline_battle:{challenger_id}")]
+        [InlineKeyboardButton("âœ… Accept", callback_data=f"accept_battle:{challenger_id}"),
+         InlineKeyboardButton("âŒ Decline", callback_data=f"decline_battle:{challenger_id}")]
     ])
 
     await update.message.reply_text(
-        f"⚔️ <b>Pet Battle Request</b>\n@{target_user.username}, do you accept the challenge?\n\n"
+        f"âš”ï¸ <b>Pet Battle Request</b>\n@{target_user.username}, do you accept the challenge?\n\n"
         f"{challenger_pet[0]} ({challenger_pet[1]}) vs {target_pet[0]} ({target_pet[1]})",
         reply_markup=keyboard,
         parse_mode=ParseMode.HTML
@@ -103,10 +103,10 @@ async def handle_battle_response(update: Update, context: ContextTypes.DEFAULT_T
     challenger_id = int(challenger_id)
 
     if uid != update.effective_user.id:
-        return await query.edit_message_text("🚫 Only the challenged user can respond.")
+        return await query.edit_message_text("ðŸš« Only the challenged user can respond.")
 
     if action == "decline_battle":
-        return await query.edit_message_text("❌ Battle declined.")
+        return await query.edit_message_text("âŒ Battle declined.")
 
     # Battle logic
     winner = random.choice([uid, challenger_id])
@@ -116,10 +116,10 @@ async def handle_battle_response(update: Update, context: ContextTypes.DEFAULT_T
                 conn.execute("UPDATE pet_battles SET wins = wins + 1 WHERE uid = ?", (uid,))
                 conn.execute("UPDATE users SET coins = coins + 200 WHERE id = ?", (uid,))
                 add_earnings(uid, 200)
-                msg = "🏆 You won the pet battle! +₹200"
+                msg = "ðŸ† You won the pet battle! +â‚¹200"
             else:
                 conn.execute("UPDATE pet_battles SET losses = losses + 1 WHERE uid = ?", (uid,))
-                msg = "😿 You lost the pet battle."
+                msg = "ðŸ˜¿ You lost the pet battle."
 
             conn.commit()
 

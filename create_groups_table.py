@@ -1,4 +1,4 @@
-from database import get_conn
+﻿from database import get_conn
 
 with get_conn() as conn:
     conn.execute("""
@@ -10,4 +10,4 @@ with get_conn() as conn:
     """)
     conn.commit()
 
-print("✅ 'groups' table created.")
+print("âœ… 'groups' table created.")

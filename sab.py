@@ -1,4 +1,4 @@
-from telegram import Update
+﻿from telegram import Update
 from telegram.ext import ContextTypes
 from telegram.constants import ParseMode
 from telegram.helpers import mention_html
@@ -18,14 +18,14 @@ def load_circle():
                 data = json.load(f)
                 circle_of_presence = {int(k): set(v) for k, v in data.items()}
         except Exception as e:
-            print(f"⚠️ Failed to load circle: {e}")
+            print(f"âš ï¸ Failed to load circle: {e}")
 
 def save_circle():
     try:
         with open(CIRCLE_FILE, "w") as f:
             json.dump({str(k): list(v) for k, v in circle_of_presence.items()}, f)
     except Exception as e:
-        print(f"⚠️ Failed to save circle: {e}")
+        print(f"âš ï¸ Failed to save circle: {e}")
 
 async def track_group_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat = update.effective_chat
@@ -51,15 +51,15 @@ async def handle_sab(update: Update, context: ContextTypes.DEFAULT_TYPE):
         pass
 
     if not is_group_admin and uid not in ADMIN_IDS:
-        return await message.reply_text("⛔ Only group admins or bot admins can use /sab.")
+        return await message.reply_text("â›” Only group admins or bot admins can use /sab.")
 
     text = message.reply_to_message.text if message.reply_to_message else message.text.replace("/sab", "").strip()
     if not text:
-        text = "🫵"
+        text = "ðŸ«µ"
 
     members = circle_of_presence.get(str(chat.id), set())
     if not members:
-        await message.reply_text("⚠️ No known members in this group yet.")
+        await message.reply_text("âš ï¸ No known members in this group yet.")
         return
 
     chunk_size = 6
@@ -86,15 +86,15 @@ async def handle_sahab(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     text = message.reply_to_message.text if message.reply_to_message else message.text.replace("/sahab", "").strip()
     if not text:
-        text = "🫡"
+        text = "ðŸ«¡"
 
     try:
         admins = await context.bot.get_chat_administrators(chat.id)
     except:
-        return await message.reply_text("⚠️ Could not fetch admins.")
+        return await message.reply_text("âš ï¸ Could not fetch admins.")
 
     if not admins:
-        return await message.reply_text("📭 No admins found in this group.")
+        return await message.reply_text("ðŸ“­ No admins found in this group.")
 
     chunk_size = 6
     admin_ids = [admin.user.id for admin in admins]
@@ -117,7 +117,7 @@ async def handle_sahab(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def handle_circle_list(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not circle_of_presence:
-        await update.message.reply_text("🌀 The circle is currently empty.")
+        await update.message.reply_text("ðŸŒ€ The circle is currently empty.")
         return
 
     user_lines = []
@@ -126,13 +126,13 @@ async def handle_circle_list(update: Update, context: ContextTypes.DEFAULT_TYPE)
             user = await context.bot.get_chat(user_id)
             name = user.full_name if user.full_name else str(user_id)
             link = f"https://t.me/{user.username}" if user.username else "(no link)"
-            user_lines.append(f"🔗 [{name}]({link})")
+            user_lines.append(f"ðŸ”— [{name}]({link})")
         except Exception:
-            user_lines.append(f"❓ Unknown user ({user_id})")
+            user_lines.append(f"â“ Unknown user ({user_id})")
 
     response = "\n".join(user_lines)
     await update.message.reply_text(
-        f"🌟 Circle of Presence:\n{response}",
+        f"ðŸŒŸ Circle of Presence:\n{response}",
         parse_mode=ParseMode.MARKDOWN
     )
 
@@ -140,7 +140,7 @@ async def handle_circle_clear(update: Update, context: ContextTypes.DEFAULT_TYPE
     chat_id = update.effective_chat.id
     circle_of_presence.pop(chat_id, None)
     save_circle()
-    await update.message.reply_text("🧹 Circle cleared.")
+    await update.message.reply_text("ðŸ§¹ Circle cleared.")
 
 
 

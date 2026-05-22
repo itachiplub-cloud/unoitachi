@@ -1,4 +1,4 @@
-import time
+﻿import time
 from telegram import Update
 from telegram.ext import ContextTypes
 from database import get_balance, update_balance, add_user, get_username
@@ -23,7 +23,7 @@ async def itachi_listener(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     last = last_itachi_reward.get(uid, 0)
     if now - last < cooldown:
-        await msg.reply_text(f"⏳ Try again in {cooldown - (now - last)}s.")
+        await msg.reply_text(f"â³ Try again in {cooldown - (now - last)}s.")
         return
     last_itachi_reward[uid] = now
 
@@ -39,7 +39,7 @@ async def itachi_listener(update: Update, context: ContextTypes.DEFAULT_TYPE):
     print(f"DEBUG Itachi after:  uid={uid}, balance={after}")
 
     name = get_username(uid)
-    await msg.reply_text(f"🩷 @{name} earned {reward} coins! You now have {after} coins.")
+    await msg.reply_text(f"ðŸ©· @{name} earned {reward} coins! You now have {after} coins.")
 
 
 
@@ -69,7 +69,7 @@ async def nitho_listener(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         last = last_nitho_reward.get(uid, 0)
         if now - last < cooldown:
-            await msg.reply_text(f"⏳ Try again in {cooldown - (now - last)}s.")
+            await msg.reply_text(f"â³ Try again in {cooldown - (now - last)}s.")
             return
         last_nitho_reward[uid] = now
 
@@ -79,6 +79,6 @@ async def nitho_listener(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         after = get_balance(uid)
         name = get_username(uid)
-        await msg.reply_text(f"🫣 @{name} earned {reward} coin! You now have {after} coins.")
+        await msg.reply_text(f"ðŸ«£ @{name} earned {reward} coin! You now have {after} coins.")
 
   

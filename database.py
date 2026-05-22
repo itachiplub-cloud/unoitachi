@@ -1,4 +1,4 @@
-import sqlite3
+﻿import sqlite3
 import time
 import threading
 import os
@@ -50,7 +50,7 @@ def sync_sqlite_to_mongodb(conn):
         conn.execute("DELETE FROM modified_users WHERE uid IN (" + ",".join("?" for _ in uids) + ")", uids)
         conn.commit()
     except Exception as e:
-        print(f"⚠️ Error in sync_sqlite_to_mongodb: {e}")
+        print(f"âš ï¸ Error in sync_sqlite_to_mongodb: {e}")
 
 def setup_sync_triggers(conn):
     try:
@@ -70,9 +70,9 @@ def setup_sync_triggers(conn):
             END;
         """)
         conn.commit()
-        print("✅ SQLite triggers for user synchronization setup successfully.")
+        print("âœ… SQLite triggers for user synchronization setup successfully.")
     except Exception as e:
-        print(f"⚠️ Error setting up triggers: {e}")
+        print(f"âš ï¸ Error setting up triggers: {e}")
 
 @contextmanager
 def get_conn():
@@ -87,9 +87,9 @@ def get_conn():
         try:
             sync_sqlite_to_mongodb(conn)
         except Exception as sync_err:
-            print(f"⚠️ Sync to mongo failed: {sync_err}")
+            print(f"âš ï¸ Sync to mongo failed: {sync_err}")
     except sqlite3.DatabaseError as e:
-        print(f"⚠️ Database error: {e}")
+        print(f"âš ï¸ Database error: {e}")
         if conn:
             try:
                 conn.rollback()
@@ -102,18 +102,18 @@ def get_conn():
             conn = None
         
         if "file is not a database" in str(e) or "corrupt" in str(e).lower():
-            print("⚠️ Database file is corrupted or invalid. Attempting auto-recovery...")
+            print("âš ï¸ Database file is corrupted or invalid. Attempting auto-recovery...")
             if os.path.exists(DB_PATH):
                 backup_path = f"{DB_PATH}.corrupted.{int(time.time())}"
                 try:
                     os.rename(DB_PATH, backup_path)
-                    print(f"📦 Backed up corrupted database to {backup_path}")
+                    print(f"ðŸ“¦ Backed up corrupted database to {backup_path}")
                 except Exception as rename_err:
-                    print(f"❌ Failed to rename corrupted database: {rename_err}")
+                    print(f"âŒ Failed to rename corrupted database: {rename_err}")
                     raise e
             
             try:
-                print("🔄 Creating new database...")
+                print("ðŸ”„ Creating new database...")
                 conn = sqlite3.connect(DB_PATH, timeout=10, check_same_thread=False)
                 conn.row_factory = sqlite3.Row
                 conn.execute("PRAGMA journal_mode=WAL;")
@@ -122,9 +122,9 @@ def get_conn():
                 try:
                     sync_sqlite_to_mongodb(conn)
                 except Exception as sync_err:
-                    print(f"⚠️ Sync to mongo failed: {sync_err}")
+                    print(f"âš ï¸ Sync to mongo failed: {sync_err}")
             except Exception as retry_err:
-                print(f"❌ Auto-recovery failed: {retry_err}")
+                print(f"âŒ Auto-recovery failed: {retry_err}")
                 if conn:
                     conn.close()
                 raise
@@ -155,7 +155,7 @@ def setup_groups_table():
 
         conn.commit()
 
-        print("✅ groups table ready")
+        print("âœ… groups table ready")
 
 def auto_fix_users_table():
 
@@ -245,10 +245,10 @@ def auto_fix_users_table():
                         ADD COLUMN {col} {dtype}
                     """)
 
-                    print(f"✅ Added missing column: {col}")
+                    print(f"âœ… Added missing column: {col}")
 
                 except Exception as e:
-                    print(f"⚠️ Failed adding {col}: {e}")
+                    print(f"âš ï¸ Failed adding {col}: {e}")
 
         # Sync uid/id
         try:
@@ -266,11 +266,11 @@ def auto_fix_users_table():
             """)
 
         except Exception as e:
-            print(f"⚠️ ID sync failed: {e}")
+            print(f"âš ï¸ ID sync failed: {e}")
 
         conn.commit()
 
-        print("✅ users table auto-fix completed")
+        print("âœ… users table auto-fix completed")
 # =========================================================
 # VALIDATION FUNCTIONS
 # =========================================================
@@ -282,11 +282,11 @@ def validate_database():
             conn.execute("SELECT 1")
         return True
     except sqlite3.DatabaseError:
-        print("⚠️ Database file is corrupted. Recreating...")
+        print("âš ï¸ Database file is corrupted. Recreating...")
         if os.path.exists(DB_PATH):
             backup_path = f"{DB_PATH}.backup.{int(time.time())}"
             os.rename(DB_PATH, backup_path)
-            print(f"📦 Backed up corrupted database to {backup_path}")
+            print(f"ðŸ“¦ Backed up corrupted database to {backup_path}")
         return False
 
 # =========================================================
@@ -296,7 +296,7 @@ def validate_database():
 def setup_core_tables():
     """Setup core tables with proper error handling."""
     if not validate_database():
-        print("🔄 Creating new database...")
+        print("ðŸ”„ Creating new database...")
     
     with get_conn() as conn:
         # Users table - merged with all columns from both versions
@@ -461,7 +461,7 @@ def setup_core_tables():
         # Insert default settings if not exists
         conn.execute("INSERT OR IGNORE INTO settings (key, value) VALUES ('ref_reward', '50')")
         
-        print("✅ Core tables setup completed")
+        print("âœ… Core tables setup completed")
 
 # =========================================================
 # BANK TABLES (Merged)
@@ -501,7 +501,7 @@ def setup_bank_tables():
                 timestamp INTEGER
             )
         """)
-        print("✅ Bank tables setup completed")
+        print("âœ… Bank tables setup completed")
 
 def setup_banktax_table():
     """Setup bank tax table."""
@@ -513,7 +513,7 @@ def setup_banktax_table():
             )
         """)
         conn.execute("INSERT OR IGNORE INTO banktax (id, coins) VALUES (1, 0)")
-        print("✅ Bank tax table setup completed")
+        print("âœ… Bank tax table setup completed")
 
 def ensure_system_account():
     """Ensure system account exists."""
@@ -573,7 +573,7 @@ def setup_clan_tables():
             PRIMARY KEY(clan_id, voter_id, target_id)
         )
         """)
-        print("✅ Clan tables setup completed")
+        print("âœ… Clan tables setup completed")
 
 # =========================================================
 # GAME TABLES
@@ -612,7 +612,7 @@ def setup_game_tables():
                 coins_earned INTEGER DEFAULT 0
             )
         """)
-        print("✅ Game tables setup completed")
+        print("âœ… Game tables setup completed")
 
 def setup_game_cooldowns():
     """Setup game cooldowns table."""
@@ -625,7 +625,7 @@ def setup_game_cooldowns():
                 PRIMARY KEY (id, game)
             )
         """)
-        print("✅ Game cooldowns table setup completed")
+        print("âœ… Game cooldowns table setup completed")
 
 def setup_mines_table():
     """Setup mines game table."""
@@ -640,7 +640,7 @@ def setup_mines_table():
                 started_at INTEGER
             )
         """)
-        print("✅ Mines table setup completed")
+        print("âœ… Mines table setup completed")
 
 def setup_mines_cooldown_table():
     """Setup mines cooldown table."""
@@ -651,7 +651,7 @@ def setup_mines_cooldown_table():
                 last_played INTEGER
             )
         """)
-        print("✅ Mines cooldown table setup completed")
+        print("âœ… Mines cooldown table setup completed")
 
 def setup_user_stats():
     """Setup user stats table."""
@@ -662,7 +662,7 @@ def setup_user_stats():
                 coins_earned INTEGER DEFAULT 0
             )
         """)
-        print("✅ User stats table setup completed")
+        print("âœ… User stats table setup completed")
 
 # =========================================================
 # SHOWROOM TABLES
@@ -707,7 +707,7 @@ def setup_showroom_tables():
                 timestamp INTEGER
             )
         """)
-        print("✅ Showroom tables setup completed")
+        print("âœ… Showroom tables setup completed")
 
 def ensure_market_trades_table():
     setup_showroom_tables()
@@ -744,7 +744,7 @@ def setup_pet_tables():
                 losses INTEGER DEFAULT 0
             )
         """)
-        print("✅ Pet tables setup completed")
+        print("âœ… Pet tables setup completed")
 
 def setup_pet_system():
     setup_pet_tables()
@@ -769,7 +769,7 @@ def setup_loans_table():
             deductions_done INTEGER DEFAULT 0
         )
         """)
-        print("✅ Loans table setup completed")
+        print("âœ… Loans table setup completed")
 
 def ensure_loans_table():
     setup_loans_table()
@@ -802,7 +802,7 @@ def setup_user_memory_table():
 
         conn.commit()
 
-        print("✅ User memory table setup completed")
+        print("âœ… User memory table setup completed")
 
 
 def ensure_user_memory_table():
@@ -812,7 +812,7 @@ def ensure_user_memory_table():
 # =========================================================
 
 def setup_group_config_table():
-    """Create table for per‑group configuration key/value pairs."""
+    """Create table for perâ€‘group configuration key/value pairs."""
     with get_conn() as conn:
         conn.execute("""
             CREATE TABLE IF NOT EXISTS group_config (
@@ -822,7 +822,7 @@ def setup_group_config_table():
                 PRIMARY KEY (gid, key)
             )
         """)
-        print("✅ Group config table setup completed")
+        print("âœ… Group config table setup completed")
 
 def set_group_config(gid: int, key: str, value: str):
     """Insert or update a configuration value for a specific group."""
@@ -854,7 +854,7 @@ def setup_word_scores():
                 points INTEGER DEFAULT 0
             )
         """)
-        print("✅ Word scores table setup completed")
+        print("âœ… Word scores table setup completed")
 
 # =========================================================
 # GIVEAWAY CARD TABLES
@@ -882,7 +882,7 @@ def setup_giveaway_card_tables():
                 PRIMARY KEY (id, card_id)
             )
         """)
-        print("✅ Giveaway card tables setup completed")
+        print("âœ… Giveaway card tables setup completed")
 
 def migrate_giveaway_card_table():
     """Migrate giveaway card table if needed."""
@@ -891,7 +891,7 @@ def migrate_giveaway_card_table():
             conn.execute("ALTER TABLE giveaway_cards ADD COLUMN quantity INTEGER DEFAULT 1")
         except sqlite3.OperationalError:
             pass
-        print("✅ Giveaway card table migration completed")
+        print("âœ… Giveaway card table migration completed")
 
 # =========================================================
 # DATABASE INITIALIZATION
@@ -901,7 +901,7 @@ def migrate_giveaway_card_table():
 
 def initialize_database():
     """Initialize all database tables."""
-    print("🚀 Initializing database...")
+    print("ðŸš€ Initializing database...")
 
     try:
 
@@ -1062,11 +1062,11 @@ def initialize_database():
 
                         """)
 
-                        print(f"✅ Added column: {col}")
+                        print(f"âœ… Added column: {col}")
 
                 except Exception as e:
 
-                    print(f"⚠️ Failed adding {col}: {e}")
+                    print(f"âš ï¸ Failed adding {col}: {e}")
 
             # Sync uid/id
             try:
@@ -1089,11 +1089,11 @@ def initialize_database():
 
                 conn.commit()
 
-                print("✅ ID ↔ UID sync completed")
+                print("âœ… ID â†” UID sync completed")
 
             except Exception as e:
 
-                print(f"⚠️ Sync failed: {e}")
+                print(f"âš ï¸ Sync failed: {e}")
 
         # =================================================
         # OTHER TABLES
@@ -1118,11 +1118,11 @@ def initialize_database():
         with get_conn() as conn:
             setup_sync_triggers(conn)
 
-        print("✅ Database initialization completed successfully!")
+        print("âœ… Database initialization completed successfully!")
 
     except Exception as e:
 
-        print(f"❌ Failed to initialize database: {e}")
+        print(f"âŒ Failed to initialize database: {e}")
 
         raise
 # =========================================================
@@ -1164,12 +1164,12 @@ def update_balance(id, amount):
             with db_lock:
                 with get_conn() as conn:
                     conn.execute("UPDATE users SET coins = coins + ? WHERE id = ?", (amount, id))
-                    print(f"✅ Updated balance for UID {id} by ₹{amount}")
+                    print(f"âœ… Updated balance for UID {id} by â‚¹{amount}")
                     return True
         except sqlite3.OperationalError:
-            print(f"⚠️ Attempt {attempt+1}: DB locked for UID {id}, retrying...")
+            print(f"âš ï¸ Attempt {attempt+1}: DB locked for UID {id}, retrying...")
             time.sleep(1)
-    print(f"❌ Failed to update balance for UID {id}")
+    print(f"âŒ Failed to update balance for UID {id}")
     return False
 
 def get_bank_balance(id):
@@ -1188,12 +1188,12 @@ def set_bank(id, amount):
             with db_lock:
                 with get_conn() as conn:
                     conn.execute("UPDATE users SET bank = ? WHERE id = ?", (amount, id))
-                    print(f"✅ Bank set to {amount} for UID {id}")
+                    print(f"âœ… Bank set to {amount} for UID {id}")
                     return True
         except sqlite3.OperationalError:
-            print(f"⚠️ Attempt {attempt+1}: DB locked during set_bank, retrying...")
+            print(f"âš ï¸ Attempt {attempt+1}: DB locked during set_bank, retrying...")
             time.sleep(1)
-    print(f"❌ Failed to set bank for UID {id}")
+    print(f"âŒ Failed to set bank for UID {id}")
     return False
 
 def is_bribed(id):
@@ -1214,7 +1214,7 @@ def add_earnings(id, amount):
         with get_conn() as conn:
             conn.execute("INSERT OR IGNORE INTO user_stats (id, coins_earned) VALUES (?, 0)", (id,))
             conn.execute("UPDATE user_stats SET coins_earned = coins_earned + ? WHERE id = ?", (amount, id))
-            print(f"✅ Added earnings ₹{amount} for UID {id}")
+            print(f"âœ… Added earnings â‚¹{amount} for UID {id}")
 
 def deposit_tax(amount):
     for attempt in range(3):
@@ -1222,12 +1222,12 @@ def deposit_tax(amount):
             with db_lock:
                 with get_conn() as conn:
                     conn.execute("INSERT INTO tax_bank (amount, timestamp) VALUES (?, ?)", (amount, int(time.time())))
-                    print(f"✅ Deposited ₹{amount} into tax bank")
+                    print(f"âœ… Deposited â‚¹{amount} into tax bank")
                     return True
         except sqlite3.OperationalError:
-            print(f"⚠️ Attempt {attempt+1}: DB locked during tax deposit, retrying...")
+            print(f"âš ï¸ Attempt {attempt+1}: DB locked during tax deposit, retrying...")
             time.sleep(1)
-    print(f"❌ Failed to deposit tax after retries")
+    print(f"âŒ Failed to deposit tax after retries")
     return False
 
 def add_admin(username):
@@ -1317,7 +1317,7 @@ def add_bribed_column():
         """).fetchone()
 
         if not tables:
-            print("⚠️ users table does not exist yet")
+            print("âš ï¸ users table does not exist yet")
             return
 
         columns = conn.execute(
@@ -1331,7 +1331,7 @@ def add_bribed_column():
                 ADD COLUMN bribed INTEGER DEFAULT 0
             """)
 
-            print("✅ bribed column added")
+            print("âœ… bribed column added")
 
 def migrate_users_table():
     with get_conn() as conn:
@@ -1359,19 +1359,19 @@ def migrate_users_table():
 def backfill_chat_ids(default_chat_id):
     with get_conn() as conn:
         conn.execute("UPDATE users SET chat_id = ? WHERE chat_id IS NULL", (default_chat_id,))
-        print(f"🧹 Backfilled chat_id for legacy users with {default_chat_id}")
+        print(f"ðŸ§¹ Backfilled chat_id for legacy users with {default_chat_id}")
 
 def force_patch_all_users(chat_id):
     with get_conn() as conn:
         conn.execute("UPDATE users SET chat_id = ?", (chat_id,))
-        print(f"🛠️ Force patched all users with chat_id {chat_id}")
+        print(f"ðŸ› ï¸ Force patched all users with chat_id {chat_id}")
 
 def debug_users_by_chat(chat_id):
     with get_conn() as conn:
         rows = conn.execute("SELECT id, username, chat_id FROM users WHERE chat_id = ?", (chat_id,)).fetchall()
-        print(f"📊 Found {len(rows)} users with chat_id {chat_id}")
+        print(f"ðŸ“Š Found {len(rows)} users with chat_id {chat_id}")
         for row in rows:
-            print(f"🧾 {row}")
+            print(f"ðŸ§¾ {row}")
 
 # =========================================================
 # ECONOMY COMMANDS FUNCTIONS
@@ -1623,7 +1623,7 @@ def ensure_table(table_name, query):
 
         conn.commit()
 
-        print(f"✅ Ensured table: {table_name}")
+        print(f"âœ… Ensured table: {table_name}")
 
 
 # =========================================================
@@ -1717,7 +1717,7 @@ def fix_users_uid_column():
                 SET id = id
             """)
 
-            print("✅ users.id column added successfully")
+            print("âœ… users.id column added successfully")
 
         try:
             conn.execute("""
@@ -1764,4 +1764,4 @@ from mongo_users import *
 if __name__ == "__main__":
     initialize_database()
     fix_users_uid_column()
-    print("✅ Database initialization complete!")
+    print("âœ… Database initialization complete!")

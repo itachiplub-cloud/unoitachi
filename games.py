@@ -1,4 +1,4 @@
-import random, time
+﻿import random, time
 from telegram import Update
 from telegram.ext import ContextTypes, CommandHandler
 from database import get_balance, update_balance
@@ -55,32 +55,32 @@ async def flip(update: Update, context: ContextTypes.DEFAULT_TYPE):
     wait = check_cooldown(uid, "flip")
     if wait:
         return await update.message.reply_text(
-            f"🕒 Wait {wait}s before flipping again."
+            f"ðŸ•’ Wait {wait}s before flipping again."
         )
 
     if len(context.args) != 2:
-        return await update.message.reply_text("🪙 Usage: /flip <heads|tails> <amount>")
+        return await update.message.reply_text("ðŸª™ Usage: /flip <heads|tails> <amount>")
 
     guess_raw, amt_raw = context.args
     guess = guess_raw.lower()
     if guess not in ("heads", "tails"):
-        return await update.message.reply_text("🚫 Guess must be 'heads' or 'tails'.")
+        return await update.message.reply_text("ðŸš« Guess must be 'heads' or 'tails'.")
 
     try:
         bet = int(amt_raw)
         if bet <= 0:
             raise ValueError
     except ValueError:
-        return await update.message.reply_text("🚫 Bet must be a positive integer.")
+        return await update.message.reply_text("ðŸš« Bet must be a positive integer.")
 
     balance = get_balance(uid)
     if balance < bet:
         return await update.message.reply_text(
-            f"💸 You have {balance} coins—cannot bet {bet}."
+            f"ðŸ’¸ You have {balance} coinsâ€”cannot bet {bet}."
         )
     update_balance(uid, -bet)
 
-    await update.message.reply_text("🕒 Flipping the coin… check back in 3s.")
+    await update.message.reply_text("ðŸ•’ Flipping the coinâ€¦ check back in 3s.")
     context.job_queue.run_once(
         flip_result,
         when=3,
@@ -104,10 +104,10 @@ async def flip_result(context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(
         chat_id=data["chat_id"],
         text=(
-            f"🪙 <b>Flip Result</b>: {result.upper()}\n"
-            f"🎯 Your Guess: {data['guess'].upper()}\n"
-            f"{'🏆 You won!' if won else '😢 You lost.'}\n"
-            f"{'💰 Payout: ' + str(payout) + ' coins' if won else '💸 Your wager was lost.'}"
+            f"ðŸª™ <b>Flip Result</b>: {result.upper()}\n"
+            f"ðŸŽ¯ Your Guess: {data['guess'].upper()}\n"
+            f"{'ðŸ† You won!' if won else 'ðŸ˜¢ You lost.'}\n"
+            f"{'ðŸ’° Payout: ' + str(payout) + ' coins' if won else 'ðŸ’¸ Your wager was lost.'}"
         ),
         parse_mode="HTML",
     )
@@ -121,33 +121,33 @@ async def roll(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     wait = check_cooldown(uid, "roll")
     if wait:
-        return await update.message.reply_text(f"🕒 Wait {wait}s before rolling again.")
+        return await update.message.reply_text(f"ðŸ•’ Wait {wait}s before rolling again.")
 
     if len(context.args) != 1:
-        return await update.message.reply_text("🎲 Usage: /roll <bet>")
+        return await update.message.reply_text("ðŸŽ² Usage: /roll <bet>")
     try:
         bet = int(context.args[0])
         if bet <= 0:
             raise ValueError
     except ValueError:
-        return await update.message.reply_text("🚫 Invalid bet.")
+        return await update.message.reply_text("ðŸš« Invalid bet.")
 
 
     bal = get_balance(uid)
     if bal < bet:
-        return await update.message.reply_text(f"💸 You only have {bal} coins.")
+        return await update.message.reply_text(f"ðŸ’¸ You only have {bal} coins.")
     update_balance(uid, -bet)
 
     THRESHOLD = 10_000
     if bet > THRESHOLD:
-        # cheat mode: 60% bot‐win, 40% user‐win
+        # cheat mode: 60% botâ€win, 40% userâ€win
         if random.random() < 0.6:
-            # force a bot‐win: pick user in [1..5], then bot in [user+1..6]
+            # force a botâ€win: pick user in [1..5], then bot in [user+1..6]
             you = random.randint(1, 5)
             bot_roll = random.randint(you + 1, 6)
             outcome = "bot"
         else:
-            # force a user‐win: pick bot in [1..5], then you in [bot+1..6]
+            # force a userâ€win: pick bot in [1..5], then you in [bot+1..6]
             bot_roll = random.randint(1, 5)
             you = random.randint(bot_roll + 1, 6)
             outcome = "user"
@@ -165,12 +165,12 @@ async def roll(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if outcome == "user":
         win_amt = bet * 1.5
         update_balance(uid, win_amt)
-        text = f"🏆 You Rocked! You rolled {you}, bot rolled {bot_roll}. +{win_amt} coins."
+        text = f"ðŸ† You Rocked! You rolled {you}, bot rolled {bot_roll}. +{win_amt} coins."
     elif outcome == "bot":
-        text = f"😢 Haar Gye. You rolled {you}, bot rolled {bot_roll}. Lost {bet} coins."
+        text = f"ðŸ˜¢ Haar Gye. You rolled {you}, bot rolled {bot_roll}. Lost {bet} coins."
     else:  # tie
         update_balance(uid, bet)
-        text = f"🤝 ohh Tie! Both Noob {you}. Bet returned."
+        text = f"ðŸ¤ ohh Tie! Both Noob {you}. Bet returned."
 
     await update.message.reply_text(text)
 
@@ -178,26 +178,26 @@ async def rps(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     wait = check_cooldown(uid, "rps")
     if wait:
-        return await update.message.reply_text(f"🕒 Wait {wait}s before playing again.")
+        return await update.message.reply_text(f"ðŸ•’ Wait {wait}s before playing again.")
 
     if len(context.args) != 2:
         return await update.message.reply_text(
-            "✂️ Usage: /rps <rock|paper|scissors> <bet>"
+            "âœ‚ï¸ Usage: /rps <rock|paper|scissors> <bet>"
         )
 
     choice = context.args[0].lower()
     if choice not in ("rock", "paper", "scissors"):
-        return await update.message.reply_text("🚫 Invalid choice.(rock , paper , scissors) .")
+        return await update.message.reply_text("ðŸš« Invalid choice.(rock , paper , scissors) .")
     try:
         bet = int(context.args[1])
         if bet <= 0:
             raise ValueError
     except:
-        return await update.message.reply_text("🚫 Number Enter krna he (Kyu nahi ho rhi he padhai ?).")
+        return await update.message.reply_text("ðŸš« Number Enter krna he (Kyu nahi ho rhi he padhai ?).")
 
     bal = get_balance(uid)
     if bal < bet:
-        return await update.message.reply_text(f"💸 Not enough coins (Autat me 🌚). You have {bal}.")
+        return await update.message.reply_text(f"ðŸ’¸ Not enough coins (Autat me ðŸŒš). You have {bal}.")
 
     update_balance(uid, -bet)
     bot_choice = random.choice(["rock", "paper", "scissors"])
@@ -205,13 +205,13 @@ async def rps(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if choice == bot_choice:
         update_balance(uid, bet)
-        text = f"🤝 Tie! Bot chose {bot_choice}. Bet returned."
+        text = f"ðŸ¤ Tie! Bot chose {bot_choice}. Bet returned."
     elif wins[choice] == bot_choice:
         payout = bet * 1.5
         update_balance(uid, payout)
-        text = f"🏆 You win! Bot chose {bot_choice}. +{payout} coins."
+        text = f"ðŸ† You win! Bot chose {bot_choice}. +{payout} coins."
     else:
-        text = f"😢 You lose! Bot chose {bot_choice}. Lost {bet} coins."
+        text = f"ðŸ˜¢ You lose! Bot chose {bot_choice}. Lost {bet} coins."
 
     await update.message.reply_text(text)
 
@@ -220,11 +220,11 @@ async def guessbet(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     wait = check_cooldown(uid, "guess")
     if wait:
-        return await update.message.reply_text(f"🕒 Wait {wait}s before guessing again.")
+        return await update.message.reply_text(f"ðŸ•’ Wait {wait}s before guessing again.")
 
     if len(context.args) != 2:
         return await update.message.reply_text(
-            "🔢 Usage: /guessbet <1-50> <bet>"
+            "ðŸ”¢ Usage: /guessbet <1-50> <bet>"
         )
 
     try:
@@ -234,13 +234,13 @@ async def guessbet(update: Update, context: ContextTypes.DEFAULT_TYPE):
             raise ValueError
     except:
         return await update.message.reply_text(
-            "🚫 Invalid input. Use: /guessbet <1-50> <bet>"
+            "ðŸš« Invalid input. Use: /guessbet <1-50> <bet>"
         )
 
     bal = get_balance(uid)
     if bal < bet:
         return await update.message.reply_text(
-            f"💸 You have {bal}, not enough to bet {bet}."
+            f"ðŸ’¸ You have {bal}, not enough to bet {bet}."
         )
 
     update_balance(uid, -bet)
@@ -256,9 +256,9 @@ async def guessbet(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if reward:
         update_balance(uid, reward)
-        msg = f"🎯 The number was {target}. You earned {reward} coins!"
+        msg = f"ðŸŽ¯ The number was {target}. You earned {reward} coins!"
     else:
-        msg = f"❌ The number was {target}. You lost your {bet} coins."
+        msg = f"âŒ The number was {target}. You lost your {bet} coins."
 
     await update.message.reply_text(msg)
 
@@ -266,66 +266,66 @@ async def spin(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     wait = check_cooldown(uid, "spin")
     if wait:
-        return await update.message.reply_text(f"🕒 Wait {wait}s before spinning again.")
+        return await update.message.reply_text(f"ðŸ•’ Wait {wait}s before spinning again.")
 
     if len(context.args) != 1:
-        return await update.message.reply_text("🎡 Usage: /spin <bet>")
+        return await update.message.reply_text("ðŸŽ¡ Usage: /spin <bet>")
     try:
         bet = int(context.args[0])
         if bet <= 0:
             raise ValueError
     except:
-        return await update.message.reply_text("🚫 Invalid bet.")
+        return await update.message.reply_text("ðŸš« Invalid bet.")
 
     bal = get_balance(uid)
     if bal < bet:
         return await update.message.reply_text(
-            f"💸 Insufficient coins. You have {bal}."
+            f"ðŸ’¸ Insufficient coins. You have {bal}."
         )
 
     update_balance(uid, -bet)
     rnd = random.random()
     if rnd < 0.50:
-        msg = f"😞 You spun 🟥 — No win. Lost {bet} coins."
+        msg = f"ðŸ˜ž You spun ðŸŸ¥ â€” No win. Lost {bet} coins."
     elif rnd < 0.80:
         update_balance(uid, bet)
-        msg = f"🙂 You spun 🟩 — Bet returned."
+        msg = f"ðŸ™‚ You spun ðŸŸ© â€” Bet returned."
     elif rnd < 0.95:
         win = bet * 1.5
         update_balance(uid, win)
-        msg = f"🎉 You spun 🟦 — +{win} coins!"
+        msg = f"ðŸŽ‰ You spun ðŸŸ¦ â€” +{win} coins!"
     else:
         win = bet * 2
         update_balance(uid, win)
-        msg = f"💎 JACKPOT! 🟪 +{win} coins!"
+        msg = f"ðŸ’Ž JACKPOT! ðŸŸª +{win} coins!"
 
     await update.message.reply_text(msg)
 
 
-raffle_data = {}  # chat_id → {"entries": set(uid), "job": Job}
+raffle_data = {}  # chat_id â†’ {"entries": set(uid), "job": Job}
 raffle_global_entries = set()  # Global tracker for all entrants
 
-RAFFLE_ENTRY_COST = 200  # 💸 Cost to join
+RAFFLE_ENTRY_COST = 200  # ðŸ’¸ Cost to join
 
 async def enter(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat_id = update.effective_chat.id
     uid = update.effective_user.id
 
-    # ⏳ Optional cooldown check
+    # â³ Optional cooldown check
     wait = check_cooldown(uid, "enter")
     if wait:
-        return await update.message.reply_text(f"🕒 Wait {wait}s before entering again.")
+        return await update.message.reply_text(f"ðŸ•’ Wait {wait}s before entering again.")
 
-    # 🔒 Already joined globally
+    # ðŸ”’ Already joined globally
     if uid in raffle_global_entries:
-        return await update.message.reply_text("🔔 Kitni baar aaoge.")
+        return await update.message.reply_text("ðŸ”” Kitni baar aaoge.")
 
-    # 💰 Check balance before joining
+    # ðŸ’° Check balance before joining
     balance = get_balance(uid)
     if balance < RAFFLE_ENTRY_COST:
-        return await update.message.reply_text("❌ You need ₹200 to buy ticket for the raffle.")
+        return await update.message.reply_text("âŒ You need â‚¹200 to buy ticket for the raffle.")
 
-    # 🧾 Deduct entry cost
+    # ðŸ§¾ Deduct entry cost
     update_balance(uid, -RAFFLE_ENTRY_COST)
 
     data = raffle_data.get(chat_id)
@@ -339,16 +339,16 @@ async def enter(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         raffle_data[chat_id]["job"] = job
 
-        return await update.message.reply_text("🎟️ Raffle ticket purchased At the cost of ₹200!\n 30s to join with /enter.\n")
+        return await update.message.reply_text("ðŸŽŸï¸ Raffle ticket purchased At the cost of â‚¹200!\n 30s to join with /enter.\n")
 
     if uid in data["entries"]:
-        return await update.message.reply_text("🔔 Kitni baar aaoge.")
+        return await update.message.reply_text("ðŸ”” Kitni baar aaoge.")
 
     data["entries"].add(uid)
     raffle_global_entries.add(uid)
 
     await update.message.reply_text(
-        f"🎟️ You joined! ₹{RAFFLE_ENTRY_COST} deducted.\nTotal entrants: {len(data['entries'])}."
+        f"ðŸŽŸï¸ You joined! â‚¹{RAFFLE_ENTRY_COST} deducted.\nTotal entrants: {len(data['entries'])}."
     )
 
 
@@ -363,7 +363,7 @@ async def _raffle_draw(context: ContextTypes.DEFAULT_TYPE):
 
     if not data or not data["entries"]:
         return await context.bot.send_message(
-            chat_id, "❌ No entrants — raffle closed."
+            chat_id, "âŒ No entrants â€” raffle closed."
         )
 
     winner = random.choice(list(data["entries"]))
@@ -382,8 +382,8 @@ async def _raffle_draw(context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(
         chat_id,
         (
-            f"🏆 <a href='tg://user?id={winner}'>{mention_name}</a> won the raffle!\n"
-            f"💰 Prize: {prize} coins"
+            f"ðŸ† <a href='tg://user?id={winner}'>{mention_name}</a> won the raffle!\n"
+            f"ðŸ’° Prize: {prize} coins"
         ),
         parse_mode="HTML"
     )
@@ -393,18 +393,18 @@ async def _raffle_draw(context: ContextTypes.DEFAULT_TYPE):
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
 import random, time
-# FIX: removed circular self-import ("from games import ...") —
+# FIX: removed circular self-import ("from games import ...") â€”
 #      is_global_raid and raid_log are already defined at the top of this file.
 from mongo_users import mongo_db, update_balance, get_username, get_balance
 from database import is_bribed, add_earnings
 from datetime import datetime
 
-# ── MongoDB collections for mines (replaces broken SQLite tables) ─────────────
+# â”€â”€ MongoDB collections for mines (replaces broken SQLite tables) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 _mines_games_col     = mongo_db["mines_games"]      # active game per user
 _mines_cooldowns_col = mongo_db["mines_cooldowns"]  # cooldown per user
 _mines_games_col.create_index("uid", unique=True)
 _mines_cooldowns_col.create_index("uid", unique=True)
-# ─────────────────────────────────────────────────────────────────────────────
+# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 COOLDOWN_SECONDS = 180
 MINES_TRAP_MODE = False
@@ -426,11 +426,11 @@ def build_mines_grid(uid):
         row_buttons = []
         for j in range(5):
             index = i * 5 + j
-            label = "🟦" if index not in revealed else "🟩"
+            label = "ðŸŸ¦" if index not in revealed else "ðŸŸ©"
             row_buttons.append(InlineKeyboardButton(label, callback_data=f"reveal_{index}"))
         keyboard.append(row_buttons)
 
-    keyboard.append([InlineKeyboardButton("🏃 Exit", callback_data="exitmines")])
+    keyboard.append([InlineKeyboardButton("ðŸƒ Exit", callback_data="exitmines")])
     return InlineKeyboardMarkup(keyboard)
 
 async def mines(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -438,22 +438,22 @@ async def mines(update: Update, context: ContextTypes.DEFAULT_TYPE):
     args = context.args
 
     if len(args) != 2 or not args[0].isdigit() or not args[1].isdigit():
-        return await update.message.reply_text("⚠️ Usage: /mines <bombs> <bet>")
+        return await update.message.reply_text("âš ï¸ Usage: /mines <bombs> <bet>")
 
     bombs = int(args[0])
     bet   = int(args[1])
     coins = get_balance(uid)
 
     if bombs < 1 or bombs > 24:
-        return await update.message.reply_text("❌ Bombs must be between 1 and 24.")
+        return await update.message.reply_text("âŒ Bombs must be between 1 and 24.")
     if bet <= 0:
-        return await update.message.reply_text("❌ Bet must be greater than 0.")
+        return await update.message.reply_text("âŒ Bet must be greater than 0.")
     if coins < bet:
-        return await update.message.reply_text("❌ Not enough coins. (Autat me 🌚)")
+        return await update.message.reply_text("âŒ Not enough coins. (Autat me ðŸŒš)")
 
     now = int(time.time())
 
-    # ── Cooldown check (MongoDB) ──────────────────────────────────────────────
+    # â”€â”€ Cooldown check (MongoDB) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     cd_doc = _mines_cooldowns_col.find_one({"uid": uid})
     if cd_doc:
         last = cd_doc.get("last_played", 0)
@@ -462,10 +462,10 @@ async def mines(update: Update, context: ContextTypes.DEFAULT_TYPE):
             mins = remaining // 60
             secs = remaining % 60
             return await update.message.reply_text(
-                f"⏳ Ruko jara sabar karo✋. Try again in {mins}m {secs}s."
+                f"â³ Ruko jara sabar karoâœ‹. Try again in {mins}m {secs}s."
             )
 
-    # ── Global raid check ─────────────────────────────────────────────────────
+    # â”€â”€ Global raid check â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     if is_global_raid() and not is_bribed(uid):
         fine       = 500
         total_loss = bet + fine
@@ -482,19 +482,19 @@ async def mines(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_message(
             chat_id=uid,
             text=(
-                "🚨 <b>RAID CONFIRMED</b>\n"
-                f"🧠 @{username}, you were busted trying to plant mines.\n"
-                f"💸 ₹{total_loss} wiped — stake + fine.\n"
-                "🕶️ Hafta time se diya kro, Bach sakte ho.\n"
+                "ðŸš¨ <b>RAID CONFIRMED</b>\n"
+                f"ðŸ§  @{username}, you were busted trying to plant mines.\n"
+                f"ðŸ’¸ â‚¹{total_loss} wiped â€” stake + fine.\n"
+                "ðŸ•¶ï¸ Hafta time se diya kro, Bach sakte ho.\n"
             ),
             parse_mode="HTML"
         )
         return await update.message.reply_text(
-            "🚨 POLICE RAID! 🚔 You were caught at the minefield.\n"
-            "💸 Full stake + ₹500 fine deducted (Agli baar hafta time pe de dena)."
+            "ðŸš¨ POLICE RAID! ðŸš” You were caught at the minefield.\n"
+            "ðŸ’¸ Full stake + â‚¹500 fine deducted (Agli baar hafta time pe de dena)."
         )
 
-    # ── Deduct bet and start game (MongoDB) ───────────────────────────────────
+    # â”€â”€ Deduct bet and start game (MongoDB) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     positions = random.sample(range(25), bombs)
     update_balance(uid, -bet)
 
@@ -518,7 +518,7 @@ async def mines(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     trap_notice = "BEST OF LUCK ." if MINES_TRAP_MODE else ""
     await update.message.reply_text(
-        f"💣 Mines game started with {bombs} bombs.\n💰 Bet: ₹{bet}\n"
+        f"ðŸ’£ Mines game started with {bombs} bombs.\nðŸ’° Bet: â‚¹{bet}\n"
         f"Tap tiles to reveal gems or bombs.\n{trap_notice}",
         reply_markup=build_mines_grid(uid)
     )
@@ -544,7 +544,7 @@ async def exitmines(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     doc = _mines_games_col.find_one({"uid": uid})
     if not doc:
-        return await update.callback_query.edit_message_text("❌ No active mines game.")
+        return await update.callback_query.edit_message_text("âŒ No active mines game.")
 
     bet        = doc["bet"]
     bombs      = doc["bombs"]
@@ -558,8 +558,8 @@ async def exitmines(update: Update, context: ContextTypes.DEFAULT_TYPE):
     _mines_games_col.delete_one({"uid": uid})
 
     await update.callback_query.edit_message_text(
-        f"🏆 Is baar bach gye Agli baar...!\n💰 Winnings: ₹{winnings}\n"
-        f"🧠 Safe tiles: {safe_count}\nMultiplier: x{multiplier}"
+        f"ðŸ† Is baar bach gye Agli baar...!\nðŸ’° Winnings: â‚¹{winnings}\n"
+        f"ðŸ§  Safe tiles: {safe_count}\nMultiplier: x{multiplier}"
     )
 
 async def handle_mines_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -580,7 +580,7 @@ async def handle_mines_button(update: Update, context: ContextTypes.DEFAULT_TYPE
         safe_count = len(revealed_set)
         if safe_count < 3:
             return await query.answer(
-                f"⚠️ 3 baar bachke dikhao or nikal lo paisa 🌝! ({safe_count}/3)",
+                f"âš ï¸ 3 baar bachke dikhao or nikal lo paisa ðŸŒ! ({safe_count}/3)",
                 show_alert=True
             )
         return await exitmines(update, context)
@@ -594,13 +594,13 @@ async def handle_mines_button(update: Update, context: ContextTypes.DEFAULT_TYPE
         # Trap mode: first tap always explodes
         if MINES_TRAP_MODE and not revealed_set:
             _mines_games_col.delete_one({"uid": uid})
-            return await query.edit_message_text("💥 You hit a bomb! Game over.")
+            return await query.edit_message_text("ðŸ’¥ You hit a bomb! Game over.")
 
         if tile in bomb_positions:
             _mines_games_col.delete_one({"uid": uid})
-            return await query.edit_message_text("💥 You hit a bomb! Game over.")
+            return await query.edit_message_text("ðŸ’¥ You hit a bomb! Game over.")
 
-        # Safe tile — persist updated revealed list
+        # Safe tile â€” persist updated revealed list
         revealed_set.add(tile)
         _mines_games_col.update_one(
             {"uid": uid},
@@ -608,7 +608,7 @@ async def handle_mines_button(update: Update, context: ContextTypes.DEFAULT_TYPE
         )
 
         return await query.edit_message_text(
-            f"✅ Safe tile revealed! ({len(revealed_set)} so far)\n"
+            f"âœ… Safe tile revealed! ({len(revealed_set)} so far)\n"
             f"Reveal more or exit once you have 3+",
             reply_markup=build_mines_grid(uid)
         )
@@ -616,18 +616,18 @@ async def handle_mines_button(update: Update, context: ContextTypes.DEFAULT_TYPE
 async def minestrap_toggle(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if uid not in ADMIN_IDS:
-        return await update.message.reply_text("❌ You're not allowed to toggle trap mode.")
+        return await update.message.reply_text("âŒ You're not allowed to toggle trap mode.")
 
     args = context.args
     if len(args) != 1 or args[0] not in ["on", "off"]:
-        return await update.message.reply_text("⚠️ Usage: /minestrap <on|off>")
+        return await update.message.reply_text("âš ï¸ Usage: /minestrap <on|off>")
 
     global MINES_TRAP_MODE
     MINES_TRAP_MODE = args[0] == "on"
 
     status = "activated" if MINES_TRAP_MODE else "deactivated"
     await update.message.reply_text(
-        f"💣 Mines trap mode {status}.\n"
+        f"ðŸ’£ Mines trap mode {status}.\n"
         f"First click will now {'explode' if MINES_TRAP_MODE else 'behave normally'}."
     )
 
@@ -635,20 +635,20 @@ async def minestrap_toggle(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def dig(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if not context.args or not context.args[0].isdigit():
-        return await update.message.reply_text("⚠️ Usage: /dig <depth>")
+        return await update.message.reply_text("âš ï¸ Usage: /dig <depth>")
 
     depth = int(context.args[0])
     if depth < 1 or depth > 10:
-        return await update.message.reply_text("❌ Depth must be between 1 and 10.")
+        return await update.message.reply_text("âŒ Depth must be between 1 and 10.")
 
     remaining = check_cooldown(uid, "dig")
     if remaining > 0:
-        return await update.message.reply_text(f"⏳ Ruko jara sabar karo✋. Try again in {remaining//60}m {remaining%60}s.")
+        return await update.message.reply_text(f"â³ Ruko jara sabar karoâœ‹. Try again in {remaining//60}m {remaining%60}s.")
 
     cost = depth * 100
     coins = get_balance(uid)
     if coins < cost:
-        return await update.message.reply_text("❌ Not enough coins (Autat me 🌚).")
+        return await update.message.reply_text("âŒ Not enough coins (Autat me ðŸŒš).")
 
     reward = random.randint(depth * 150, depth * 500)
     if random.random() < 0.2:  # 20% chance of failure
@@ -664,31 +664,31 @@ async def dig(update: Update, context: ContextTypes.DEFAULT_TYPE):
     update_cooldown(uid, "dig")
 
     if reward > 0:
-        await update.message.reply_text(f"⛏️ You dug at depth {depth} and found ₹{reward}!")
+        await update.message.reply_text(f"â›ï¸ You dug at depth {depth} and found â‚¹{reward}!")
     else:
-        await update.message.reply_text(f"💥 You hit a rock at depth {depth}. No reward.")
+        await update.message.reply_text(f"ðŸ’¥ You hit a rock at depth {depth}. No reward.")
 
 
 async def blackjack(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
 
     if not context.args or not context.args[0].isdigit():
-        return await update.message.reply_text("⚠️ Usage: /blackjack <bet>")
+        return await update.message.reply_text("âš ï¸ Usage: /blackjack <bet>")
 
     bet = int(context.args[0])
     coins = get_balance(uid)
     if bet <= 0 or coins < bet:
-        return await update.message.reply_text("❌ Invalid or insufficient coin amount.")
+        return await update.message.reply_text("âŒ Invalid or insufficient coin amount.")
 
     remaining = check_cooldown(uid, "blackjack")
     if remaining > 0:
         return await update.message.reply_text(
-            f"⏳ Ruko jara sabar karo✋. Try again in {remaining//60}m {remaining%60}s."
+            f"â³ Ruko jara sabar karoâœ‹. Try again in {remaining//60}m {remaining%60}s."
         )
 
     if police_check(uid, bet, context.bot):
         return await update.message.reply_text(
-            "🚨 POLICE RAID! 🚔 You were caught at the blackjack table.\n💸 Lost your full stake + ₹500 fine."
+            "ðŸš¨ POLICE RAID! ðŸš” You were caught at the blackjack table.\nðŸ’¸ Lost your full stake + â‚¹500 fine."
         )
 
     update_cooldown(uid, "blackjack")
@@ -700,7 +700,7 @@ async def blackjack(update: Update, context: ContextTypes.DEFAULT_TYPE):
     bot_total = draw_card() + draw_card()
 
     if user_total > bot_total:
-        result = f"🏆 You win! +₹{bet}"
+        result = f"ðŸ† You win! +â‚¹{bet}"
         with db_lock:
             with get_conn() as conn:
                 conn.execute("UPDATE users SET coins = coins + ? WHERE id = ?", (bet, uid))
@@ -708,17 +708,17 @@ async def blackjack(update: Update, context: ContextTypes.DEFAULT_TYPE):
             add_earnings(uid, bet)
 
     elif user_total < bot_total:
-        result = f"💔 You lose! -₹{bet}"
+        result = f"ðŸ’” You lose! -â‚¹{bet}"
         with db_lock:
             with get_conn() as conn:
                 conn.execute("UPDATE users SET coins = coins - ? WHERE id = ?", (bet, uid))
                 conn.commit()
 
     else:
-        result = "🤝 It's a tie! No coins lost."
+        result = "ðŸ¤ It's a tie! No coins lost."
 
     await update.message.reply_text(
-        f"🃏 Your total: {user_total}\n🤖 Bot total: {bot_total}\n{result}"
+        f"ðŸƒ Your total: {user_total}\nðŸ¤– Bot total: {bot_total}\n{result}"
     )
 
 from telegram import Bot
@@ -739,7 +739,7 @@ def is_global_raid():
 
 def police_check(uid: int, bet: int, bot: Bot = None) -> bool:
     if is_bribed(uid):
-        return False  # 🛡️ Bribe blocks raid
+        return False  # ðŸ›¡ï¸ Bribe blocks raid
 
     chance = 1.0 if is_global_raid() else 0.07
     if not is_global_raid() and bet > 10000:
@@ -749,7 +749,7 @@ def police_check(uid: int, bet: int, bot: Bot = None) -> bool:
         fine = 500
         total_loss = bet + fine
 
-        # 💸 Wipe coins
+        # ðŸ’¸ Wipe coins
         with db_lock:
             with get_conn() as conn:
                 conn.execute("UPDATE users SET coins = coins - ? WHERE id = ?", (total_loss, uid))
@@ -765,10 +765,10 @@ def police_check(uid: int, bet: int, bot: Bot = None) -> bool:
         if bot:
             username = get_username(uid) or "Unknown"
             msg = (
-                "🚨 <b>RAID CONFIRMED</b>\n"
-                f"🎯 @{username}, Reverse God cops caught you mid-play.\n"
-                f"💸 ₹{total_loss} lost — bet & fine wiped clean.\n"
-                "🕶️ Bribe next time... or face the streets again."
+                "ðŸš¨ <b>RAID CONFIRMED</b>\n"
+                f"ðŸŽ¯ @{username}, Reverse God cops caught you mid-play.\n"
+                f"ðŸ’¸ â‚¹{total_loss} lost â€” bet & fine wiped clean.\n"
+                "ðŸ•¶ï¸ Bribe next time... or face the streets again."
             )
             bot.send_message(chat_id=uid, text=msg, parse_mode=ParseMode.HTML)
 
@@ -779,23 +779,23 @@ def police_check(uid: int, bet: int, bot: Bot = None) -> bool:
 async def heist(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if not context.args:
-        return await update.message.reply_text("⚠️ Usage: /heist <location>\nAvailable: bank, museum, vault")
+        return await update.message.reply_text("âš ï¸ Usage: /heist <location>\nAvailable: bank, museum, vault")
 
     location = context.args[0].lower()
     if location not in ["bank", "museum", "vault"]:
-        return await update.message.reply_text("❌ Invalid location. Choose: bank, museum, vault")
+        return await update.message.reply_text("âŒ Invalid location. Choose: bank, museum, vault")
 
     remaining = check_cooldown(uid, "heist")
     if remaining > 0:
-        return await update.message.reply_text(f"⏳ Ruko jara sabar karo✋. Try again in {remaining//60}m {remaining%60}s.")
+        return await update.message.reply_text(f"â³ Ruko jara sabar karoâœ‹. Try again in {remaining//60}m {remaining%60}s.")
 
     cost = 500
     coins = get_balance(uid)
     if coins < cost:
-        return await update.message.reply_text("❌ Not enough coins (Autat me 🌚).")
+        return await update.message.reply_text("âŒ Not enough coins (Autat me ðŸŒš).")
 
     if police_check(uid, cost):
-        return await update.message.reply_text("🚨 POLICE RAID! 🚔 You were caught near the scene.\n💸 Lost ₹500 and your gear!")
+        return await update.message.reply_text("ðŸš¨ POLICE RAID! ðŸš” You were caught near the scene.\nðŸ’¸ Lost â‚¹500 and your gear!")
 
     success = random.random() < 0.6
     reward = random.randint(1000, 5000) if success else 0
@@ -812,13 +812,13 @@ async def heist(update: Update, context: ContextTypes.DEFAULT_TYPE):
             with db_lock:
                 add_earnings(uid, reward)
         except Exception as e:
-            print(f"⚠️ Failed to track earnings: {e}")
+            print(f"âš ï¸ Failed to track earnings: {e}")
 
     update_cooldown(uid, "heist")
 
     await update.message.reply_text(
-        f"{'🕵️ Heist successful!' if success else '🚨 Heist failed!'}\n"
-        f"{'💰 You stole ₹' + str(reward) if success else '💸 You lost ₹500'}"
+        f"{'ðŸ•µï¸ Heist successful!' if success else 'ðŸš¨ Heist failed!'}\n"
+        f"{'ðŸ’° You stole â‚¹' + str(reward) if success else 'ðŸ’¸ You lost â‚¹500'}"
     )
 
 
@@ -834,18 +834,18 @@ fly_storm_mode = False
 async def flystorm(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
     if user_id not in ADMIN_IDS:
-        return await update.message.reply_text("🚫 You’re not authorized to toggle storm mode.")
+        return await update.message.reply_text("ðŸš« Youâ€™re not authorized to toggle storm mode.")
     
     if not context.args or context.args[0].lower() not in ["on", "off"]:
-        return await update.message.reply_text("⚠️ Usage: /flystorm <on|off>")
+        return await update.message.reply_text("âš ï¸ Usage: /flystorm <on|off>")
     
     global fly_storm_mode
     fly_storm_mode = context.args[0].lower() == "on"
 
     status = (
-        "🌪️ Storm Mode Activated — All flights will crash!" 
+        "ðŸŒªï¸ Storm Mode Activated â€” All flights will crash!" 
         if fly_storm_mode 
-        else "🌤️ Storm Mode Deactivated — Flights are safe again."
+        else "ðŸŒ¤ï¸ Storm Mode Deactivated â€” Flights are safe again."
     )
     await update.message.reply_text(status)
 
@@ -855,18 +855,18 @@ fly_shield_admins = set()
 async def flyshield(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if uid not in ADMIN_IDS:
-        return await update.message.reply_text("🚫 You’re not authorized to toggle fly shield.")
+        return await update.message.reply_text("ðŸš« Youâ€™re not authorized to toggle fly shield.")
 
     if not context.args or context.args[0].lower() not in ["on", "off"]:
-        return await update.message.reply_text("⚠️ Usage: /flyshield <on|off>")
+        return await update.message.reply_text("âš ï¸ Usage: /flyshield <on|off>")
 
     global fly_shield_admins
     if context.args[0].lower() == "on":
         fly_shield_admins.add(uid)
-        status = "🛡️ Fly Shield Activated — You are now protected from crashes."
+        status = "ðŸ›¡ï¸ Fly Shield Activated â€” You are now protected from crashes."
     else:
         fly_shield_admins.discard(uid)
-        status = "☁️ Fly Shield Deactivated — You may crash again."
+        status = "â˜ï¸ Fly Shield Deactivated â€” You may crash again."
 
     await update.message.reply_text(status)
 
@@ -900,31 +900,31 @@ async def fly(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # 1. Arg validation
     if len(context.args) != 2 or not context.args[0].isdigit():
         return await update.message.reply_text(
-            "⚠️ Usage: /fly <coins> <risk>\nRisk: low, medium, high\nExample:- /fly 1000 high"
+            "âš ï¸ Usage: /fly <coins> <risk>\nRisk: low, medium, high\nExample:- /fly 1000 high"
         )
 
     bet  = int(context.args[0])
     risk = context.args[1].lower()
     if risk not in ("low", "medium", "high"):
         return await update.message.reply_text(
-            "❌ Invalid risk level. Choose: low, medium, high"
+            "âŒ Invalid risk level. Choose: low, medium, high"
         )
 
     balance = get_balance(uid)
     if bet <= 0 or balance < bet:
-        return await update.message.reply_text("❌ Invalid or insufficient coins.")
+        return await update.message.reply_text("âŒ Invalid or insufficient coins.")
 
     wait = check_cooldown(uid, "fly")
     if wait:
         mins, secs = divmod(wait, 60)
         return await update.message.reply_text(
-            f"⏳ Ruko jara sabar karo✋. Try again in {mins}m {secs}s."
+            f"â³ Ruko jara sabar karoâœ‹. Try again in {mins}m {secs}s."
         )
 
     if police_check(uid, bet, context.bot):
         return await update.message.reply_text(
-            "🚨 POLICE RAID! 🚔 You were caught at the runway.\n"
-            "💸 Lost your full stake + ₹500 fine."
+            "ðŸš¨ POLICE RAID! ðŸš” You were caught at the runway.\n"
+            "ðŸ’¸ Lost your full stake + â‚¹500 fine."
         )
 
     update_cooldown(uid, "fly")
@@ -949,7 +949,7 @@ async def fly(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             conn.commit()
         return await update.message.reply_text(
-            "💥 The plane hit turbulence and crashed!\n"
+            "ðŸ’¥ The plane hit turbulence and crashed!\n"
             "You lost your full stake."
         )
 
@@ -964,12 +964,12 @@ async def fly(update: Update, context: ContextTypes.DEFAULT_TYPE):
         conn.commit()
         add_earnings(uid, profit)
 
-    flight_visual = "🛫" + "➖" * random.randint(4, 10) + "✈️"
+    flight_visual = "ðŸ›«" + "âž–" * random.randint(4, 10) + "âœˆï¸"
     await update.message.reply_text(
         f"{flight_visual}\n\n"
-        f"🧠 Risk: <b>{risk.capitalize()}</b>\n"
-        f"📈 Multiplier: x<b>{multiplier}</b>\n"
-        f"💰 Winnings: ₹{profit}",
+        f"ðŸ§  Risk: <b>{risk.capitalize()}</b>\n"
+        f"ðŸ“ˆ Multiplier: x<b>{multiplier}</b>\n"
+        f"ðŸ’° Winnings: â‚¹{profit}",
         parse_mode="HTML",
     )
 
@@ -984,11 +984,11 @@ async def tea(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """).fetchall()
 
     if not rows:
-        return await update.message.reply_text("📉 No tea yet. Nobody’s earned anything.")
+        return await update.message.reply_text("ðŸ“‰ No tea yet. Nobodyâ€™s earned anything.")
 
-    msg = "☕ <b>Top Earners:</b>\n"
+    msg = "â˜• <b>Top Earners:</b>\n"
     for i, (username, coins) in enumerate(rows, start=1):
-        msg += f"{i}. @{username} — ₹{coins}\n"
+        msg += f"{i}. @{username} â€” â‚¹{coins}\n"
 
     await update.message.reply_text(msg, parse_mode="HTML")
 
@@ -998,24 +998,24 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
 from database import get_conn, db_lock, get_balance, add_earnings
 
-wire_options = ["🔴", "🔵", "🟢", "🟡", "⚫"]
+wire_options = ["ðŸ”´", "ðŸ”µ", "ðŸŸ¢", "ðŸŸ¡", "âš«"]
 
 async def defuse(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     args = context.args
 
     if len(args) != 2 or args[0] not in ["low", "medium", "high"] or not args[1].isdigit():
-        return await update.message.reply_text("⚠️ Usage: /defuse <low|medium|high> <coins>")
+        return await update.message.reply_text("âš ï¸ Usage: /defuse <low|medium|high> <coins>")
 
     risk = args[0]
     bet = int(args[1])
     coins = get_balance(uid)
     if bet <= 0 or coins < bet:
-        return await update.message.reply_text("❌ Invalid or insufficient coin amount.")
+        return await update.message.reply_text("âŒ Invalid or insufficient coin amount.")
 
     remaining = check_cooldown(uid, "defuse", cooldown_seconds=90)
     if remaining > 0:
-        return await update.message.reply_text(f"⏳ Cooldown: {remaining//60}m {remaining%60}s.")
+        return await update.message.reply_text(f"â³ Cooldown: {remaining//60}m {remaining%60}s.")
 
     settings = {
         "low":    {"mult": 1.5, "cut": 0.5},
@@ -1036,9 +1036,9 @@ async def defuse(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ])
 
     await update.message.reply_text(
-        f"💣 <b>Defuse Challenge</b>\nChoose the right wire to disarm the bomb!\n\n"
-        f"Risk Level: <b>{risk.capitalize()}</b>\nBet: ₹{bet}\n\n"
-        f"🧨 One wrong move and it's over.",
+        f"ðŸ’£ <b>Defuse Challenge</b>\nChoose the right wire to disarm the bomb!\n\n"
+        f"Risk Level: <b>{risk.capitalize()}</b>\nBet: â‚¹{bet}\n\n"
+        f"ðŸ§¨ One wrong move and it's over.",
         reply_markup=keyboard,
         parse_mode="HTML"
     )
@@ -1052,7 +1052,7 @@ async def handle_wire_choice(update: Update, context: ContextTypes.DEFAULT_TYPE)
 
     info = context.user_data.get("defuse")
     if not info:
-        return await query.edit_message_text("❌ No active defuse game found.")
+        return await query.edit_message_text("âŒ No active defuse game found.")
 
     selected = query.data.split(":")[1]
     context.user_data.pop("defuse", None)
@@ -1064,12 +1064,12 @@ async def handle_wire_choice(update: Update, context: ContextTypes.DEFAULT_TYPE)
                 conn.execute("UPDATE users SET coins = coins + ? WHERE id = ?", (reward, uid))
                 add_earnings(uid, reward)
                 conn.commit()
-                msg = f"✅ Correct wire ({selected})!\n🎉 You earned ₹{reward}!"
+                msg = f"âœ… Correct wire ({selected})!\nðŸŽ‰ You earned â‚¹{reward}!"
             else:
                 loss = info["loss"]
                 conn.execute("UPDATE users SET coins = coins - ? WHERE id = ?", (loss, uid))
                 conn.commit()
-                msg = f"💥 Wrong wire ({selected})!\n❌ You lost ₹{loss}."
+                msg = f"ðŸ’¥ Wrong wire ({selected})!\nâŒ You lost â‚¹{loss}."
 
     await query.edit_message_text(msg)
 
@@ -1088,7 +1088,7 @@ from telegram.constants import ParseMode
 
 global_raid_active = False
 raid_log = []
-active_raids = {}  # uid → {"by": admin_id, "timestamp": ...}
+active_raids = {}  # uid â†’ {"by": admin_id, "timestamp": ...}
 
 def start_global_raid():
     global global_raid_active
@@ -1142,10 +1142,10 @@ def police_check(uid: int, bet: int, bot=None) -> bool:
             bot.send_message(
                 chat_id=uid,
                 text=(
-                    "🚨 <b>RAID CONFIRMED</b>\n"
-                    f"🕶️ @{username}, your vault got busted mid-flight.\n"
-                    f"💸 ₹{total_loss} wiped clean.\n"
-                    f"📡 Raid Source: <b>{'GLOBAL' if is_global_raid() else 'RANDOM'}</b>"
+                    "ðŸš¨ <b>RAID CONFIRMED</b>\n"
+                    f"ðŸ•¶ï¸ @{username}, your vault got busted mid-flight.\n"
+                    f"ðŸ’¸ â‚¹{total_loss} wiped clean.\n"
+                    f"ðŸ“¡ Raid Source: <b>{'GLOBAL' if is_global_raid() else 'RANDOM'}</b>"
                 ),
                 parse_mode=ParseMode.HTML
             )
@@ -1170,7 +1170,7 @@ async def bribe(update: Update, context: ContextTypes.DEFAULT_TYPE):
     coins = get_balance(uid)
 
     if coins < 2000:
-        return await update.message.reply_text("❌ You need at least ₹2,000 to bribe the system.")
+        return await update.message.reply_text("âŒ You need at least â‚¹2,000 to bribe the system.")
 
     fee = 2000
     if coins >= 10000:
@@ -1185,9 +1185,9 @@ async def bribe(update: Update, context: ContextTypes.DEFAULT_TYPE):
             conn.commit()
 
     return await update.message.reply_text(
-        f"🕶️ You bribed Reverse God for ₹{fee}.\n"
-        f"🚫 Raid protection activated for 10 minutes.\n"
-        f"⏳ Expires at <b>{expiry.strftime('%H:%M:%S')}</b>\n"
+        f"ðŸ•¶ï¸ You bribed Reverse God for â‚¹{fee}.\n"
+        f"ðŸš« Raid protection activated for 10 minutes.\n"
+        f"â³ Expires at <b>{expiry.strftime('%H:%M:%S')}</b>\n"
         "Stay quiet, stay safe.",
         parse_mode=ParseMode.HTML
     )
@@ -1196,20 +1196,20 @@ async def bribe(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def dig(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if not context.args or not context.args[0].isdigit():
-        return await update.message.reply_text("⚠️ Usage: /dig <depth>")
+        return await update.message.reply_text("âš ï¸ Usage: /dig <depth>")
 
     depth = int(context.args[0])
     if depth < 1 or depth > 10:
-        return await update.message.reply_text("❌ Depth must be between 1 and 10.")
+        return await update.message.reply_text("âŒ Depth must be between 1 and 10.")
 
     remaining = check_cooldown(uid, "dig")
     if remaining > 0:
-        return await update.message.reply_text(f"⏳ Ruko jara sabar karo✋. Try again in {remaining//60}m {remaining%60}s.")
+        return await update.message.reply_text(f"â³ Ruko jara sabar karoâœ‹. Try again in {remaining//60}m {remaining%60}s.")
 
     cost = depth * 100
     coins = get_balance(uid)
     if coins < cost:
-        return await update.message.reply_text("❌ Not enough coins (Autat me 🌚).")
+        return await update.message.reply_text("âŒ Not enough coins (Autat me ðŸŒš).")
 
     reward = random.randint(depth * 150, depth * 500)
     if random.random() < 0.2:  # 20% chance of failure
@@ -1225,27 +1225,27 @@ async def dig(update: Update, context: ContextTypes.DEFAULT_TYPE):
     update_cooldown(uid, "dig")
 
     if reward > 0:
-        await update.message.reply_text(f"⛏️ You dug at depth {depth} and found ₹{reward}!")
+        await update.message.reply_text(f"â›ï¸ You dug at depth {depth} and found â‚¹{reward}!")
     else:
-        await update.message.reply_text(f"💥 You hit a rock at depth {depth}. No reward.")
+        await update.message.reply_text(f"ðŸ’¥ You hit a rock at depth {depth}. No reward.")
 
 
 async def blackjack(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if not context.args or not context.args[0].isdigit():
-        return await update.message.reply_text("⚠️ Usage: /blackjack <bet>")
+        return await update.message.reply_text("âš ï¸ Usage: /blackjack <bet>")
 
     bet = int(context.args[0])
     coins = get_balance(uid)
     if coins < bet:
-        return await update.message.reply_text("❌ Not enough coins (Autat me 🌚) .")
+        return await update.message.reply_text("âŒ Not enough coins (Autat me ðŸŒš) .")
 
     remaining = check_cooldown(uid, "blackjack")
     if remaining > 0:
-        return await update.message.reply_text(f"⏳ Ruko jara sabar karo✋. Try again in {remaining//60}m {remaining%60}s.")
+        return await update.message.reply_text(f"â³ Ruko jara sabar karoâœ‹. Try again in {remaining//60}m {remaining%60}s.")
 
     if police_check(uid, bet):
-        return await update.message.reply_text("🚨 POLICE RAID! 🚔 You lost your bet + ₹500 fine mid-play.")
+        return await update.message.reply_text("ðŸš¨ POLICE RAID! ðŸš” You lost your bet + â‚¹500 fine mid-play.")
 
     def draw_card(): return random.randint(2, 11)
     user_total = draw_card() + draw_card()
@@ -1253,45 +1253,45 @@ async def blackjack(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     result = ""
     if user_total > bot_total:
-        result = f"🏆 You win! +₹{bet}"
+        result = f"ðŸ† You win! +â‚¹{bet}"
         with db_lock:
             with get_conn() as conn:
                 conn.execute("UPDATE users SET coins = coins + ? WHERE id = ?", (bet, uid))
                 conn.commit()
     elif user_total < bot_total:
-        result = f"💔 You lose! -₹{bet}"
+        result = f"ðŸ’” You lose! -â‚¹{bet}"
         with db_lock:
             with get_conn() as conn:
                 conn.execute("UPDATE users SET coins = coins - ? WHERE id = ?", (bet, uid))
                 conn.commit()
     else:
-        result = "🤝 It's a tie! No coins lost."
+        result = "ðŸ¤ It's a tie! No coins lost."
 
     update_cooldown(uid, "blackjack")
     await update.message.reply_text(
-        f"🃏 Your total: {user_total}\n🤖 Bot total: {bot_total}\n{result}"
+        f"ðŸƒ Your total: {user_total}\nðŸ¤– Bot total: {bot_total}\n{result}"
     )
 
 async def heist(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if not context.args:
-        return await update.message.reply_text("⚠️ Usage: /heist <location>\nAvailable: bank, museum, vault")
+        return await update.message.reply_text("âš ï¸ Usage: /heist <location>\nAvailable: bank, museum, vault")
 
     location = context.args[0].lower()
     if location not in ["bank", "museum", "vault"]:
-        return await update.message.reply_text("❌ Invalid location. Choose: bank, museum, vault")
+        return await update.message.reply_text("âŒ Invalid location. Choose: bank, museum, vault")
 
     remaining = check_cooldown(uid, "heist")
     if remaining > 0:
-        return await update.message.reply_text(f"⏳ Ruko jara sabar karo✋. Try again in {remaining//60}m {remaining%60}s.")
+        return await update.message.reply_text(f"â³ Ruko jara sabar karoâœ‹. Try again in {remaining//60}m {remaining%60}s.")
 
     cost = 500
     coins = get_balance(uid)
     if coins < cost:
-        return await update.message.reply_text("❌ Not enough coins (Autat me 🌚) .")
+        return await update.message.reply_text("âŒ Not enough coins (Autat me ðŸŒš) .")
 
     if police_check(uid, cost):
-        return await update.message.reply_text("🚨 POLICE RAID! 🚔 You were caught near the scene.\n💸 Lost ₹500 and your gear!")
+        return await update.message.reply_text("ðŸš¨ POLICE RAID! ðŸš” You were caught near the scene.\nðŸ’¸ Lost â‚¹500 and your gear!")
 
     success = random.random() < 0.6
     reward = random.randint(1000, 5000) if success else 0
@@ -1308,11 +1308,11 @@ async def heist(update: Update, context: ContextTypes.DEFAULT_TYPE):
             with db_lock:
                 add_earnings(uid, reward)
         except Exception as e:
-            print(f"⚠️ Failed to track earnings: {e}")
+            print(f"âš ï¸ Failed to track earnings: {e}")
 
     update_cooldown(uid, "heist")
 
     await update.message.reply_text(
-        f"{'🕵️ Heist successful!' if success else '🚨 Heist failed!'}\n"
-        f"{'💰 You stole ₹' + str(reward) if success else '💸 You lost ₹500'}"
+        f"{'ðŸ•µï¸ Heist successful!' if success else 'ðŸš¨ Heist failed!'}\n"
+        f"{'ðŸ’° You stole â‚¹' + str(reward) if success else 'ðŸ’¸ You lost â‚¹500'}"
     )

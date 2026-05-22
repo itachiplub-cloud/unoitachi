@@ -1,4 +1,4 @@
-import time
+﻿import time
 import random
 from database import get_conn, update_balance
 
@@ -166,15 +166,15 @@ def assign_investor_badge(uid):
     assets = get_user_assets(uid)
     total_value = sum(cost * qty for _, _, cost, _, _, qty in assets)
     if total_value >= 10000:
-        badge = "💎 Vault Keeper"
+        badge = "ðŸ’Ž Vault Keeper"
     elif total_value >= 5000:
-        badge = "🏦 Shadow Banker"
+        badge = "ðŸ¦ Shadow Banker"
     elif total_value >= 2500:
-        badge = "📈 Crypto Monk"
+        badge = "ðŸ“ˆ Crypto Monk"
     elif total_value >= 1000:
-        badge = "🥇 Gold Tycoon"
+        badge = "ðŸ¥‡ Gold Tycoon"
     else:
-        badge = "💼 Novice Investor"
+        badge = "ðŸ’¼ Novice Investor"
     with get_conn() as conn:
         conn.execute("REPLACE INTO badges (uid, badge) VALUES (?, ?)", (uid, badge))
         conn.commit()

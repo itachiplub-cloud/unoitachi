@@ -1,4 +1,4 @@
-from telegram import Update
+﻿from telegram import Update
 from telegram.ext import CommandHandler, CallbackContext
 from telegram.constants import ParseMode
 from datetime import datetime, timedelta
@@ -16,13 +16,13 @@ def loan(update: Update, context: CallbackContext):
     args = context.args
 
     if len(args) != 1 or not args[0].isdigit():
-        return update.message.reply_text("⚠️ Usage: /loan <amount>")
+        return update.message.reply_text("âš ï¸ Usage: /loan <amount>")
 
     amount = int(args[0])
 
     if amount > 1_000_000:
         return update.message.reply_text(
-            "🚫 Loan amount exceeds the maximum limit of ₹1,000,000.\nTry a smaller amount to stay within ritual bounds.\n(Autat me 🌚)"
+            "ðŸš« Loan amount exceeds the maximum limit of â‚¹1,000,000.\nTry a smaller amount to stay within ritual bounds.\n(Autat me ðŸŒš)"
         )
 
     with db_lock:
@@ -32,7 +32,7 @@ def loan(update: Update, context: CallbackContext):
             if row:
                 due = row["total_due"]
                 return update.message.reply_text(
-                    f"❌ You already have an active loan of ₹{due:,}.\nRepay it first using /rloan before requesting another."
+                    f"âŒ You already have an active loan of â‚¹{due:,}.\nRepay it first using /rloan before requesting another."
                 )
 
             # Delete old repaid loans to avoid UNIQUE constraint
@@ -50,11 +50,11 @@ def loan(update: Update, context: CallbackContext):
             conn.commit()
 
     return update.message.reply_text(
-        f"✅ *Loan Approved*\n"
-        f"Amount: ₹{amount:,}\n"
-        f"Interest: ₹{interest:,}\n"
-        f"Total Due: ₹{total_due:,}\n\n"
-        f"Repay within 24h using /rloan — every coin is part of your legacy.",
+        f"âœ… *Loan Approved*\n"
+        f"Amount: â‚¹{amount:,}\n"
+        f"Interest: â‚¹{interest:,}\n"
+        f"Total Due: â‚¹{total_due:,}\n\n"
+        f"Repay within 24h using /rloan â€” every coin is part of your legacy.",
         parse_mode=ParseMode.MARKDOWN
     )
 
@@ -65,17 +65,17 @@ def repay_loan(update: Update, context: CallbackContext):
         with get_conn() as conn:
             loan = conn.execute("SELECT * FROM loans WHERE id = ? AND repaid = 0", (uid,)).fetchone()
             if not loan:
-                return update.message.reply_text("❌ No active loan found.")
+                return update.message.reply_text("âŒ No active loan found.")
 
             balance = get_balance(uid)
             if balance < loan["total_due"]:
-                return update.message.reply_text("❌ Insufficient balance to repay.")
+                return update.message.reply_text("âŒ Insufficient balance to repay.")
 
             conn.execute("UPDATE users SET coins = coins - ? WHERE id = ?", (loan["total_due"], uid))
             conn.execute("UPDATE loans SET repaid = 1 WHERE id = ?", (uid,))
             conn.commit()
 
-    return update.message.reply_text(f"✅ Loan repaid\nTotal Paid: ₹{loan['total_due']}")
+    return update.message.reply_text(f"âœ… Loan repaid\nTotal Paid: â‚¹{loan['total_due']}")
 
 from datetime import datetime, timedelta
 from telegram import Update
@@ -90,9 +90,9 @@ def my_loan(update: Update, context: CallbackContext):
     with get_conn() as conn:
         loan = conn.execute("SELECT * FROM loans WHERE id = ?", (uid,)).fetchone()
         if not loan:
-            return update.message.reply_text("❌ You have no loan history.")
+            return update.message.reply_text("âŒ You have no loan history.")
 
-        # 🔍 Detect and parse loan_time format
+        # ðŸ” Detect and parse loan_time format
         loan_time_str = loan["loan_time"]
         loan_time = None
         formats_to_try = [
@@ -110,18 +110,18 @@ def my_loan(update: Update, context: CallbackContext):
                 continue
 
         if loan_time is None:
-            return update.message.reply_text(f"⚠️ Invalid loan_time format: {loan_time_str}")
+            return update.message.reply_text(f"âš ï¸ Invalid loan_time format: {loan_time_str}")
 
         time_left = max(0, int((loan_time + timedelta(hours=LOAN_DURATION_HOURS) - datetime.utcnow()).total_seconds() // 3600))
 
-        status = "✅ Repaid" if loan["repaid"] else "❌ Unpaid"
+        status = "âœ… Repaid" if loan["repaid"] else "âŒ Unpaid"
         deduction = "Started" if loan["daily_deduction_started"] else "Not started"
 
     return update.message.reply_text(
-        f"📜 Loan Status:\n"
-        f"Amount: ₹{loan['amount']}\n"
-        f"Interest: ₹{loan['interest']}\n"
-        f"Total Due: ₹{loan['total_due']}\n"
+        f"ðŸ“œ Loan Status:\n"
+        f"Amount: â‚¹{loan['amount']}\n"
+        f"Interest: â‚¹{loan['interest']}\n"
+        f"Total Due: â‚¹{loan['total_due']}\n"
         f"Time Left: {time_left}h\n"
         f"Status: {status}\n"
         f"Daily Deduction: {deduction}"
@@ -137,7 +137,7 @@ def top_loans(update: Update, context: CallbackContext):
         if not rows:
             return update.message.reply_text("No active loans found.")
 
-        leaderboard = "🏦 *Top Loans:*\n"
+        leaderboard = "ðŸ¦ *Top Loans:*\n"
         for i, row in enumerate(rows, start=1):
             uid = row["id"]
             due = row["total_due"]
@@ -166,7 +166,7 @@ def top_loans(update: Update, context: CallbackContext):
                 # Fallback if user info can't be fetched
                 display_name = f"[UID {uid}](tg://user?id={uid})"
 
-            leaderboard += f"{i}. {display_name} → Due: ₹{due_str}\n"
+            leaderboard += f"{i}. {display_name} â†’ Due: â‚¹{due_str}\n"
 
         return update.message.reply_text(leaderboard, parse_mode=ParseMode.MARKDOWN)
 
@@ -175,10 +175,10 @@ def top_loans(update: Update, context: CallbackContext):
 def deduct_command(update: Update, context: CallbackContext):
     uid = update.effective_user.id
     if uid not in ADMIN_IDS:
-        return update.message.reply_text("❌ You are not authorized to run this command.")
+        return update.message.reply_text("âŒ You are not authorized to run this command.")
 
     run_daily_deductions()
-    update.message.reply_text("✅ Daily deductions processed.")
+    update.message.reply_text("âœ… Daily deductions processed.")
 
 
 
@@ -188,7 +188,7 @@ def resetloan(update: Update, context: CallbackContext):
     admin_id = update.effective_user.id
 
     if admin_id not in ADMIN_IDS:
-        return update.message.reply_text("🚫 You are not authorized to perform this ritual.")
+        return update.message.reply_text("ðŸš« You are not authorized to perform this ritual.")
 
     # Get target UID
     if update.message.reply_to_message:
@@ -196,7 +196,7 @@ def resetloan(update: Update, context: CallbackContext):
     elif context.args and context.args[0].isdigit():
         target_uid = int(context.args[0])
     else:
-        return update.message.reply_text("⚠️ Usage: /resetloan <uid> or reply to a user.")
+        return update.message.reply_text("âš ï¸ Usage: /resetloan <uid> or reply to a user.")
 
     with db_lock:
         with get_conn() as conn:
@@ -207,11 +207,11 @@ def resetloan(update: Update, context: CallbackContext):
 
     if affected:
         update.message.reply_text(
-            f"✅ Loan for UID {target_uid} has been reset.\nThe path is clear for a new request."
+            f"âœ… Loan for UID {target_uid} has been reset.\nThe path is clear for a new request."
         )
     else:
         update.message.reply_text(
-            f"ℹ️ No active loan found for UID {target_uid}.\nNothing to reset."
+            f"â„¹ï¸ No active loan found for UID {target_uid}.\nNothing to reset."
         )
 
 
@@ -220,7 +220,7 @@ async def resetallloans(update: Update, context: ContextTypes.DEFAULT_TYPE):
     admin_id = update.effective_user.id
 
     if admin_id not in ADMIN_IDS:
-        await update.message.reply_text("🚫 You are not authorized to perform this ritual.")
+        await update.message.reply_text("ðŸš« You are not authorized to perform this ritual.")
         return
 
     with db_lock:
@@ -231,5 +231,5 @@ async def resetallloans(update: Update, context: ContextTypes.DEFAULT_TYPE):
             conn.commit()
 
     await update.message.reply_text(
-        f"🧹 All active loans have been reset.\n{affected} users released from debt.\nLet the legacy begin anew."
+        f"ðŸ§¹ All active loans have been reset.\n{affected} users released from debt.\nLet the legacy begin anew."
     )

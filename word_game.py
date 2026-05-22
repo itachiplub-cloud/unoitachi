@@ -1,4 +1,4 @@
-import random
+﻿import random
 from telegram import Update
 from telegram.ext import ContextTypes
 from database import get_conn
@@ -113,7 +113,7 @@ async def startwordgame(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_sessions[user_id] = session
     display = " ".join(["_" for _ in word])
     await update.message.reply_text(
-        f"🎮 Word Guess Game Started!\nWord: {display}\nLives: {session['lives']}\nUse /ithink or /g <letter> to play \n /hint to get a hint."
+        f"ðŸŽ® Word Guess Game Started!\nWord: {display}\nLives: {session['lives']}\nUse /ithink or /g <letter> to play \n /hint to get a hint."
     )
 
 async def guess(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -121,17 +121,17 @@ async def guess(update: Update, context: ContextTypes.DEFAULT_TYPE):
     session = user_sessions.get(user_id)
 
     if not session:
-        return await update.message.reply_text("⚠️ No active game. Use /startwordgame to begin.")
+        return await update.message.reply_text("âš ï¸ No active game. Use /startwordgame to begin.")
 
     if not context.args:
-        return await update.message.reply_text("📝 Usage: /ithink <letter>")
+        return await update.message.reply_text("ðŸ“ Usage: /ithink <letter>")
 
     letter = context.args[0].lower()
     word = session["word"]
     guessed = session["guessed"]
 
     if letter in guessed:
-        return await update.message.reply_text("🔁 Already guessed that letter.")
+        return await update.message.reply_text("ðŸ” Already guessed that letter.")
 
     guessed.append(letter)
 
@@ -146,38 +146,38 @@ async def guess(update: Update, context: ContextTypes.DEFAULT_TYPE):
         display = " ".join([c if c in guessed else "_" for c in word])
         if all(c in guessed for c in word):
             user_sessions.pop(user_id)
-            return await update.message.reply_text(f"🏆 You guessed the word: {word}!\n🎉 Victory!")
-        return await update.message.reply_text(f"✅ Correct!\nWord: {display}\nLives: {session['lives']}")
+            return await update.message.reply_text(f"ðŸ† You guessed the word: {word}!\nðŸŽ‰ Victory!")
+        return await update.message.reply_text(f"âœ… Correct!\nWord: {display}\nLives: {session['lives']}")
     else:
         session["lives"] -= 1
         if session["lives"] <= 0:
             user_sessions.pop(user_id)
-            return await update.message.reply_text(f"💀 Out of lives!\nThe word was: {word}")
+            return await update.message.reply_text(f"ðŸ’€ Out of lives!\nThe word was: {word}")
         display = " ".join([c if c in guessed else "_" for c in word])
-        return await update.message.reply_text(f"❌ Wrong!\nWord: {display}\nLives left: {session['lives']}")
+        return await update.message.reply_text(f"âŒ Wrong!\nWord: {display}\nLives left: {session['lives']}")
 
 async def hint(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
     session = user_sessions.get(user_id)
 
     if not session:
-        return await update.message.reply_text("⚠️ No active game. Use /startwordgame to begin.")
+        return await update.message.reply_text("âš ï¸ No active game. Use /startwordgame to begin.")
 
-    await update.message.reply_text(f"💡 Hint: {session['hint']}")
+    await update.message.reply_text(f"ðŸ’¡ Hint: {session['hint']}")
 
 async def wordscore(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
     with get_conn() as conn:
         row = conn.execute("SELECT points FROM word_scores WHERE user_id = ?", (user_id,)).fetchone()
         points = row[0] if row else 0
-    await update.message.reply_text(f"🏅 Your Word Guess Score: {points} points")
+    await update.message.reply_text(f"ðŸ… Your Word Guess Score: {points} points")
 
 async def wordtop(update: Update, context: ContextTypes.DEFAULT_TYPE):
     with get_conn() as conn:
         rows = conn.execute("SELECT username, points FROM word_scores ORDER BY points DESC LIMIT 10").fetchall()
     if not rows:
-        return await update.message.reply_text("📭 No scores yet.")
-    lines = ["🏆 Top Word Guess Players:"]
+        return await update.message.reply_text("ðŸ“­ No scores yet.")
+    lines = ["ðŸ† Top Word Guess Players:"]
     for i, (username, points) in enumerate(rows, start=1):
-        lines.append(f"{i}. @{username} — {points} pts")
+        lines.append(f"{i}. @{username} â€” {points} pts")
     await update.message.reply_text("\n".join(lines))

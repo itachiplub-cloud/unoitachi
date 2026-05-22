@@ -1,4 +1,4 @@
-from telegram.ext import ContextTypes
+﻿from telegram.ext import ContextTypes
 
 async def get_group_user_ids(context: ContextTypes.DEFAULT_TYPE, chat_id: int) -> set:
     members = set()
@@ -8,7 +8,7 @@ async def get_group_user_ids(context: ContextTypes.DEFAULT_TYPE, chat_id: int) -
         for admin in admins:
             members.add(admin.user.id)
     except Exception as e:
-        print(f"⚠️ Failed to fetch admins: {e}")
+        print(f"âš ï¸ Failed to fetch admins: {e}")
 
     try:
         # This part depends on your bot having access to message history
@@ -18,6 +18,6 @@ async def get_group_user_ids(context: ContextTypes.DEFAULT_TYPE, chat_id: int) -
             if msg.from_user:
                 members.add(msg.from_user.id)
     except Exception as e:
-        print(f"⚠️ Failed to fetch chat history: {e}")
+        print(f"âš ï¸ Failed to fetch chat history: {e}")
 
     return members

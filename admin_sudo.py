@@ -1,4 +1,4 @@
-import logging
+﻿import logging
 from telegram import Update
 from telegram.ext import ContextTypes, CommandHandler
 # Functions to manage admins are assumed to exist in database module
@@ -18,20 +18,20 @@ async def add_sudo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """
     requester = update.effective_user.id
     if not _is_owner(requester):
-        return await update.message.reply_text("⚠️ Only the bot owner can add sudo admins.")
+        return await update.message.reply_text("âš ï¸ Only the bot owner can add sudo admins.")
     # Determine target user ID
     if update.message.reply_to_message:
         target_id = update.message.reply_to_message.from_user.id
     else:
         if not context.args:
-            return await update.message.reply_text("⚠️ Provide a user ID or reply to a user's message.")
+            return await update.message.reply_text("âš ï¸ Provide a user ID or reply to a user's message.")
         try:
             target_id = int(context.args[0])
         except ValueError:
-            return await update.message.reply_text("❌ Invalid user ID.")
+            return await update.message.reply_text("âŒ Invalid user ID.")
     # Add admin (owner is already in ADMIN_IDS)
     add_admin(target_id)
-    await update.message.reply_text(f"✅ User {target_id} added to bot admins.")
+    await update.message.reply_text(f"âœ… User {target_id} added to bot admins.")
 
 async def rm_sudo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Remove a user from bot admins. Only the bot owner can use this command.
@@ -39,30 +39,30 @@ async def rm_sudo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """
     requester = update.effective_user.id
     if not _is_owner(requester):
-        return await update.message.reply_text("⚠️ Only the bot owner can remove sudo admins.")
+        return await update.message.reply_text("âš ï¸ Only the bot owner can remove sudo admins.")
     if update.message.reply_to_message:
         target_id = update.message.reply_to_message.from_user.id
     else:
         if not context.args:
-            return await update.message.reply_text("⚠️ Provide a user ID or reply to a user's message.")
+            return await update.message.reply_text("âš ï¸ Provide a user ID or reply to a user's message.")
         try:
             target_id = int(context.args[0])
         except ValueError:
-            return await update.message.reply_text("❌ Invalid user ID.")
+            return await update.message.reply_text("âŒ Invalid user ID.")
     # Prevent removing the owner
     if target_id == OWNER_ID:
-        return await update.message.reply_text("🚫 Cannot remove the bot owner from admins.")
+        return await update.message.reply_text("ðŸš« Cannot remove the bot owner from admins.")
     remove_admin(target_id)
-    await update.message.reply_text(f"✅ User {target_id} removed from bot admins.")
+    await update.message.reply_text(f"âœ… User {target_id} removed from bot admins.")
 
 async def sudo_list_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """List current bot admins (including owner)."""
     admins = get_admin_list()
     if not admins:
-        return await update.message.reply_text("⚠️ No admins configured.")
-    lines = ["🛡 <b>Bot Admins:</b>"]
+        return await update.message.reply_text("âš ï¸ No admins configured.")
+    lines = ["ðŸ›¡ <b>Bot Admins:</b>"]
     for uid in sorted(admins):
-        lines.append(f"• ID: <code>{uid}</code>")
+        lines.append(f"â€¢ ID: <code>{uid}</code>")
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
 def get_admin_sudo_handlers():

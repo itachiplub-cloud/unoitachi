@@ -1,4 +1,4 @@
-import time
+﻿import time
 import asyncio
 import logging
 from datetime import datetime
@@ -69,13 +69,13 @@ async def send_alive_logger(client, bot_name: str = "Itachi Bot"):
         return
     
     uptime_text = f"""
-🔥 <b>BOT IS NOW ONLINE</b>
+ðŸ”¥ <b>BOT IS NOW ONLINE</b>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🤖 Bot: {escape_markdown(bot_name)}
-⏰ Time: <code>{format_timestamp()}</code>
-⚡ Status: <b>🟢 ACTIVE</b>
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+ðŸ¤– Bot: {escape_markdown(bot_name)}
+â° Time: <code>{format_timestamp()}</code>
+âš¡ Status: <b>ðŸŸ¢ ACTIVE</b>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 """
     await safe_send_message(client, LOGGER_GC_ID, uptime_text)
     logger.info(f"Bot online notification sent to {LOGGER_GC_ID}")
@@ -86,13 +86,13 @@ async def send_shutdown_logger(client, bot_name: str = "Itachi Bot"):
         return
     
     shutdown_text = f"""
-🔴 <b>BOT IS SHUTTING DOWN</b>
+ðŸ”´ <b>BOT IS SHUTTING DOWN</b>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🤖 Bot: {escape_markdown(bot_name)}
-⏰ Time: <code>{format_timestamp()}</code>
-⚡ Status: <b>🔴 OFFLINE</b>
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+ðŸ¤– Bot: {escape_markdown(bot_name)}
+â° Time: <code>{format_timestamp()}</code>
+âš¡ Status: <b>ðŸ”´ OFFLINE</b>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 """
     await safe_send_message(client, LOGGER_GC_ID, shutdown_text)
     logger.info(f"Bot shutdown notification sent to {LOGGER_GC_ID}")
@@ -104,14 +104,14 @@ async def send_start_logger(client, user: User):
     
     # Check if user is new (you may want to implement this check)
     user_text = f"""
-🚀 <b>USER STARTED BOT</b>
+ðŸš€ <b>USER STARTED BOT</b>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-👤 Name: {escape_markdown(user.full_name or 'Unknown')}
-🆔 User ID: <code>{user.id}</code>
-📛 Username: @{escape_markdown(user.username) if user.username else 'None'}
-🗓️ First Seen: <code>{format_timestamp()}</code>
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+ðŸ‘¤ Name: {escape_markdown(user.full_name or 'Unknown')}
+ðŸ†” User ID: <code>{user.id}</code>
+ðŸ“› Username: @{escape_markdown(user.username) if user.username else 'None'}
+ðŸ—“ï¸ First Seen: <code>{format_timestamp()}</code>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 """
     await safe_send_message(client, LOGGER_GC_ID, user_text)
     logger.info(f"New user started bot: {user.id} - {user.username}")
@@ -128,15 +128,15 @@ async def send_group_logger(client, chat: Chat):
         members = "Unknown"
     
     group_text = f"""
-🔥 <b>BOT ADDED TO GROUP</b>
+ðŸ”¥ <b>BOT ADDED TO GROUP</b>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🏷️ Group: {escape_markdown(chat.title or 'Unknown')}
-🆔 Chat ID: <code>{chat.id}</code>
-👥 Members: {members}
-📝 Type: {chat.type}
-⏰ Added: <code>{format_timestamp()}</code>
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+ðŸ·ï¸ Group: {escape_markdown(chat.title or 'Unknown')}
+ðŸ†” Chat ID: <code>{chat.id}</code>
+ðŸ‘¥ Members: {members}
+ðŸ“ Type: {chat.type}
+â° Added: <code>{format_timestamp()}</code>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 """
     await safe_send_message(client, LOGGER_GC_ID, group_text)
     logger.info(f"Bot added to group: {chat.id} - {chat.title}")
@@ -147,13 +147,13 @@ async def send_leave_group_logger(client, chat: Chat):
         return
     
     leave_text = f"""
-⚠️ <b>BOT REMOVED FROM GROUP</b>
+âš ï¸ <b>BOT REMOVED FROM GROUP</b>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🏷️ Group: {escape_markdown(chat.title or 'Unknown')}
-🆔 Chat ID: <code>{chat.id}</code>
-⏰ Removed: <code>{format_timestamp()}</code>
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+ðŸ·ï¸ Group: {escape_markdown(chat.title or 'Unknown')}
+ðŸ†” Chat ID: <code>{chat.id}</code>
+â° Removed: <code>{format_timestamp()}</code>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 """
     await safe_send_message(client, LOGGER_GC_ID, leave_text)
     logger.info(f"Bot removed from group: {chat.id} - {chat.title}")
@@ -171,19 +171,19 @@ async def send_command_logger(client, update: Update, context: ContextTypes.DEFA
         return
     
     command_text = f"""
-⌨️ <b>COMMAND EXECUTED</b>
+âŒ¨ï¸ <b>COMMAND EXECUTED</b>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-👤 User: {escape_markdown(user.full_name or 'Unknown')}
-🆔 User ID: <code>{user.id}</code>
-📛 Username: @{escape_markdown(user.username) if user.username else 'None'}
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+ðŸ‘¤ User: {escape_markdown(user.full_name or 'Unknown')}
+ðŸ†” User ID: <code>{user.id}</code>
+ðŸ“› Username: @{escape_markdown(user.username) if user.username else 'None'}
 
-💬 Command: <code>{escape_markdown(message.text[:100])}</code>
-🏷️ Chat: {escape_markdown(chat.title or 'Private')}
-🆔 Chat ID: <code>{chat.id}</code>
+ðŸ’¬ Command: <code>{escape_markdown(message.text[:100])}</code>
+ðŸ·ï¸ Chat: {escape_markdown(chat.title or 'Private')}
+ðŸ†” Chat ID: <code>{chat.id}</code>
 
-⏰ Time: <code>{format_timestamp()}</code>
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+â° Time: <code>{format_timestamp()}</code>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 """
     await safe_send_message(client, LOGGER_GC_ID, command_text)
     if ENABLE_DEBUG_LOGS:
@@ -195,36 +195,36 @@ async def send_error_logger(client, error: Exception, update: Update = None):
         return
     
     error_text = f"""
-❌ <b>ERROR OCCURRED</b>
+âŒ <b>ERROR OCCURRED</b>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚠️ Error: <code>{escape_markdown(str(error)[:200])}</code>
-📌 Type: {type(error).__name__}
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+âš ï¸ Error: <code>{escape_markdown(str(error)[:200])}</code>
+ðŸ“Œ Type: {type(error).__name__}
 
 """
     
     if update and update.effective_user:
         user = update.effective_user
         error_text += f"""
-👤 User: {escape_markdown(user.full_name or 'Unknown')}
-🆔 User ID: <code>{user.id}</code>
+ðŸ‘¤ User: {escape_markdown(user.full_name or 'Unknown')}
+ðŸ†” User ID: <code>{user.id}</code>
 """
     
     if update and update.effective_chat:
         chat = update.effective_chat
         error_text += f"""
-🏷️ Chat: {escape_markdown(chat.title or 'Private')}
-🆔 Chat ID: <code>{chat.id}</code>
+ðŸ·ï¸ Chat: {escape_markdown(chat.title or 'Private')}
+ðŸ†” Chat ID: <code>{chat.id}</code>
 """
     
     if update and update.effective_message and update.effective_message.text:
         error_text += f"""
-💬 Message: <code>{escape_markdown(update.effective_message.text[:100])}</code>
+ðŸ’¬ Message: <code>{escape_markdown(update.effective_message.text[:100])}</code>
 """
     
     error_text += f"""
-⏰ Time: <code>{format_timestamp()}</code>
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+â° Time: <code>{format_timestamp()}</code>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 """
     
     await safe_send_message(client, LOGGER_GC_ID, error_text)
@@ -236,23 +236,23 @@ async def send_bank_transaction_logger(client, user_id: int, username: str, acti
         return
     
     transaction_text = f"""
-💰 <b>BANK TRANSACTION</b>
+ðŸ’° <b>BANK TRANSACTION</b>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-👤 User: @{escape_markdown(username) if username else str(user_id)}
-🆔 User ID: <code>{user_id}</code>
-💱 Action: <b>{action.upper()}</b>
-💵 Amount: <b>₹{amount:,}</b>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+ðŸ‘¤ User: @{escape_markdown(username) if username else str(user_id)}
+ðŸ†” User ID: <code>{user_id}</code>
+ðŸ’± Action: <b>{action.upper()}</b>
+ðŸ’µ Amount: <b>â‚¹{amount:,}</b>
 """
     
     if bank_id:
         transaction_text += f"""
-🏦 Bank ID: <code>{bank_id}</code>
+ðŸ¦ Bank ID: <code>{bank_id}</code>
 """
     
     transaction_text += f"""
-⏰ Time: <code>{format_timestamp()}</code>
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+â° Time: <code>{format_timestamp()}</code>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 """
     await safe_send_message(client, LOGGER_GC_ID, transaction_text)
 
@@ -262,18 +262,18 @@ async def send_card_draw_logger(client, user_id: int, username: str, card_name: 
         return
     
     card_text = f"""
-🎴 <b>CARD DRAWN</b>
+ðŸŽ´ <b>CARD DRAWN</b>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-👤 User: @{escape_markdown(username) if username else str(user_id)}
-🆔 User ID: <code>{user_id}</code>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+ðŸ‘¤ User: @{escape_markdown(username) if username else str(user_id)}
+ðŸ†” User ID: <code>{user_id}</code>
 
-🃏 Card: <b>{escape_markdown(card_name)}</b>
-⭐ Rarity: {card_rarity.upper()}
-💎 Value: {card_value}
+ðŸƒ Card: <b>{escape_markdown(card_name)}</b>
+â­ Rarity: {card_rarity.upper()}
+ðŸ’Ž Value: {card_value}
 
-⏰ Time: <code>{format_timestamp()}</code>
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+â° Time: <code>{format_timestamp()}</code>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 """
     await safe_send_message(client, LOGGER_GC_ID, card_text)
 
@@ -283,19 +283,19 @@ async def send_trade_logger(client, sender_id: int, sender_name: str, receiver_i
         return
     
     trade_text = f"""
-🔄 <b>COIN TRANSFER</b>
+ðŸ”„ <b>COIN TRANSFER</b>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📤 Sender: @{escape_markdown(sender_name) if sender_name else str(sender_id)}
-🆔 Sender ID: <code>{sender_id}</code>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+ðŸ“¤ Sender: @{escape_markdown(sender_name) if sender_name else str(sender_id)}
+ðŸ†” Sender ID: <code>{sender_id}</code>
 
-📥 Receiver: @{escape_markdown(receiver_name) if receiver_name else str(receiver_id)}
-🆔 Receiver ID: <code>{receiver_id}</code>
+ðŸ“¥ Receiver: @{escape_markdown(receiver_name) if receiver_name else str(receiver_id)}
+ðŸ†” Receiver ID: <code>{receiver_id}</code>
 
-💸 Amount: <b>₹{amount:,}</b>
+ðŸ’¸ Amount: <b>â‚¹{amount:,}</b>
 
-⏰ Time: <code>{format_timestamp()}</code>
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+â° Time: <code>{format_timestamp()}</code>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 """
     await safe_send_message(client, LOGGER_GC_ID, trade_text)
 
@@ -305,24 +305,24 @@ async def send_duel_logger(client, winner_id: int, winner_name: str, loser_id: i
         return
     
     duel_text = f"""
-⚔️ <b>DUEL COMPLETED</b>
+âš”ï¸ <b>DUEL COMPLETED</b>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🏆 Winner: @{escape_markdown(winner_name) if winner_name else str(winner_id)}
-🆔 Winner ID: <code>{winner_id}</code>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+ðŸ† Winner: @{escape_markdown(winner_name) if winner_name else str(winner_id)}
+ðŸ†” Winner ID: <code>{winner_id}</code>
 
-💀 Loser: @{escape_markdown(loser_name) if loser_name else str(loser_id)}
-🆔 Loser ID: <code>{loser_id}</code>
+ðŸ’€ Loser: @{escape_markdown(loser_name) if loser_name else str(loser_id)}
+ðŸ†” Loser ID: <code>{loser_id}</code>
 """
     
     if reward:
         duel_text += f"""
-💰 Reward: <b>₹{reward:,}</b>
+ðŸ’° Reward: <b>â‚¹{reward:,}</b>
 """
     
     duel_text += f"""
-⏰ Time: <code>{format_timestamp()}</code>
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+â° Time: <code>{format_timestamp()}</code>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 """
     await safe_send_message(client, LOGGER_GC_ID, duel_text)
 
@@ -332,17 +332,17 @@ async def send_bot_stats_logger(client, stats: Dict[str, Any]):
         return
     
     stats_text = f"""
-📊 <b>BOT STATISTICS</b>
+ðŸ“Š <b>BOT STATISTICS</b>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-👥 Total Users: {stats.get('total_users', 'Unknown')}
-💬 Total Groups: {stats.get('total_groups', 'Unknown')}
-💰 Total Coins in Circulation: ₹{stats.get('total_coins', 0):,}
-🏦 Total Tax Collected: ₹{stats.get('total_tax', 0):,}
-🎴 Total Cards in Deck: {stats.get('total_cards', 0)}
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+ðŸ‘¥ Total Users: {stats.get('total_users', 'Unknown')}
+ðŸ’¬ Total Groups: {stats.get('total_groups', 'Unknown')}
+ðŸ’° Total Coins in Circulation: â‚¹{stats.get('total_coins', 0):,}
+ðŸ¦ Total Tax Collected: â‚¹{stats.get('total_tax', 0):,}
+ðŸŽ´ Total Cards in Deck: {stats.get('total_cards', 0)}
 
-⏰ Time: <code>{format_timestamp()}</code>
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+â° Time: <code>{format_timestamp()}</code>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 """
     await safe_send_message(client, LOGGER_GC_ID, stats_text)
 
@@ -356,20 +356,20 @@ async def send_admin_alert(client, message: str, severity: str = "INFO"):
         return
     
     severity_emoji = {
-        "INFO": "ℹ️",
-        "WARNING": "⚠️",
-        "ERROR": "❌",
-        "CRITICAL": "🔥"
+        "INFO": "â„¹ï¸",
+        "WARNING": "âš ï¸",
+        "ERROR": "âŒ",
+        "CRITICAL": "ðŸ”¥"
     }
     
     alert_text = f"""
-{severity_emoji.get(severity, 'ℹ️')} <b>ADMIN ALERT</b>
+{severity_emoji.get(severity, 'â„¹ï¸')} <b>ADMIN ALERT</b>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 {escape_markdown(message)}
 
-⏰ Time: <code>{format_timestamp()}</code>
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+â° Time: <code>{format_timestamp()}</code>
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 """
     await safe_send_message(client, LOGGER_GC_ID, alert_text)
 
@@ -393,7 +393,7 @@ def configure_logger(logger_id: int = None, enable_debug: bool = False):
     if logger_id:
         LOGGER_GC_ID = logger_id
     ENABLE_DEBUG_LOGS = enable_debug
-    print(f"✅ Logger configured - Channel ID: {LOGGER_GC_ID}, Debug: {ENABLE_DEBUG_LOGS}")
+    print(f"âœ… Logger configured - Channel ID: {LOGGER_GC_ID}, Debug: {ENABLE_DEBUG_LOGS}")
 
 # =========================================================
 # TEST FUNCTION

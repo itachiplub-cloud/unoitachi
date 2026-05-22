@@ -1,4 +1,4 @@
-import time
+﻿import time
 from database import get_conn, db_lock
 
 def check_cooldown(uid: int, game: str, cooldown_seconds: int = 300) -> int:

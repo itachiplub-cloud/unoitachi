@@ -1,4 +1,4 @@
-import time
+﻿import time
 from telegram import Update
 from telegram.ext import ContextTypes
 from database import get_balance, update_balance
@@ -57,16 +57,16 @@ async def createclan(update: Update, context: ContextTypes.DEFAULT_TYPE):
     name = " ".join(context.args).strip() if context.args else None
 
     if not name:
-        return await update.message.reply_text("🏯 Usage: /createclan <clan_name>")
+        return await update.message.reply_text("ðŸ¯ Usage: /createclan <clan_name>")
     if get_balance(uid) < CLAN_CREATION_TAX:
-        return await update.message.reply_text(f"💰 You need {CLAN_CREATION_TAX} coins to create a clan.")
+        return await update.message.reply_text(f"ðŸ’° You need {CLAN_CREATION_TAX} coins to create a clan.")
     if get_user_clan(uid):
-        return await update.message.reply_text("🚫 You are already in a clan.")
+        return await update.message.reply_text("ðŸš« You are already in a clan.")
 
     clan_id = create_clan(name, uid)
     update_balance(uid, -CLAN_CREATION_TAX)
     await update.message.reply_text(
-        f"✅ Clan <b>{name}</b> created successfully!\nYou are the Clan Master.\n💸 {CLAN_CREATION_TAX} coins deducted.",
+        f"âœ… Clan <b>{name}</b> created successfully!\nYou are the Clan Master.\nðŸ’¸ {CLAN_CREATION_TAX} coins deducted.",
         parse_mode="HTML"
     )
 
@@ -80,14 +80,14 @@ async def joinclan(update: Update, context: ContextTypes.DEFAULT_TYPE):
     clan_name = " ".join(context.args or []).strip()
 
     if not clan_name:
-        return await update.message.reply_text("🏯 Usage: /joinclan <clan_name>")
+        return await update.message.reply_text("ðŸ¯ Usage: /joinclan <clan_name>")
 
     clan_id = get_clan_by_name(clan_name)
     if not clan_id:
-        return await update.message.reply_text(f"❌ Clan '{clan_name}' not found.")
+        return await update.message.reply_text(f"âŒ Clan '{clan_name}' not found.")
 
     if get_user_clan(user.id):
-        return await update.message.reply_text("🚫 You are already in a clan.")
+        return await update.message.reply_text("ðŸš« You are already in a clan.")
 
     username  = user.username or user.first_name
     joined_at = int(time.time())
@@ -111,7 +111,7 @@ async def joinclan(update: Update, context: ContextTypes.DEFAULT_TYPE):
         conn.commit()
 
     await update.message.reply_text(
-        f"✅ You joined clan <b>{clan_name}</b> as {position}!",
+        f"âœ… You joined clan <b>{clan_name}</b> as {position}!",
         parse_mode="HTML"
     )
 
@@ -120,45 +120,45 @@ async def clangoal(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     clan_id = get_user_clan(uid)
     if not clan_id:
-        return await update.message.reply_text("🏯 You’re not in a clan.")
+        return await update.message.reply_text("ðŸ¯ Youâ€™re not in a clan.")
 
     goals = clan_goal_progress(clan_id)
     if not goals:
-        return await update.message.reply_text("📭 No active goals for your clan.")
+        return await update.message.reply_text("ðŸ“­ No active goals for your clan.")
 
-    lines = ["📜 <b>Clan Goals</b>:"]
+    lines = ["ðŸ“œ <b>Clan Goals</b>:"]
     for goal_name, progress, target in goals:
-        status = "✅ Completed" if progress >= target else f"🔄 {progress}/{target}"
-        lines.append(f"• <b>{goal_name}</b>: {status}")
+        status = "âœ… Completed" if progress >= target else f"ðŸ”„ {progress}/{target}"
+        lines.append(f"â€¢ <b>{goal_name}</b>: {status}")
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
 async def voteleader(update: Update, context: ContextTypes.DEFAULT_TYPE):
     voter_id = update.effective_user.id
     if not context.args or not context.args[0].startswith("@"):
-        return await update.message.reply_text("🗳️ Usage: /voteleader @username")
+        return await update.message.reply_text("ðŸ—³ï¸ Usage: /voteleader @username")
 
     target_username = context.args[0][1:]
     target_id = get_user_by_username(target_username)
     if not target_id:
-        return await update.message.reply_text(f"❌ User '@{target_username}' not found.")
+        return await update.message.reply_text(f"âŒ User '@{target_username}' not found.")
 
     clan_id = get_user_clan(voter_id)
     if not clan_id:
-        return await update.message.reply_text("🚫 You’re not in a clan.")
+        return await update.message.reply_text("ðŸš« Youâ€™re not in a clan.")
     if get_user_clan(target_id) != clan_id:
-        return await update.message.reply_text("🚫 That user is not in your clan.")
+        return await update.message.reply_text("ðŸš« That user is not in your clan.")
 
     cast_vote(clan_id, voter_id, target_id)
-    await update.message.reply_text(f"🗳️ Vote cast for <b>@{target_username}</b> as new Clan Master!", parse_mode="HTML")
+    await update.message.reply_text(f"ðŸ—³ï¸ Vote cast for <b>@{target_username}</b> as new Clan Master!", parse_mode="HTML")
 
 async def clanrank(update: Update, context: ContextTypes.DEFAULT_TYPE):
     leaderboard = get_clan_leaderboard()
     if not leaderboard:
-        return await update.message.reply_text("📭 No clans have completed goals yet.")
+        return await update.message.reply_text("ðŸ“­ No clans have completed goals yet.")
 
-    lines = ["🏆 <b>Top Clans</b> — By Goals Completed:"]
+    lines = ["ðŸ† <b>Top Clans</b> â€” By Goals Completed:"]
     for i, (clan_name, count) in enumerate(leaderboard, start=1):
-        lines.append(f"{i}. <b>{clan_name}</b> — ✅ {count} goals")
+        lines.append(f"{i}. <b>{clan_name}</b> â€” âœ… {count} goals")
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
 async def myclan(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -174,7 +174,7 @@ async def myclan(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """, (uid,)).fetchone()
 
         if not clan_row:
-            return await update.message.reply_text("❌ You’re not part of any clan.")
+            return await update.message.reply_text("âŒ Youâ€™re not part of any clan.")
 
         clan_id, clan_name, master_uid, your_title = clan_row
 
@@ -185,23 +185,23 @@ async def myclan(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """, (clan_id,)).fetchall()
 
     lines = [
-        f"🏯 Clan: <b>{clan_name}</b>",
-        f"👤 You: <b>{username}</b> — {your_title}",
-        "👥 Members:"
+        f"ðŸ¯ Clan: <b>{clan_name}</b>",
+        f"ðŸ‘¤ You: <b>{username}</b> â€” {your_title}",
+        "ðŸ‘¥ Members:"
     ]
 
     for m_uid, m_username, m_title in members:
         tag = 'Master' if m_uid == master_uid else m_title
-        lines.append(f"• @{m_username} — {tag}")
+        lines.append(f"â€¢ @{m_username} â€” {tag}")
 
 
     footer = [""]  # blank line
     if uid == master_uid:
         footer.append(
-            "As master, set titles by replying to a member’s message with "
+            "As master, set titles by replying to a memberâ€™s message with "
             "/settitle <New Title>"
         )
-    footer.append("📭 No active goals.")
+    footer.append("ðŸ“­ No active goals.")
 
     await update.message.reply_text(
         "\n".join(lines + footer),
@@ -233,7 +233,7 @@ async def leaveclan(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ).fetchone()
 
         if not row:
-            return await update.message.reply_text("❌ You’re not part of any clan.")
+            return await update.message.reply_text("âŒ Youâ€™re not part of any clan.")
 
         clan_name = row[0]
 
@@ -242,7 +242,7 @@ async def leaveclan(update: Update, context: ContextTypes.DEFAULT_TYPE):
         conn.commit()
 
     await update.message.reply_text(
-        f"🚪 <b>{username}</b> has left the clan <b>{clan_name}</b>.",
+        f"ðŸšª <b>{username}</b> has left the clan <b>{clan_name}</b>.",
         parse_mode="HTML"
     )
 
@@ -266,19 +266,19 @@ async def settitle(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     clan_id = get_user_clan(issuer.id)
     if not clan_id:
-        return await update.message.reply_text("🚫 You’re not in any clan.")
+        return await update.message.reply_text("ðŸš« Youâ€™re not in any clan.")
 
     if get_user_title(issuer.id, clan_id) != "Master":
-        return await update.message.reply_text("❌ Only the clan master can set titles.")
+        return await update.message.reply_text("âŒ Only the clan master can set titles.")
 
     if update.message.reply_to_message:
-        # — If replying to a member’s message
+        # â€” If replying to a memberâ€™s message
         target_user = update.message.reply_to_message.from_user
         new_title   = " ".join(args).strip()
     else:
         if len(args) < 2:
             return await update.message.reply_text(
-                "🏷 Usage: /settitle <@username|user_id> <new title>"
+                "ðŸ· Usage: /settitle <@username|user_id> <new title>"
             )
         mention, *title_parts = args
         new_title = " ".join(title_parts).strip()
@@ -291,15 +291,15 @@ async def settitle(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     (clan_id, uname),
                 ).fetchone()
             if not row:
-                return await update.message.reply_text(f"❌ {mention} is not in your clan.")
+                return await update.message.reply_text(f"âŒ {mention} is not in your clan.")
             target_user = type("U", (), {"id": row["uid"], "username": uname})
         elif mention.isdigit():
             target_user = type("U", (), {"id": int(mention), "username": None})
         else:
-            return await update.message.reply_text("❌ Invalid user. Use @username or user ID.")
+            return await update.message.reply_text("âŒ Invalid user. Use @username or user ID.")
 
     if not new_title:
-        return await update.message.reply_text("❌ Title cannot be empty.")
+        return await update.message.reply_text("âŒ Title cannot be empty.")
 
     with get_conn() as conn:
         conn.execute(
@@ -317,6 +317,6 @@ async def settitle(update: Update, context: ContextTypes.DEFAULT_TYPE):
         else f"UID {target_user.id}"
     )
     await update.message.reply_text(
-        f"✅ Set title of <b>{display_name}</b> to “<i>{new_title}</i>”.",
+        f"âœ… Set title of <b>{display_name}</b> to â€œ<i>{new_title}</i>â€.",
         parse_mode="HTML",
     )

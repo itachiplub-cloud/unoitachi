@@ -1,4 +1,4 @@
-import os
+﻿import os
 import time
 import json
 from pymongo import MongoClient
@@ -87,7 +87,7 @@ def _write_to_sqlite(user_doc):
             conn.commit()
             conn.close()
         except Exception as e:
-            print(f"⚠️ Error syncing MongoDB to SQLite for UID {user_doc.get('id')}: {e}")
+            print(f"âš ï¸ Error syncing MongoDB to SQLite for UID {user_doc.get('id')}: {e}")
 
 def _get_user(uid):
     user = users_col.find_one({"id": uid})
@@ -202,7 +202,7 @@ def purge_users():
             conn.commit()
             conn.close()
         except Exception as e:
-            print(f"⚠️ Error purging SQLite users: {e}")
+            print(f"âš ï¸ Error purging SQLite users: {e}")
 
 def get_all_user_ids():
     return [u["id"] for u in users_col.find({}, {"id": 1})]
@@ -236,7 +236,7 @@ def remove_user_by_id(uid):
             conn.commit()
             conn.close()
         except Exception as e:
-            print(f"⚠️ Error removing SQLite user {uid}: {e}")
+            print(f"âš ï¸ Error removing SQLite user {uid}: {e}")
 
 def remove_user_by_username(username):
     clean = username.lstrip("@ ").strip()
@@ -266,7 +266,7 @@ def remove_user_by_username(username):
             conn.commit()
             conn.close()
         except Exception as e:
-            print(f"⚠️ Error removing SQLite user by username {clean}: {e}")
+            print(f"âš ï¸ Error removing SQLite user by username {clean}: {e}")
 
 def get_low_balance_users(threshold=10):
     return [u.get("username", "Unknown") for u in users_col.find({"coins": {"$lt": threshold}})]
@@ -302,6 +302,6 @@ def force_patch_all_users(chat_id):
 
 def debug_users_by_chat(chat_id):
     users = list(users_col.find({"chat_id": chat_id}))
-    print(f"📊 Found {len(users)} users with chat_id {chat_id}")
+    print(f"ðŸ“Š Found {len(users)} users with chat_id {chat_id}")
     for u in users:
-        print(f"🧾 {u}")
+        print(f"ðŸ§¾ {u}")

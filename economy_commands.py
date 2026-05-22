@@ -1,4 +1,4 @@
-import time
+﻿import time
 import json
 from telegram import Update
 from telegram.ext import ContextTypes
@@ -49,24 +49,24 @@ async def daily(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         if now - last < 86400:
             wait = int((86400 - (now - last)) / 60)
-            return await update.message.reply_text(f"🕒 Already claimed. Try again in {wait} minutes.")
+            return await update.message.reply_text(f"ðŸ•’ Already claimed. Try again in {wait} minutes.")
 
         reward = 100
         update_balance(uid, reward)
         conn.execute("UPDATE users SET last_daily = ? WHERE id = ?", (now, uid))
         conn.commit()
 
-    await update.message.reply_text(f"🎁 You received {reward} coins as your daily reward!")
+    await update.message.reply_text(f"ðŸŽ You received {reward} coins as your daily reward!")
 
 async def leaderboard(update: Update, context: ContextTypes.DEFAULT_TYPE):
     users = get_all_users()
     if not users:
-        return await update.message.reply_text("📭 No users found.")
+        return await update.message.reply_text("ðŸ“­ No users found.")
 
-    lines = ["🏆 Top Richest Users:"]
+    lines = ["ðŸ† Top Richest Users:"]
     for i, (uid, username, coins) in enumerate(users[:10], start=1):
         name = f"@{username}" if username else f"User {uid}"
-        lines.append(f"{i}. {name} — {coins} coins")
+        lines.append(f"{i}. {name} â€” {coins} coins")
 
     await update.message.reply_text("\n".join(lines))
 
@@ -77,7 +77,7 @@ async def referrals(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     count = len(rows)
     names = [f"@{r[0]}" if r[0] else "Unnamed" for r in rows]
-    msg = f"👥 You’ve invited {count} user(s).\n" + ("\n".join(names) if names else "No referrals yet.")
+    msg = f"ðŸ‘¥ Youâ€™ve invited {count} user(s).\n" + ("\n".join(names) if names else "No referrals yet.")
     await update.message.reply_text(msg)
 
 async def invite(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -86,9 +86,9 @@ async def invite(update: Update, context: ContextTypes.DEFAULT_TYPE):
     link = f"https://t.me/{bot_username}?start={uid}"
 
     await update.message.reply_text(
-        f"🎁 <b>Invite Friends</b>\n"
+        f"ðŸŽ <b>Invite Friends</b>\n"
         f"Share this link:\n<a href='{link}'>{link}</a>\n\n"
-        f"💰 Earn coins when they join!",
+        f"ðŸ’° Earn coins when they join!",
         parse_mode="HTML"
     )
 
@@ -108,11 +108,11 @@ async def myreferrals(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """, (uid,)).fetchall()
 
     if not rows:
-        return await update.message.reply_text("🙁 You haven’t invited anyone yet.")
+        return await update.message.reply_text("ðŸ™ You havenâ€™t invited anyone yet.")
 
     count = len(rows)
     await update.message.reply_text(
-        f"🎁 You’ve invited <b>{count}</b> users!\n💰 Earned: <b>{count * get_ref_reward()} coins</b>",
+        f"ðŸŽ Youâ€™ve invited <b>{count}</b> users!\nðŸ’° Earned: <b>{count * get_ref_reward()} coins</b>",
         parse_mode="HTML"
     )
 
@@ -140,9 +140,9 @@ async def referrank(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("No referral data found.")
         return
 
-    lines = ["🏆 <b>Top Referrers</b>"]
+    lines = ["ðŸ† <b>Top Referrers</b>"]
     for i, (uid, total) in enumerate(rows, 1):
-        lines.append(f"{i}. <a href='tg://user?id={uid}'>User</a> — <b>{total}</b> invites")
+        lines.append(f"{i}. <a href='tg://user?id={uid}'>User</a> â€” <b>{total}</b> invites")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -154,7 +154,7 @@ admin_ids = config.get("ADMIN_IDS", [])
 async def setrefreward(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if uid not in ADMIN_IDS:
-        return await update.message.reply_text("🚫 You’re not authorized.")
+        return await update.message.reply_text("ðŸš« Youâ€™re not authorized.")
 
     try:
         new_value = int(context.args[0])
@@ -170,9 +170,9 @@ async def setrefreward(update: Update, context: ContextTypes.DEFAULT_TYPE):
             """, (new_value,))
             conn.commit()
 
-        await update.message.reply_text(f"✅ Referral reward set to {new_value} coins.")
+        await update.message.reply_text(f"âœ… Referral reward set to {new_value} coins.")
     except:
-        await update.message.reply_text("⚠️ Usage: /setrefreward <amount>")
+        await update.message.reply_text("âš ï¸ Usage: /setrefreward <amount>")
 
 
 async def referralscore(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -181,12 +181,12 @@ async def referralscore(update: Update, context: ContextTypes.DEFAULT_TYPE):
         referred = conn.execute("SELECT COUNT(*) FROM users WHERE referrer_id = ?", (uid,)).fetchone()[0]
 
     total_earned = referred * 100
-    await update.message.reply_text(f"💰 You’ve earned {total_earned} coins from {referred} referral(s).")
+    await update.message.reply_text(f"ðŸ’° Youâ€™ve earned {total_earned} coins from {referred} referral(s).")
 
 async def referralmap(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if uid not in admin_ids:
-        return await update.message.reply_text("🚫 Admins only.")
+        return await update.message.reply_text("ðŸš« Admins only.")
 
     with get_conn() as conn:
         rows = conn.execute("""
@@ -197,11 +197,11 @@ async def referralmap(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """).fetchall()
 
     if not rows:
-        return await update.message.reply_text("📭 No referral data found.")
+        return await update.message.reply_text("ðŸ“­ No referral data found.")
 
-    lines = ["📊 Referral Map:"]
+    lines = ["ðŸ“Š Referral Map:"]
     for invitee, referrer in rows:
-        lines.append(f"👤 @{invitee} was invited by @{referrer}")
+        lines.append(f"ðŸ‘¤ @{invitee} was invited by @{referrer}")
     await update.message.reply_text("\n".join(lines))
 
 
@@ -210,20 +210,20 @@ async def bank(update: Update, context: ContextTypes.DEFAULT_TYPE):
     with get_conn() as conn:
         row = conn.execute("SELECT bank FROM users WHERE id = ?", (uid,)).fetchone()
     bank_balance = row[0] if row else 0
-    await update.message.reply_text(f"🏦 Your bank balance: {bank_balance} coins")
+    await update.message.reply_text(f"ðŸ¦ Your bank balance: {bank_balance} coins")
 
 async def deposit(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     args = context.args
 
     if not args or not args[0].isdigit():
-        return await update.message.reply_text("⚠️ Usage: /deposit <amount>")
+        return await update.message.reply_text("âš ï¸ Usage: /deposit <amount>")
 
     amount = int(args[0])
     coins = get_balance(uid)
 
     if coins < amount:
-        return await update.message.reply_text("❌ Not enough coins to deposit.")
+        return await update.message.reply_text("âŒ Not enough coins to deposit.")
 
     now = int(time.time())
 
@@ -232,7 +232,7 @@ async def deposit(update: Update, context: ContextTypes.DEFAULT_TYPE):
             conn.execute("UPDATE users SET coins = coins - ?, bank = bank + ?, last_deposit_time = ? WHERE id = ?", (amount, amount, now, uid))
             conn.commit()
 
-    await update.message.reply_text(f"✅ Deposited ₹{amount} into bank.\n⏳ Interest will be claimable after 24 hours using /claiminterest")
+    await update.message.reply_text(f"âœ… Deposited â‚¹{amount} into bank.\nâ³ Interest will be claimable after 24 hours using /claiminterest")
 
 async def claiminterest(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
@@ -241,14 +241,14 @@ async def claiminterest(update: Update, context: ContextTypes.DEFAULT_TYPE):
     with get_conn() as conn:
         row = conn.execute("SELECT bank, last_deposit_time FROM users WHERE id = ?", (uid,)).fetchone()
         if not row:
-            return await update.message.reply_text("❌ You don’t have a bank account.")
+            return await update.message.reply_text("âŒ You donâ€™t have a bank account.")
 
         bank_balance, last_deposit = row
         if now - last_deposit < 86400:
             remaining = 86400 - (now - last_deposit)
             hours = remaining // 3600
             minutes = (remaining % 3600) // 60
-            return await update.message.reply_text(f"⏳ You can claim interest in {hours}h {minutes}m.")
+            return await update.message.reply_text(f"â³ You can claim interest in {hours}h {minutes}m.")
 
         interest = int(bank_balance * 0.04)
 
@@ -256,7 +256,7 @@ async def claiminterest(update: Update, context: ContextTypes.DEFAULT_TYPE):
             conn.execute("UPDATE users SET bank = bank + ?, last_deposit_time = ? WHERE id = ?", (interest, now, uid))
             conn.commit()
 
-    await update.message.reply_text(f"✅ Claimed ₹{interest} interest on your bank savings.")
+    await update.message.reply_text(f"âœ… Claimed â‚¹{interest} interest on your bank savings.")
 
 
 async def withdraw(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -264,13 +264,13 @@ async def withdraw(update: Update, context: ContextTypes.DEFAULT_TYPE):
     args = context.args
 
     if not args or not args[0].isdigit():
-        return await update.message.reply_text("⚠️ Usage: /withdraw <amount>")
+        return await update.message.reply_text("âš ï¸ Usage: /withdraw <amount>")
 
     amount = int(args[0])
     bank_balance = get_bank_balance(uid)
 
     if bank_balance < amount:
-        return await update.message.reply_text("❌ Not enough bank savings.")
+        return await update.message.reply_text("âŒ Not enough bank savings.")
 
     tax = int(amount * 0.025)
     net = amount - tax
@@ -281,19 +281,19 @@ async def withdraw(update: Update, context: ContextTypes.DEFAULT_TYPE):
             conn.commit()
 
     deposit_tax(tax)
-    await update.message.reply_text(f"✅ Withdrawn ₹{amount} from bank.\n💸 ₹{tax} collected as tax.\n👜 You received ₹{net}")
+    await update.message.reply_text(f"âœ… Withdrawn â‚¹{amount} from bank.\nðŸ’¸ â‚¹{tax} collected as tax.\nðŸ‘œ You received â‚¹{net}")
 
 async def topbank(update: Update, context: ContextTypes.DEFAULT_TYPE):
     with get_conn() as conn:
         rows = conn.execute("SELECT username, bank FROM users ORDER BY bank DESC LIMIT 10").fetchall()
 
     if not rows:
-        return await update.message.reply_text("📭 No bank data found.")
+        return await update.message.reply_text("ðŸ“­ No bank data found.")
 
-    lines = ["🏦 Top Bank Balances:"]
+    lines = ["ðŸ¦ Top Bank Balances:"]
     for i, (username, bank) in enumerate(rows, start=1):
         name = f"@{username}" if username else "Unnamed"
-        lines.append(f"{i}. {name} — {bank} coins")
+        lines.append(f"{i}. {name} â€” {bank} coins")
 
     await update.message.reply_text("\n".join(lines))
 
@@ -303,17 +303,17 @@ async def stats(update: Update, context: ContextTypes.DEFAULT_TYPE):
     savings = get_locked_savings(uid)
 
     await update.message.reply_text(
-        f"📊 Your Stats:\n"
-        f"💰 Coins: {stats['coins']}\n"
-        f"🧘 Karma: {stats['karma']}\n"
-        f"🔒 Locked Savings: {savings} coins"
+        f"ðŸ“Š Your Stats:\n"
+        f"ðŸ’° Coins: {stats['coins']}\n"
+        f"ðŸ§˜ Karma: {stats['karma']}\n"
+        f"ðŸ”’ Locked Savings: {savings} coins"
     )
 
 async def taxbank(update: Update, context: ContextTypes.DEFAULT_TYPE):
     with get_conn() as conn:
         row = conn.execute("SELECT SUM(amount) FROM tax_bank").fetchone()
     total_tax = row[0] if row and row[0] else 0
-    await update.message.reply_text(f"🏛️ Total tax collected: {total_tax} coins")
+    await update.message.reply_text(f"ðŸ›ï¸ Total tax collected: {total_tax} coins")
 
 async def taxtop(update: Update, context: ContextTypes.DEFAULT_TYPE):
     with get_conn() as conn:
@@ -327,12 +327,12 @@ async def taxtop(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """).fetchall()
 
     if not rows:
-        return await update.message.reply_text("📭 No tax data found.")
+        return await update.message.reply_text("ðŸ“­ No tax data found.")
 
-    lines = ["🏆 Top Tax Contributors:"]
+    lines = ["ðŸ† Top Tax Contributors:"]
     for i, (username, total) in enumerate(rows, start=1):
         name = f"@{username}" if username else "Unnamed"
-        lines.append(f"{i}. {name} — {total} coins")
+        lines.append(f"{i}. {name} â€” {total} coins")
 
     await update.message.reply_text("\n".join(lines))
 
@@ -349,11 +349,11 @@ ADMIN_IDS = config["ADMIN_IDS"]
 async def createbank(update, context):
     uid = update.effective_user.id
     if uid not in ADMIN_IDS:
-        return await update.message.reply_text("🚫 Only admins can create banks.")
+        return await update.message.reply_text("ðŸš« Only admins can create banks.")
 
     name = " ".join(context.args)
     if not name:
-        return await update.message.reply_text("⚠️ Usage: /createbank <name>")
+        return await update.message.reply_text("âš ï¸ Usage: /createbank <name>")
 
     with get_conn() as conn:
         conn.execute("""
@@ -362,14 +362,14 @@ async def createbank(update, context):
         """, (name, uid, int(time.time())))
         conn.commit()
 
-    await update.message.reply_text(f"✅ Bank <b>{name}</b> created!", parse_mode="HTML")
+    await update.message.reply_text(f"âœ… Bank <b>{name}</b> created!", parse_mode="HTML")
 
 async def joinbank(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     args = context.args
 
     if not args:
-        return await update.message.reply_text("⚠️ Usage: /joinbank <bank_id>")
+        return await update.message.reply_text("âš ï¸ Usage: /joinbank <bank_id>")
 
     bank_id = int(args[0])
     entry_fee = 500
@@ -377,14 +377,14 @@ async def joinbank(update: Update, context: ContextTypes.DEFAULT_TYPE):
     with get_conn() as conn:
         coins = get_balance(uid)
         if coins < entry_fee:
-            return await update.message.reply_text("❌ Not enough coins to join a bank.")
+            return await update.message.reply_text("âŒ Not enough coins to join a bank.")
 
         conn.execute("UPDATE users SET coins = coins - ? WHERE id = ?", (entry_fee, uid))
         conn.execute("INSERT OR REPLACE INTO bank_members (uid, bank_id, joined_at) VALUES (?, ?, ?)", (uid, bank_id, int(time.time())))
         conn.commit()
 
     deposit_tax(entry_fee)
-    await update.message.reply_text(f"✅ Joined bank ID {bank_id}. ₹{entry_fee} collected as tax.")
+    await update.message.reply_text(f"âœ… Joined bank ID {bank_id}. â‚¹{entry_fee} collected as tax.")
 
 
 
@@ -400,16 +400,16 @@ async def mybank(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """, (uid,)).fetchone()
 
     if not row:
-        return await update.message.reply_text("❌ You haven’t joined any bank yet.")
+        return await update.message.reply_text("âŒ You havenâ€™t joined any bank yet.")
 
     bank_id, name, owner_uid = row
     owner = get_username(owner_uid)
 
     await update.message.reply_text(
-        f"🏦 <b>Your Bank</b>\n"
-        f"• Name: <b>{name}</b>\n"
-        f"• ID: <code>{bank_id}</code>\n"
-        f"• Owner: 👑 {owner}",
+        f"ðŸ¦ <b>Your Bank</b>\n"
+        f"â€¢ Name: <b>{name}</b>\n"
+        f"â€¢ ID: <code>{bank_id}</code>\n"
+        f"â€¢ Owner: ðŸ‘‘ {owner}",
         parse_mode="HTML"
     )
 
@@ -417,17 +417,17 @@ async def bankinfo(update, context):
     try:
         bank_id = int(context.args[0])
     except:
-        return await update.message.reply_text("⚠️ Usage: /bankinfo <bank_id>")
+        return await update.message.reply_text("âš ï¸ Usage: /bankinfo <bank_id>")
 
     with get_conn() as conn:
         bank = conn.execute("SELECT name, owner_uid FROM banks WHERE bank_id = ?", (bank_id,)).fetchone()
         if not bank:
-            return await update.message.reply_text("❌ Bank not found.")
+            return await update.message.reply_text("âŒ Bank not found.")
 
         members = conn.execute("SELECT COUNT(*) FROM bank_members WHERE bank_id = ?", (bank_id,)).fetchone()[0]
 
     await update.message.reply_text(
-        f"🏦 <b>{bank[0]}</b>\n👑 Owner: <a href='tg://user?id={bank[1]}'>Admin</a>\n👥 Members: <b>{members}</b>",
+        f"ðŸ¦ <b>{bank[0]}</b>\nðŸ‘‘ Owner: <a href='tg://user?id={bank[1]}'>Admin</a>\nðŸ‘¥ Members: <b>{members}</b>",
         parse_mode="HTML"
     )
 
@@ -438,16 +438,16 @@ async def bankdeposit(update, context):
         if amount <= 0:
             raise ValueError
     except:
-        return await update.message.reply_text("⚠️ Usage: /bankdeposit <amount>")
+        return await update.message.reply_text("âš ï¸ Usage: /bankdeposit <amount>")
 
     with get_conn() as conn:
         user = conn.execute("SELECT coins FROM users WHERE uid = ?", (uid,)).fetchone()
         if not user or user[0] < amount:
-            return await update.message.reply_text("❌ Not enough coins.")
+            return await update.message.reply_text("âŒ Not enough coins.")
 
         bank_row = conn.execute("SELECT bank_id FROM bank_members WHERE uid = ?", (uid,)).fetchone()
         if not bank_row:
-            return await update.message.reply_text("❌ You haven’t joined any bank.")
+            return await update.message.reply_text("âŒ You havenâ€™t joined any bank.")
 
         bank_id = bank_row[0]
 
@@ -470,7 +470,7 @@ async def bankdeposit(update, context):
 
         conn.commit()
 
-    await update.message.reply_text(f"✅ Deposited <b>{amount}</b> coins to your bank.", parse_mode="HTML")
+    await update.message.reply_text(f"âœ… Deposited <b>{amount}</b> coins to your bank.", parse_mode="HTML")
 
 async def bankwithdraw(update, context):
     uid = update.effective_user.id
@@ -479,18 +479,18 @@ async def bankwithdraw(update, context):
         if amount <= 0:
             raise ValueError
     except:
-        return await update.message.reply_text("⚠️ Usage: /bankwithdraw <amount>")
+        return await update.message.reply_text("âš ï¸ Usage: /bankwithdraw <amount>")
 
     with get_conn() as conn:
         bank_row = conn.execute("SELECT bank_id FROM bank_members WHERE uid = ?", (uid,)).fetchone()
         if not bank_row:
-            return await update.message.reply_text("❌ You haven’t joined any bank.")
+            return await update.message.reply_text("âŒ You havenâ€™t joined any bank.")
 
         bank_id = bank_row[0]
         reserve = conn.execute("SELECT coins FROM bank_reserves WHERE bank_id = ?", (bank_id,)).fetchone()
 
         if not reserve or reserve[0] < amount:
-            return await update.message.reply_text("❌ Bank doesn’t have enough coins.")
+            return await update.message.reply_text("âŒ Bank doesnâ€™t have enough coins.")
 
         conn.execute("UPDATE bank_reserves SET coins = coins - ? WHERE bank_id = ?", (amount, bank_id))
 
@@ -498,7 +498,7 @@ async def bankwithdraw(update, context):
 
         conn.commit()
 
-    await update.message.reply_text(f"💸 Withdrawn <b>{amount}</b> coins from your bank.", parse_mode="HTML")
+    await update.message.reply_text(f"ðŸ’¸ Withdrawn <b>{amount}</b> coins from your bank.", parse_mode="HTML")
 
 async def bankrank(update, context):
     with get_conn() as conn:
@@ -517,12 +517,12 @@ async def bankrank(update, context):
         """).fetchall()
 
     if not rows:
-        return await update.message.reply_text("📉 No banks with reserves yet.")
+        return await update.message.reply_text("ðŸ“‰ No banks with reserves yet.")
 
-    lines = ["🏦 <b>Top Banks</b>"]
+    lines = ["ðŸ¦ <b>Top Banks</b>"]
     for i, (bank_id, name, coins) in enumerate(rows, 1):
         coins = coins or 0
-        lines.append(f"{i}. <b>{name}</b> — 💰 {coins} coins (ID: {bank_id})")
+        lines.append(f"{i}. <b>{name}</b> â€” ðŸ’° {coins} coins (ID: {bank_id})")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -532,7 +532,7 @@ async def bankdashboard(update, context):
     with get_conn() as conn:
         bank = conn.execute("SELECT bank_id, name FROM banks WHERE owner_uid = ?", (uid,)).fetchone()
         if not bank:
-            return await update.message.reply_text("❌ You don’t own any bank.")
+            return await update.message.reply_text("âŒ You donâ€™t own any bank.")
 
         bank_id, name = bank
         members = conn.execute("SELECT COUNT(*) FROM bank_members WHERE bank_id = ?", (bank_id,)).fetchone()[0]
@@ -540,7 +540,7 @@ async def bankdashboard(update, context):
         coins = coins[0] if coins else 0
 
     await update.message.reply_text(
-        f"📊 <b>Bank Dashboard</b>\n🏦 Name: <b>{name}</b>\n👥 Members: <b>{members}</b>\n💰 Reserve: <b>{coins}</b> coins",
+        f"ðŸ“Š <b>Bank Dashboard</b>\nðŸ¦ Name: <b>{name}</b>\nðŸ‘¥ Members: <b>{members}</b>\nðŸ’° Reserve: <b>{coins}</b> coins",
         parse_mode="HTML"
     )
 
@@ -552,21 +552,21 @@ async def transferbank(update, context):
         if amount <= 0:
             raise ValueError
     except:
-        return await update.message.reply_text("⚠️ Usage: /transferbank <to_bank_id> <amount>")
+        return await update.message.reply_text("âš ï¸ Usage: /transferbank <to_bank_id> <amount>")
 
     with get_conn() as conn:
         from_bank = conn.execute("SELECT bank_id FROM banks WHERE owner_uid = ?", (uid,)).fetchone()
         if not from_bank:
-            return await update.message.reply_text("❌ You don’t own any bank.")
+            return await update.message.reply_text("âŒ You donâ€™t own any bank.")
 
         from_bank_id = from_bank[0]
         from_reserve = conn.execute("SELECT coins FROM bank_reserves WHERE bank_id = ?", (from_bank_id,)).fetchone()
         if not from_reserve or from_reserve[0] < amount:
-            return await update.message.reply_text("❌ Not enough reserve in your bank.")
+            return await update.message.reply_text("âŒ Not enough reserve in your bank.")
 
         target = conn.execute("SELECT name FROM banks WHERE bank_id = ?", (to_bank_id,)).fetchone()
         if not target:
-            return await update.message.reply_text("❌ Target bank not found.")
+            return await update.message.reply_text("âŒ Target bank not found.")
 
         conn.execute("UPDATE bank_reserves SET coins = coins - ? WHERE bank_id = ?", (amount, from_bank_id))
         conn.execute("INSERT OR IGNORE INTO bank_reserves (bank_id, coins) VALUES (?, 0)", (to_bank_id,))
@@ -574,7 +574,7 @@ async def transferbank(update, context):
         conn.commit()
 
     await update.message.reply_text(
-        f"🔁 Transferred <b>{amount}</b> coins to <b>{target[0]}</b> (ID: {to_bank_id})",
+        f"ðŸ” Transferred <b>{amount}</b> coins to <b>{target[0]}</b> (ID: {to_bank_id})",
         parse_mode="HTML"
     )
 
@@ -583,7 +583,7 @@ async def bankmembers(update, context):
     try:
         bank_id = int(context.args[0])
     except:
-        return await update.message.reply_text("⚠️ Usage: /bankmembers <bank_id>")
+        return await update.message.reply_text("âš ï¸ Usage: /bankmembers <bank_id>")
 
     with get_conn() as conn:
         rows = conn.execute("""
@@ -591,12 +591,12 @@ async def bankmembers(update, context):
         """, (bank_id,)).fetchall()
 
     if not rows:
-        return await update.message.reply_text("❌ No members found in this bank.")
+        return await update.message.reply_text("âŒ No members found in this bank.")
 
-    lines = [f"👥 <b>Members of Bank ID {bank_id}</b>"]
+    lines = [f"ðŸ‘¥ <b>Members of Bank ID {bank_id}</b>"]
     for uid_row in rows:
         uid = uid_row[0]
-        lines.append(f"• <a href='tg://user?id={uid}'>User</a>")
+        lines.append(f"â€¢ <a href='tg://user?id={uid}'>User</a>")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -605,14 +605,14 @@ async def deletebank(update, context):
     try:
         bank_id = int(context.args[0])
     except:
-        return await update.message.reply_text("⚠️ Usage: /deletebank <bank_id>")
+        return await update.message.reply_text("âš ï¸ Usage: /deletebank <bank_id>")
 
     with get_conn() as conn:
         bank = conn.execute("SELECT owner_uid FROM banks WHERE bank_id = ?", (bank_id,)).fetchone()
         if not bank:
-            return await update.message.reply_text("❌ Bank not found.")
+            return await update.message.reply_text("âŒ Bank not found.")
         if bank[0] != uid:
-            return await update.message.reply_text("🚫 You don’t own this bank.")
+            return await update.message.reply_text("ðŸš« You donâ€™t own this bank.")
 
         conn.execute("DELETE FROM banks WHERE bank_id = ?", (bank_id,))
         conn.execute("DELETE FROM bank_members WHERE bank_id = ?", (bank_id,))
@@ -620,7 +620,7 @@ async def deletebank(update, context):
         conn.execute("DELETE FROM bank_logs WHERE bank_id = ?", (bank_id,))
         conn.commit()
 
-    await update.message.reply_text(f"🗑️ Bank ID <b>{bank_id}</b> deleted.", parse_mode="HTML")
+    await update.message.reply_text(f"ðŸ—‘ï¸ Bank ID <b>{bank_id}</b> deleted.", parse_mode="HTML")
 
 
 async def banklog(update, context):
@@ -629,7 +629,7 @@ async def banklog(update, context):
     with get_conn() as conn:
         bank = conn.execute("SELECT bank_id FROM banks WHERE owner_uid = ?", (uid,)).fetchone()
         if not bank:
-            return await update.message.reply_text("❌ You don’t own any bank.")
+            return await update.message.reply_text("âŒ You donâ€™t own any bank.")
 
         bank_id = bank[0]
         logs = conn.execute("""
@@ -640,12 +640,12 @@ async def banklog(update, context):
         """, (bank_id,)).fetchall()
 
     if not logs:
-        return await update.message.reply_text("📭 No recent transactions.")
+        return await update.message.reply_text("ðŸ“­ No recent transactions.")
 
-    lines = [f"📜 <b>Recent Transactions for Bank ID {bank_id}</b>"]
+    lines = [f"ðŸ“œ <b>Recent Transactions for Bank ID {bank_id}</b>"]
     for uid, action, amount, ts in logs:
         time_str = time.strftime('%Y-%m-%d %H:%M', time.localtime(ts))
-        lines.append(f"• <b>{action.title()}</b> — <code>{amount}</code> coins by <a href='tg://user?id={uid}'>User</a> at {time_str}")
+        lines.append(f"â€¢ <b>{action.title()}</b> â€” <code>{amount}</code> coins by <a href='tg://user?id={uid}'>User</a> at {time_str}")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -656,7 +656,7 @@ async def bankstats(update, context):
     with get_conn() as conn:
         bank = conn.execute("SELECT bank_id, name FROM banks WHERE owner_uid = ?", (uid,)).fetchone()
         if not bank:
-            return await update.message.reply_text("❌ You don’t own any bank.")
+            return await update.message.reply_text("âŒ You donâ€™t own any bank.")
 
         bank_id, name = bank
         members = conn.execute("SELECT COUNT(*) FROM bank_members WHERE bank_id = ?", (bank_id,)).fetchone()[0]
@@ -670,7 +670,7 @@ async def bankstats(update, context):
         """, (bank_id,)).fetchone()[0] or 0
 
     await update.message.reply_text(
-        f"📊 <b>Bank Stats</b>\n🏦 Name: <b>{name}</b>\n👥 Members: <b>{members}</b>\n💰 Reserve: <b>{coins}</b>\n📥 Deposits: <b>{deposits}</b>\n📤 Withdrawals: <b>{withdrawals}</b>",
+        f"ðŸ“Š <b>Bank Stats</b>\nðŸ¦ Name: <b>{name}</b>\nðŸ‘¥ Members: <b>{members}</b>\nðŸ’° Reserve: <b>{coins}</b>\nðŸ“¥ Deposits: <b>{deposits}</b>\nðŸ“¤ Withdrawals: <b>{withdrawals}</b>",
         parse_mode="HTML"
     )
 
@@ -681,13 +681,13 @@ async def bankinvite(update, context):
     with get_conn() as conn:
         bank = conn.execute("SELECT bank_id, name FROM banks WHERE owner_uid = ?", (uid,)).fetchone()
         if not bank:
-            return await update.message.reply_text("❌ You don’t own any bank.")
+            return await update.message.reply_text("âŒ You donâ€™t own any bank.")
 
         bank_id = bank[0]
 
     invite_link = f"https://t.me/{context.bot.username}?start=joinbank_{bank_id}"
     await update.message.reply_text(
-        f"🔗 <b>Bank Invite Link</b>\nShare this to invite users to your bank:\n{invite_link}",
+        f"ðŸ”— <b>Bank Invite Link</b>\nShare this to invite users to your bank:\n{invite_link}",
         parse_mode="HTML"
     )
 
@@ -697,7 +697,7 @@ async def bankaudit(update, context):
     with get_conn() as conn:
         bank = conn.execute("SELECT bank_id FROM banks WHERE owner_uid = ?", (uid,)).fetchone()
         if not bank:
-            return await update.message.reply_text("❌ You don’t own any bank.")
+            return await update.message.reply_text("âŒ You donâ€™t own any bank.")
 
         bank_id = bank[0]
         logs = conn.execute("""
@@ -708,12 +708,12 @@ async def bankaudit(update, context):
         """, (bank_id,)).fetchall()
 
     if not logs:
-        return await update.message.reply_text("✅ No suspicious activity detected.")
+        return await update.message.reply_text("âœ… No suspicious activity detected.")
 
-    lines = [f"🕵️ <b>Audit Log for Bank ID {bank_id}</b>"]
+    lines = [f"ðŸ•µï¸ <b>Audit Log for Bank ID {bank_id}</b>"]
     for uid, action, amount, ts in logs:
         time_str = time.strftime('%Y-%m-%d %H:%M', time.localtime(ts))
-        lines.append(f"• <b>{action.title()}</b> — <code>{amount}</code> coins by <a href='tg://user?id={uid}'>User</a> at {time_str}")
+        lines.append(f"â€¢ <b>{action.title()}</b> â€” <code>{amount}</code> coins by <a href='tg://user?id={uid}'>User</a> at {time_str}")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -727,14 +727,14 @@ async def banklist(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """).fetchall()
 
     if not rows:
-        return await update.message.reply_text("📭 No banks have been created yet.")
+        return await update.message.reply_text("ðŸ“­ No banks have been created yet.")
 
-    lines = ["🏦 <b>Available Banks</b>\n💸 Joining a bank costs <b>500 coins</b>."]
+    lines = ["ðŸ¦ <b>Available Banks</b>\nðŸ’¸ Joining a bank costs <b>500 coins</b>."]
     for bank_id, name, owner_uid in rows:
         owner = get_username(owner_uid)
         lines.append(
-            f"• <b>{name}</b> (ID: {bank_id}) — 👑 {owner}\n"
-            f"↪️ <code>/joinbank {bank_id}</code>"
+            f"â€¢ <b>{name}</b> (ID: {bank_id}) â€” ðŸ‘‘ {owner}\n"
+            f"â†ªï¸ <code>/joinbank {bank_id}</code>"
         )
 
     await update.message.reply_text("\n\n".join(lines), parse_mode="HTML")
@@ -747,7 +747,7 @@ async def joinbank(update: Update, context: ContextTypes.DEFAULT_TYPE):
     tax = 500
 
     if balance < tax:
-        return await update.message.reply_text(f"❌ You need at least {tax} coins to join the bank system.")
+        return await update.message.reply_text(f"âŒ You need at least {tax} coins to join the bank system.")
 
     with get_conn() as conn:
         conn.execute("UPDATE users SET bank = 0 WHERE id = ?", (uid,))
@@ -759,7 +759,7 @@ async def joinbank(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """, (tax, tax))
         conn.commit()
 
-    await update.message.reply_text(f"✅ @{name}, you’ve joined the bank system!\n💸 Entry tax of {tax} coins collected.")
+    await update.message.reply_text(f"âœ… @{name}, youâ€™ve joined the bank system!\nðŸ’¸ Entry tax of {tax} coins collected.")
 
 
 
@@ -777,19 +777,19 @@ async def leavebank(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """, (uid,)).fetchone()
 
         if not row:
-            return await update.message.reply_text("⚠️ You’re not part of any bank.")
+            return await update.message.reply_text("âš ï¸ Youâ€™re not part of any bank.")
 
         bank_id, bank_name = row
         savings = get_bank_balance(uid)
 
     await update.message.reply_text(
-        f"🏦 <b>Bank:</b> {bank_name} (ID: {bank_id})\n"
-        f"💰 <b>Your Bank Balance:</b> {savings} coins\n\n"
-        f"⚠️ If you leave this bank:\n"
-        f"• Your savings will be deleted\n"
-        f"• The coins will be collected as tax\n"
-        f"• You cannot recover them later\n\n"
-        f"👉 To confirm, type <code>/confirmleavebank</code>",
+        f"ðŸ¦ <b>Bank:</b> {bank_name} (ID: {bank_id})\n"
+        f"ðŸ’° <b>Your Bank Balance:</b> {savings} coins\n\n"
+        f"âš ï¸ If you leave this bank:\n"
+        f"â€¢ Your savings will be deleted\n"
+        f"â€¢ The coins will be collected as tax\n"
+        f"â€¢ You cannot recover them later\n\n"
+        f"ðŸ‘‰ To confirm, type <code>/confirmleavebank</code>",
         parse_mode="HTML"
     )
 
@@ -802,7 +802,7 @@ async def confirmleavebank(update: Update, context: ContextTypes.DEFAULT_TYPE):
     with get_conn() as conn:
         row = conn.execute("SELECT bank_id FROM bank_members WHERE uid = ?", (uid,)).fetchone()
         if not row:
-            return await update.message.reply_text("⚠️ You’re not part of any bank.")
+            return await update.message.reply_text("âš ï¸ Youâ€™re not part of any bank.")
 
         savings = get_bank_balance(uid)
 
@@ -814,6 +814,6 @@ async def confirmleavebank(update: Update, context: ContextTypes.DEFAULT_TYPE):
         conn.commit()
 
     await update.message.reply_text(
-        f"✅ You’ve left your bank.\n💸 {savings} coins were collected as tax.\nYou can join another bank using /banklist.",
+        f"âœ… Youâ€™ve left your bank.\nðŸ’¸ {savings} coins were collected as tax.\nYou can join another bank using /banklist.",
         parse_mode="HTML"
     )

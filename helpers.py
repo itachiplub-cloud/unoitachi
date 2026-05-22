@@ -1,4 +1,4 @@
-from user_stats import track_user_activity
+﻿from user_stats import track_user_activity
 
 def log_game(uid):
     track_user_activity(uid, "games_played")

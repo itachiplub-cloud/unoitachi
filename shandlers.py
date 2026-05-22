@@ -1,4 +1,4 @@
-import random
+﻿import random
 import logging
 
 from telegram import Update
@@ -21,41 +21,41 @@ def is_admin(user_id: int) -> bool:
 async def add_sticker(update: Update, context: ContextTypes.DEFAULT_TYPE):
     msg, user = update.effective_message, update.effective_user
     if not is_admin(user.id):
-        return await msg.reply_text("🚫 You’re not an admin.")
+        return await msg.reply_text("ðŸš« Youâ€™re not an admin.")
     tgt = msg.reply_to_message
     if not tgt or (not tgt.sticker and not tgt.animation):
         return await msg.reply_text("Reply to a sticker or GIF with /addsticker.")
     fid = tgt.sticker.file_id if tgt.sticker else tgt.animation.file_id
     add_file_id(fid)
-    await msg.reply_text("✅ Added to the sticker pool.")
+    await msg.reply_text("âœ… Added to the sticker pool.")
 
 async def list_stickers(update: Update, context: ContextTypes.DEFAULT_TYPE):
     msg, user = update.effective_message, update.effective_user
     if not is_admin(user.id):
-        return await msg.reply_text("🚫 You’re not an admin.")
+        return await msg.reply_text("ðŸš« Youâ€™re not an admin.")
     pool = list_file_ids()
     if not pool:
-        return await msg.reply_text("❌ Pool is empty.")
+        return await msg.reply_text("âŒ Pool is empty.")
     lines = [f"{i+1}. {fid}" for i, fid in enumerate(pool)]
-    await msg.reply_text("🎟️ Current Sticker Pool:\n" + "\n".join(lines))
+    await msg.reply_text("ðŸŽŸï¸ Current Sticker Pool:\n" + "\n".join(lines))
 
 async def remove_sticker(update: Update, context: ContextTypes.DEFAULT_TYPE):
     msg, user = update.effective_message, update.effective_user
     if not is_admin(user.id):
-        return await msg.reply_text("🚫 You’re not an admin.")
+        return await msg.reply_text("ðŸš« Youâ€™re not an admin.")
     if not context.args:
         return await msg.reply_text("Usage: /removesticker <file_id>")
     remove_file_id(context.args[0])
-    await msg.reply_text("🗑️ Removed (if present).")
+    await msg.reply_text("ðŸ—‘ï¸ Removed (if present).")
 
 async def react_with_random(update: Update, context: ContextTypes.DEFAULT_TYPE):
     msg = update.effective_message
 
-    # 1) Must reply to one of the bot’s messages
+    # 1) Must reply to one of the botâ€™s messages
     if not msg.reply_to_message or msg.reply_to_message.from_user.id != context.bot.id:
         return
 
-    # 2) Only proceed if it’s a sticker or animation
+    # 2) Only proceed if itâ€™s a sticker or animation
     if not (msg.sticker or msg.animation):
         return
 

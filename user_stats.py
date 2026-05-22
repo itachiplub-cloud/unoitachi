@@ -1,4 +1,4 @@
-import datetime
+﻿import datetime
 from database import get_conn
 
 def setup_user_daily_stats():

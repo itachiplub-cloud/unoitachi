@@ -1,4 +1,4 @@
-import logging
+﻿import logging
 import json
 import random
 import time
@@ -53,12 +53,12 @@ pending_heart = {}
 pending_proposal = {}
 last_itachi_reward = {}
 
-# ── In-memory stores ──────────────────────────────────────────────────────────
+# â”€â”€ In-memory stores â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 adjust_log = []          # FIX: was referenced but never defined
 scheduled_messages = []  # FIX: defined once here, removed duplicate below
 flash_sales = {}
 
-print("🚀 Main file started.")
+print("ðŸš€ Main file started.")
 
 from database import setup_clan_tables
 setup_clan_tables()
@@ -388,99 +388,99 @@ logging.basicConfig(level=logging.INFO)
 configure_logger(logger_id=-1003964165574, enable_debug=False)
 
 
-# ══════════════════════════════════════════════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 #  COMMAND HANDLERS
-# ══════════════════════════════════════════════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     help_text = (
-        "🧭 <b>Welcome PLAYER!</b>\nHere are your available commands, grouped by category:\n\n"
+        "ðŸ§­ <b>Welcome PLAYER!</b>\nHere are your available commands, grouped by category:\n\n"
 
-        "💰 <b>Economy</b>\n"
-        "• /earn — Claim daily coins\n"
-        "• /balance — Check your coin balance\n"
-        "• /give @user &lt;amount&gt; — Gift coins\n"
-        "• /send @user &lt;amount&gt; — Send coins\n"
-        "• /transfer @user &lt;amount&gt; — Transfer coins\n"
-        "• /top — View group leaderboard\n"
-        "• /btop — View bot leaderboard\n"
-        "• /request &lt;amount&gt; — Request coins\n"
-        "• /bankstats — View global asset stats\n"
+        "ðŸ’° <b>Economy</b>\n"
+        "â€¢ /earn â€” Claim daily coins\n"
+        "â€¢ /balance â€” Check your coin balance\n"
+        "â€¢ /give @user &lt;amount&gt; â€” Gift coins\n"
+        "â€¢ /send @user &lt;amount&gt; â€” Send coins\n"
+        "â€¢ /transfer @user &lt;amount&gt; â€” Transfer coins\n"
+        "â€¢ /top â€” View group leaderboard\n"
+        "â€¢ /btop â€” View bot leaderboard\n"
+        "â€¢ /request &lt;amount&gt; â€” Request coins\n"
+        "â€¢ /bankstats â€” View global asset stats\n"
 
-        "\n🎴 <b>Cards & Spells</b>\n"
-        "• /draw — Draw a spell card\n"
-        "• /mycards — View your cards\n"
-        "• /steal — Attempt to steal a card\n"
-        "• /cardlist — List all available cards\n"
-        "• /vault — View your relics & artefacts\n"
-        "• /cardvault — View card vault\n"
-        "• /prestigevault — View prestige cards\n"
+        "\nðŸŽ´ <b>Cards & Spells</b>\n"
+        "â€¢ /draw â€” Draw a spell card\n"
+        "â€¢ /mycards â€” View your cards\n"
+        "â€¢ /steal â€” Attempt to steal a card\n"
+        "â€¢ /cardlist â€” List all available cards\n"
+        "â€¢ /vault â€” View your relics & artefacts\n"
+        "â€¢ /cardvault â€” View card vault\n"
+        "â€¢ /prestigevault â€” View prestige cards\n"
 
-        "\n⚔️ <b>Combat</b>\n"
-        "• /challenge — Challenge someone to a duel\n"
-        "• /duelrank — View your duel stats\n"
-        "• /duelbadge — View your duel badge\n"
-        "• /bossfight — Fight a boss\n"
+        "\nâš”ï¸ <b>Combat</b>\n"
+        "â€¢ /challenge â€” Challenge someone to a duel\n"
+        "â€¢ /duelrank â€” View your duel stats\n"
+        "â€¢ /duelbadge â€” View your duel badge\n"
+        "â€¢ /bossfight â€” Fight a boss\n"
 
-        "\n🌟 <b>Karma & Tasks</b>\n"
-        "• /karma — View your karma\n"
-        "• /karmaquiz — Test your karma\n"
-        "• /karmahall — View karma leaderboard\n"
-        "• /dailymission — Get your daily mission\n"
-        "• /claimstreak — Claim streak reward\n"
-        "• /achievements — View your achievements\n"
+        "\nðŸŒŸ <b>Karma & Tasks</b>\n"
+        "â€¢ /karma â€” View your karma\n"
+        "â€¢ /karmaquiz â€” Test your karma\n"
+        "â€¢ /karmahall â€” View karma leaderboard\n"
+        "â€¢ /dailymission â€” Get your daily mission\n"
+        "â€¢ /claimstreak â€” Claim streak reward\n"
+        "â€¢ /achievements â€” View your achievements\n"
 
-        "\n🏪 <b>Market & Assets</b>\n"
-        "• /assetmarket — Browse investment assets\n"
-        "• /buyasset &lt;name&gt; — Purchase asset\n"
-        "• /myassets — View your assets\n"
-        "• /collectincome — Collect passive income\n"
-        "• /sellasset &lt;name&gt; — Sell an asset\n"
-        "• /assetinfo &lt;name&gt; — Info about an asset\n"
-        "• /investrank — View top investors\n"
-        "• /assetcompare A | B — Compare two assets\n"
-        "• /assettrend &lt;name&gt; — View price trend\n"
-        "• /assetlore &lt;name&gt; — View lore\n"
-        "• /assettitle — Your asset-based title\n"
+        "\nðŸª <b>Market & Assets</b>\n"
+        "â€¢ /assetmarket â€” Browse investment assets\n"
+        "â€¢ /buyasset &lt;name&gt; â€” Purchase asset\n"
+        "â€¢ /myassets â€” View your assets\n"
+        "â€¢ /collectincome â€” Collect passive income\n"
+        "â€¢ /sellasset &lt;name&gt; â€” Sell an asset\n"
+        "â€¢ /assetinfo &lt;name&gt; â€” Info about an asset\n"
+        "â€¢ /investrank â€” View top investors\n"
+        "â€¢ /assetcompare A | B â€” Compare two assets\n"
+        "â€¢ /assettrend &lt;name&gt; â€” View price trend\n"
+        "â€¢ /assetlore &lt;name&gt; â€” View lore\n"
+        "â€¢ /assettitle â€” Your asset-based title\n"
 
-        "\n📖 <b>Progress & Quests</b>\n"
-        "• /profilecard — View your profile\n"
-        "• /shinobirank — Prestige leaderboard\n"
-        "• /shinobititle — Your shinobi title\n"
-        "• /shinobibadge — View your badge\n"
-        "• /shinobilegacy — Your legacy stats\n"
-        "• /questbook — View your quests\n"
-        "• /groupgoal — View group goal\n"
-        "• /clangoal — View clan-wide goal\n"
+        "\nðŸ“– <b>Progress & Quests</b>\n"
+        "â€¢ /profilecard â€” View your profile\n"
+        "â€¢ /shinobirank â€” Prestige leaderboard\n"
+        "â€¢ /shinobititle â€” Your shinobi title\n"
+        "â€¢ /shinobibadge â€” View your badge\n"
+        "â€¢ /shinobilegacy â€” Your legacy stats\n"
+        "â€¢ /questbook â€” View your quests\n"
+        "â€¢ /groupgoal â€” View group goal\n"
+        "â€¢ /clangoal â€” View clan-wide goal\n"
 
-        "\n🔮 <b>Gambling & Luck</b>\n"
-        "• /fly &lt;coins&gt; — Risk coins in flight\n"
-        "• /mines &lt;bombs&gt; &lt;coins&gt; — Dodge bombs, win coins\n"
-        "• /blackjack &lt;coins&gt; — Play blackjack\n"
-        "• /dig &lt;1-10&gt; — Dig for random rewards\n"
+        "\nðŸ”® <b>Gambling & Luck</b>\n"
+        "â€¢ /fly &lt;coins&gt; â€” Risk coins in flight\n"
+        "â€¢ /mines &lt;bombs&gt; &lt;coins&gt; â€” Dodge bombs, win coins\n"
+        "â€¢ /blackjack &lt;coins&gt; â€” Play blackjack\n"
+        "â€¢ /dig &lt;1-10&gt; â€” Dig for random rewards\n"
 
-        "\n🏎️ <b>Vehicles & Showroom</b>\n"
-        "• /showroom — View all cars and bikes in the showroom\n"
-        "• /myshowroom — View your personal showroom\n"
-        "• /buy &lt;id&gt; — Buy a vehicle from the showroom\n"
-        "• /sellitem — Sell your cars or bikes\n"
-        "• /market — View vehicles listed by other users\n"
-        "• /buyitem — Buy a vehicle from the market\n"
-        "• /mylistings — View your active listings\n"
-        "• /cancelitem — Cancel a listed item\n"
+        "\nðŸŽï¸ <b>Vehicles & Showroom</b>\n"
+        "â€¢ /showroom â€” View all cars and bikes in the showroom\n"
+        "â€¢ /myshowroom â€” View your personal showroom\n"
+        "â€¢ /buy &lt;id&gt; â€” Buy a vehicle from the showroom\n"
+        "â€¢ /sellitem â€” Sell your cars or bikes\n"
+        "â€¢ /market â€” View vehicles listed by other users\n"
+        "â€¢ /buyitem â€” Buy a vehicle from the market\n"
+        "â€¢ /mylistings â€” View your active listings\n"
+        "â€¢ /cancelitem â€” Cancel a listed item\n"
 
-        "\n🛠️ <b>Utilities</b>\n"
-        "• /start — Begin your journey\n"
-        "• /help — Show this command list\n"
+        "\nðŸ› ï¸ <b>Utilities</b>\n"
+        "â€¢ /start â€” Begin your journey\n"
+        "â€¢ /help â€” Show this command list\n"
 
-        "\n🩷 <i>Use 'Itachi' and 'best' in one sentence once every 4 Hours to earn coins</i>\n"
-        "\n🌸 May your journey be guided by honor and wisdom."
+        "\nðŸ©· <i>Use 'Itachi' and 'best' in one sentence once every 4 Hours to earn coins</i>\n"
+        "\nðŸŒ¸ May your journey be guided by honor and wisdom."
 
-        "\n\n<b>📘 Itachi Bot Help Guide</b>\n"
-        "📩 If you have any problem or query about the bot,\n"
+        "\n\n<b>ðŸ“˜ Itachi Bot Help Guide</b>\n"
+        "ðŸ“© If you have any problem or query about the bot,\n"
         "please reach out to our masters:\n"
-        "👤 <b>@Itachiplub2</b>\n"
-        "👤 <b>@Avalon_18</b>\n"
+        "ðŸ‘¤ <b>@Itachiplub2</b>\n"
+        "ðŸ‘¤ <b>@Avalon_18</b>\n"
     )
     await update.message.reply_text(help_text, parse_mode="HTML")
 
@@ -489,26 +489,26 @@ async def allcards(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat = update.effective_chat
     user = update.effective_user
 
-    # FIX: allow in private too — only enforce admin check in groups
+    # FIX: allow in private too â€” only enforce admin check in groups
     if chat.type in ("group", "supergroup"):
         member = await context.bot.get_chat_member(chat.id, user.id)
         if member.status not in ("administrator", "creator"):
-            return await update.message.reply_text("🔒 You must be an admin to use this.")
+            return await update.message.reply_text("ðŸ”’ You must be an admin to use this.")
 
     with get_conn() as conn:
         rows = conn.execute("SELECT file_id, json FROM deck").fetchall()
 
     if not rows:
-        return await update.message.reply_text("📭 Deck is empty.")
+        return await update.message.reply_text("ðŸ“­ Deck is empty.")
 
     media_group = []
     for file_id, raw in rows:
         try:
             card = json.loads(raw)
             caption = (
-                f"🎴 <b>{card.get('name')}</b>\n"
-                f"🪄 {card.get('power')}\n"
-                f"💠 {card.get('rarity').title()}"
+                f"ðŸŽ´ <b>{card.get('name')}</b>\n"
+                f"ðŸª„ {card.get('power')}\n"
+                f"ðŸ’  {card.get('rarity').title()}"
             )
         except Exception:
             caption = None
@@ -534,23 +534,23 @@ async def gift(update: Update, context: ContextTypes.DEFAULT_TYPE):
         card_name = " ".join(args).strip()
     else:
         if len(args) < 2:
-            return await update.message.reply_text("📦 Usage: /gift <card name> @username")
+            return await update.message.reply_text("ðŸ“¦ Usage: /gift <card name> @username")
         *name_parts, target = args
         card_name = " ".join(name_parts).strip()
         if not target.startswith("@"):
-            return await update.message.reply_text("🚫 Tag the recipient with @username.")
+            return await update.message.reply_text("ðŸš« Tag the recipient with @username.")
         username = target[1:]
         with get_conn() as conn:
             row = conn.execute("SELECT uid FROM users WHERE username=?", (username,)).fetchone()
         if not row:
-            return await update.message.reply_text(f"❌ User @{username} not found.")
+            return await update.message.reply_text(f"âŒ User @{username} not found.")
         recipient_id = row[0]
 
     if recipient_id == sender_id:
-        return await update.message.reply_text("🫣 You can't gift a card to yourself.")
+        return await update.message.reply_text("ðŸ«£ You can't gift a card to yourself.")
 
     if not card_name:
-        return await update.message.reply_text("❌ You must specify the card name to gift.")
+        return await update.message.reply_text("âŒ You must specify the card name to gift.")
 
     with get_conn() as conn:
         row = conn.execute("""
@@ -561,7 +561,7 @@ async def gift(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """, (sender_id, card_name.lower())).fetchone()
 
         if not row:
-            return await update.message.reply_text(f"🔍 No card named '{card_name}' in your vault.")
+            return await update.message.reply_text(f"ðŸ” No card named '{card_name}' in your vault.")
 
         rowid, file_id, name, power, value, rarity = row
         conn.execute("DELETE FROM user_cards WHERE rowid=?", (rowid,))
@@ -573,13 +573,13 @@ async def gift(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     recipient_tag = await resolve_name(update.effective_chat.id, recipient_id, context)
     await update.message.reply_text(
-        f"🎁 You sent '<b>{name}</b>' to {recipient_tag}.",
+        f"ðŸŽ You sent '<b>{name}</b>' to {recipient_tag}.",
         parse_mode="HTML"
     )
     try:
         await context.bot.send_message(
             chat_id=recipient_id,
-            text=f"💝 You received '<b>{name}</b>' from <b>{sender.username or sender.first_name}</b>!",
+            text=f"ðŸ’ You received '<b>{name}</b>' from <b>{sender.username or sender.first_name}</b>!",
             parse_mode="HTML"
         )
     except Exception:
@@ -598,14 +598,14 @@ async def exchange(update: Update, context: ContextTypes.DEFAULT_TYPE):
         recipient_id = recipient.id
         if len(args) < 2:
             return await update.message.reply_text(
-                "📦 Usage (reply): `/exchange <your_card> <their_card>`",
+                "ðŸ“¦ Usage (reply): `/exchange <your_card> <their_card>`",
                 parse_mode="Markdown"
             )
         your_name, their_name = args[0], args[1]
     else:
         if len(args) < 3 or not args[1].startswith("@"):
             return await update.message.reply_text(
-                "📦 Usage: `/exchange <your_card> @username <their_card>`",
+                "ðŸ“¦ Usage: `/exchange <your_card> @username <their_card>`",
                 parse_mode="Markdown"
             )
         your_name = args[0]
@@ -614,11 +614,11 @@ async def exchange(update: Update, context: ContextTypes.DEFAULT_TYPE):
         with get_conn() as conn:
             row = conn.execute("SELECT uid FROM users WHERE username=?", (username,)).fetchone()
         if not row:
-            return await update.message.reply_text(f"❌ User @{username} not found.")
+            return await update.message.reply_text(f"âŒ User @{username} not found.")
         recipient_id = row[0]
 
     if recipient_id == sender_id:
-        return await update.message.reply_text("🫣 You can't exchange with yourself.")
+        return await update.message.reply_text("ðŸ«£ You can't exchange with yourself.")
 
     now = int(time.time())
     with get_conn() as conn:
@@ -632,9 +632,9 @@ async def exchange(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """, (recipient_id, their_name.lower())).fetchone()
 
         if not row1:
-            return await update.message.reply_text(f"🔍 You don't own '{your_name}'.")
+            return await update.message.reply_text(f"ðŸ” You don't own '{your_name}'.")
         if not row2:
-            return await update.message.reply_text(f"🔍 Recipient doesn't own '{their_name}'.")
+            return await update.message.reply_text(f"ðŸ” Recipient doesn't own '{their_name}'.")
 
         id1, fid1, nm1, pw1, val1, rar1 = row1
         id2, fid2, nm2, pw2, val2, rar2 = row2
@@ -658,17 +658,17 @@ async def exchange(update: Update, context: ContextTypes.DEFAULT_TYPE):
     deposit_tax(tax1 + tax2)
 
     await update.message.reply_text(
-        f"🔄 Swapped:\n"
-        f" • You gave '{nm1}' and received '{nm2}'.\n"
-        f"💸 Tax charged: {tax1 + tax2} coins.",
+        f"ðŸ”„ Swapped:\n"
+        f" â€¢ You gave '{nm1}' and received '{nm2}'.\n"
+        f"ðŸ’¸ Tax charged: {tax1 + tax2} coins.",
         parse_mode="HTML"
     )
     try:
         await context.bot.send_message(
             chat_id=recipient_id,
             text=(
-                f"💱 You received '{nm1}' from {sender.username or sender.first_name}!\n"
-                f"🔄 Exchanged for your '{nm2}'."
+                f"ðŸ’± You received '{nm1}' from {sender.username or sender.first_name}!\n"
+                f"ðŸ”„ Exchanged for your '{nm2}'."
             )
         )
     except Exception:
@@ -678,15 +678,15 @@ async def exchange(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def assetmarket(update: Update, context: ContextTypes.DEFAULT_TYPE):
     assets = get_asset_market()
     if not assets:
-        return await update.message.reply_text("📭 No assets available in ITACHI'S SECURE BANK.")
+        return await update.message.reply_text("ðŸ“­ No assets available in ITACHI'S SECURE BANK.")
 
-    lines = ["🏦 <b>ITACHI'S SECURE BANK — Asset Market</b>:"]
+    lines = ["ðŸ¦ <b>ITACHI'S SECURE BANK â€” Asset Market</b>:"]
     for name, type_, cost, yield_, risk in assets:
         lines.append(
-            f"🔹 <b>{name}</b> ({type_})\n"
-            f"💰 Cost: {cost} coins\n"
-            f"📈 Yield: {yield_}/day\n"
-            f"⚠️ Risk: {risk}\n"
+            f"ðŸ”¹ <b>{name}</b> ({type_})\n"
+            f"ðŸ’° Cost: {cost} coins\n"
+            f"ðŸ“ˆ Yield: {yield_}/day\n"
+            f"âš ï¸ Risk: {risk}\n"
         )
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -696,7 +696,7 @@ async def buyasset(update: Update, context: ContextTypes.DEFAULT_TYPE):
     username = update.effective_user.username or update.effective_user.first_name
 
     if not context.args:
-        return await update.message.reply_text("🛒 Usage: /buyasset <asset_name> [quantity]")
+        return await update.message.reply_text("ðŸ›’ Usage: /buyasset <asset_name> [quantity]")
 
     args = context.args
     quantity = 1
@@ -708,12 +708,12 @@ async def buyasset(update: Update, context: ContextTypes.DEFAULT_TYPE):
         asset_name = " ".join(args)
 
     if quantity <= 0:
-        return await update.message.reply_text("🚫 Quantity must be a positive number.")
+        return await update.message.reply_text("ðŸš« Quantity must be a positive number.")
 
     assets = get_asset_market()
     asset = next((a for a in assets if a[0].lower() == asset_name.lower()), None)
     if not asset:
-        return await update.message.reply_text(f"❌ Asset '{asset_name}' not found in ITACHI'S SECURE BANK.")
+        return await update.message.reply_text(f"âŒ Asset '{asset_name}' not found in ITACHI'S SECURE BANK.")
 
     name, type_, _, yield_, risk = asset
 
@@ -723,14 +723,14 @@ async def buyasset(update: Update, context: ContextTypes.DEFAULT_TYPE):
             (name,)
         ).fetchone()
     if not row:
-        return await update.message.reply_text("❌ No price data available for this asset.")
+        return await update.message.reply_text("âŒ No price data available for this asset.")
     cost = row[0]
 
     total_cost = cost * quantity
     coins = get_balance(uid)
     if coins < total_cost:
         return await update.message.reply_text(
-            f"🚫 You need {total_cost} coins to buy <b>{quantity}x {name}</b>. You only have {coins}.",
+            f"ðŸš« You need {total_cost} coins to buy <b>{quantity}x {name}</b>. You only have {coins}.",
             parse_mode="HTML"
         )
 
@@ -740,8 +740,8 @@ async def buyasset(update: Update, context: ContextTypes.DEFAULT_TYPE):
     update_achievements(uid)
 
     await update.message.reply_text(
-        f"✅ <b>{username}</b> purchased <b>{quantity}x {name}</b> from ITACHI'S SECURE BANK!\n"
-        f"💰 Total Cost: {total_cost} coins\n📈 Daily Yield: {yield_ * quantity} coins\n⚠️ Risk Level: {risk}",
+        f"âœ… <b>{username}</b> purchased <b>{quantity}x {name}</b> from ITACHI'S SECURE BANK!\n"
+        f"ðŸ’° Total Cost: {total_cost} coins\nðŸ“ˆ Daily Yield: {yield_ * quantity} coins\nâš ï¸ Risk Level: {risk}",
         parse_mode="HTML"
     )
 
@@ -752,22 +752,22 @@ async def myassets(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     assets = get_user_assets(uid)
     if not assets:
-        return await update.message.reply_text(f"📭 <b>{username}</b>, you don't own any assets yet.", parse_mode="HTML")
+        return await update.message.reply_text(f"ðŸ“­ <b>{username}</b>, you don't own any assets yet.", parse_mode="HTML")
 
-    lines = [f"💼 <b>{username}'s Portfolio — ITACHI'S SECURE BANK</b>:"]
+    lines = [f"ðŸ’¼ <b>{username}'s Portfolio â€” ITACHI'S SECURE BANK</b>:"]
     total_yield = 0
 
     for name, type_, cost, yield_, risk, qty in assets:
         income = yield_ * qty
         total_yield += income
         lines.append(
-            f"🔸 <b>{name}</b> ({type_})\n"
-            f"📦 Quantity: {qty}\n"
-            f"📈 Daily Yield: {income} coins\n"
-            f"⚠️ Risk: {risk}\n"
+            f"ðŸ”¸ <b>{name}</b> ({type_})\n"
+            f"ðŸ“¦ Quantity: {qty}\n"
+            f"ðŸ“ˆ Daily Yield: {income} coins\n"
+            f"âš ï¸ Risk: {risk}\n"
         )
 
-    lines.append(f"\n💰 <b>Total Passive Income:</b> {total_yield} coins/day")
+    lines.append(f"\nðŸ’° <b>Total Passive Income:</b> {total_yield} coins/day")
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
 
@@ -778,7 +778,7 @@ async def collectincome(update: Update, context: ContextTypes.DEFAULT_TYPE):
     now = int(time.time())
     assets = get_user_assets(uid)
     if not assets:
-        return await update.message.reply_text(f"📭 <b>{username}</b>, you don't own any assets yet.", parse_mode="HTML")
+        return await update.message.reply_text(f"ðŸ“­ <b>{username}</b>, you don't own any assets yet.", parse_mode="HTML")
 
     total_income = 0
 
@@ -801,15 +801,15 @@ async def collectincome(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 )
 
     if total_income == 0:
-        return await update.message.reply_text("🕒 You've already collected income in the last 24 hours.")
+        return await update.message.reply_text("ðŸ•’ You've already collected income in the last 24 hours.")
 
     update_balance(uid, total_income)
     assign_investor_badge(uid)
     update_achievements(uid)
 
     await update.message.reply_text(
-        f"✅ <b>{username}</b>, you've collected <b>{total_income}</b> coins from your assets!\n"
-        f"🏦 Thank you for banking with ITACHI'S SECURE BANK.",
+        f"âœ… <b>{username}</b>, you've collected <b>{total_income}</b> coins from your assets!\n"
+        f"ðŸ¦ Thank you for banking with ITACHI'S SECURE BANK.",
         parse_mode="HTML"
     )
 
@@ -819,13 +819,13 @@ async def sellasset(update: Update, context: ContextTypes.DEFAULT_TYPE):
     username = update.effective_user.username or update.effective_user.first_name
 
     if not context.args:
-        return await update.message.reply_text("🧾 Usage: /sellasset <asset_name>")
+        return await update.message.reply_text("ðŸ§¾ Usage: /sellasset <asset_name>")
 
     asset_name = " ".join(context.args).strip()
     assets = get_user_assets(uid)
     owned = next((a for a in assets if a[0].lower() == asset_name.lower()), None)
     if not owned:
-        return await update.message.reply_text(f"❌ You don't own any '{asset_name}' to sell.")
+        return await update.message.reply_text(f"âŒ You don't own any '{asset_name}' to sell.")
 
     name, type_, _, yield_, risk, qty = owned
 
@@ -835,7 +835,7 @@ async def sellasset(update: Update, context: ContextTypes.DEFAULT_TYPE):
             (name,)
         ).fetchone()
     if not row:
-        return await update.message.reply_text("❌ No price data available for this asset.")
+        return await update.message.reply_text("âŒ No price data available for this asset.")
     current_price = row[0]
     refund = current_price * qty
 
@@ -847,32 +847,32 @@ async def sellasset(update: Update, context: ContextTypes.DEFAULT_TYPE):
     update_achievements(uid)
 
     await update.message.reply_text(
-        f"✅ <b>{username}</b> sold <b>{qty}x {name}</b> for <b>{refund}</b> coins at market price.\n"
-        f"🏦 Thank you for banking with ITACHI'S SECURE BANK.",
+        f"âœ… <b>{username}</b> sold <b>{qty}x {name}</b> for <b>{refund}</b> coins at market price.\n"
+        f"ðŸ¦ Thank you for banking with ITACHI'S SECURE BANK.",
         parse_mode="HTML"
     )
 
 
 async def mintasset(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user.id not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Only admins can mint new assets.")
+        return await update.message.reply_text("â›” Only admins can mint new assets.")
 
     raw = " ".join(context.args)
     parts = [p.strip() for p in raw.split("|")]
     if len(parts) != 5:
-        return await update.message.reply_text("🧾 Usage: /mintasset Name | type | cost | yield | risk")
+        return await update.message.reply_text("ðŸ§¾ Usage: /mintasset Name | type | cost | yield | risk")
 
     name, type_, cost_str, yield_str, risk = parts
     try:
         cost = int(cost_str)
         yield_ = int(yield_str)
     except ValueError:
-        return await update.message.reply_text("🚫 Cost and yield must be integers.")
+        return await update.message.reply_text("ðŸš« Cost and yield must be integers.")
 
     with get_conn() as conn:
         exists = conn.execute("SELECT 1 FROM assets WHERE name=?", (name,)).fetchone()
         if exists:
-            return await update.message.reply_text(f"⚠️ Asset '{name}' already exists.")
+            return await update.message.reply_text(f"âš ï¸ Asset '{name}' already exists.")
         conn.execute("INSERT INTO assets (name, type, cost, yield, risk) VALUES (?, ?, ?, ?, ?)",
                      (name, type_, cost, yield_, risk))
         ts = int(time.time())
@@ -880,7 +880,7 @@ async def mintasset(update: Update, context: ContextTypes.DEFAULT_TYPE):
         conn.commit()
 
     await update.message.reply_text(
-        f"✅ Minted <b>{name}</b>!\n💰 Cost: {cost} coins\n📈 Yield: {yield_}/day\n⚠️ Risk: {risk}",
+        f"âœ… Minted <b>{name}</b>!\nðŸ’° Cost: {cost} coins\nðŸ“ˆ Yield: {yield_}/day\nâš ï¸ Risk: {risk}",
         parse_mode="HTML"
     )
 
@@ -888,24 +888,24 @@ async def mintasset(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def removeasset(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if uid not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Only admins can remove assets.")
+        return await update.message.reply_text("â›” Only admins can remove assets.")
 
     if not context.args:
-        return await update.message.reply_text("🧾 Usage: /removeasset <asset_name>")
+        return await update.message.reply_text("ðŸ§¾ Usage: /removeasset <asset_name>")
 
     asset_name = " ".join(context.args).strip()
 
     with get_conn() as conn:
         exists = conn.execute("SELECT 1 FROM assets WHERE name=?", (asset_name,)).fetchone()
         if not exists:
-            return await update.message.reply_text(f"❌ Asset '{asset_name}' not found.")
+            return await update.message.reply_text(f"âŒ Asset '{asset_name}' not found.")
         conn.execute("DELETE FROM assets WHERE name=?", (asset_name,))
         conn.execute("DELETE FROM asset_prices WHERE name=?", (asset_name,))
         conn.execute("DELETE FROM user_assets WHERE asset_name=?", (asset_name,))
         conn.commit()
 
     await update.message.reply_text(
-        f"🗑️ Asset '<b>{asset_name}</b>' has been removed from ITACHI'S SECURE BANK.",
+        f"ðŸ—‘ï¸ Asset '<b>{asset_name}</b>' has been removed from ITACHI'S SECURE BANK.",
         parse_mode="HTML"
     )
 
@@ -920,39 +920,39 @@ async def investrank(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """).fetchall()
 
     if not rows:
-        return await update.message.reply_text("📭 No investors found in ITACHI'S SECURE BANK.")
+        return await update.message.reply_text("ðŸ“­ No investors found in ITACHI'S SECURE BANK.")
 
-    lines = ["🏦 <b>Top Investors — ITACHI'S SECURE BANK</b>:"]
+    lines = ["ðŸ¦ <b>Top Investors â€” ITACHI'S SECURE BANK</b>:"]
     for i, (uid, value) in enumerate(rows, start=1):
         username = get_username(uid)
-        lines.append(f"{i}. <b>{username}</b> — 💼 Portfolio Value: {value} coins")
+        lines.append(f"{i}. <b>{username}</b> â€” ðŸ’¼ Portfolio Value: {value} coins")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
 
 async def assetinfo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not context.args:
-        return await update.message.reply_text("🔍 Usage: /assetinfo <asset_name>")
+        return await update.message.reply_text("ðŸ” Usage: /assetinfo <asset_name>")
 
     asset_name = " ".join(context.args).strip()
     assets = get_asset_market()
     asset = next((a for a in assets if a[0].lower() == asset_name.lower()), None)
 
     if not asset:
-        return await update.message.reply_text(f"❌ Asset '{asset_name}' not found in ITACHI'S SECURE BANK.")
+        return await update.message.reply_text(f"âŒ Asset '{asset_name}' not found in ITACHI'S SECURE BANK.")
 
     name, type_, cost, yield_, risk = asset
     await update.message.reply_text(
-        f"📊 <b>Asset Info — {name}</b>\n"
-        f"🏷️ Type: {type_}\n💰 Cost: {cost} coins\n📈 Daily Yield: {yield_} coins\n"
-        f"⚠️ Risk Level: {risk}\n🏦 Available in ITACHI'S SECURE BANK",
+        f"ðŸ“Š <b>Asset Info â€” {name}</b>\n"
+        f"ðŸ·ï¸ Type: {type_}\nðŸ’° Cost: {cost} coins\nðŸ“ˆ Daily Yield: {yield_} coins\n"
+        f"âš ï¸ Risk Level: {risk}\nðŸ¦ Available in ITACHI'S SECURE BANK",
         parse_mode="HTML"
     )
 
 
 async def assettrend(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not context.args:
-        return await update.message.reply_text("📊 Usage: /assettrend <asset_name>")
+        return await update.message.reply_text("ðŸ“Š Usage: /assettrend <asset_name>")
 
     asset_name = " ".join(context.args).strip()
     with get_conn() as conn:
@@ -962,19 +962,19 @@ async def assettrend(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """, (asset_name,)).fetchall()
 
     if not history:
-        return await update.message.reply_text(f"❌ No price data found for '{asset_name}'.")
+        return await update.message.reply_text(f"âŒ No price data found for '{asset_name}'.")
 
-    lines = [f"📉 <b>Price Trend — {asset_name.title()}</b>:"]
+    lines = [f"ðŸ“‰ <b>Price Trend â€” {asset_name.title()}</b>:"]
     for ts, price in reversed(history):
         dt = time.strftime('%Y-%m-%d %H:%M', time.localtime(ts))
-        lines.append(f"🕒 {dt} — 💰 {price} coins")
+        lines.append(f"ðŸ•’ {dt} â€” ðŸ’° {price} coins")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
 
 async def auditvault(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user.id not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Only admins can audit the vault.")
+        return await update.message.reply_text("â›” Only admins can audit the vault.")
 
     with get_conn() as conn:
         rows = conn.execute("""
@@ -984,20 +984,20 @@ async def auditvault(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """).fetchall()
 
     if not rows:
-        return await update.message.reply_text("📭 No assets found in the vault.")
+        return await update.message.reply_text("ðŸ“­ No assets found in the vault.")
 
-    lines = ["🏛️ <b>Community Vault — ITACHI'S SECURE BANK</b>:"]
+    lines = ["ðŸ›ï¸ <b>Community Vault â€” ITACHI'S SECURE BANK</b>:"]
     total = 0
     for type_, value in rows:
         total += value
-        lines.append(f"🔹 <b>{type_.title()}</b>: {value} coins")
-    lines.append(f"\n💰 <b>Total Vault Value:</b> {total} coins")
+        lines.append(f"ðŸ”¹ <b>{type_.title()}</b>: {value} coins")
+    lines.append(f"\nðŸ’° <b>Total Vault Value:</b> {total} coins")
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
 
 async def assetshare(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not context.args:
-        return await update.message.reply_text("📊 Usage: /assetshare <asset_name>")
+        return await update.message.reply_text("ðŸ“Š Usage: /assetshare <asset_name>")
 
     asset_name = " ".join(context.args).strip()
     with get_conn() as conn:
@@ -1006,7 +1006,7 @@ async def assetshare(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ).fetchone()[0]
 
     await update.message.reply_text(
-        f"📈 <b>{count}</b> users currently own <b>{asset_name.title()}</b>.",
+        f"ðŸ“ˆ <b>{count}</b> users currently own <b>{asset_name.title()}</b>.",
         parse_mode="HTML"
     )
 
@@ -1021,21 +1021,21 @@ async def bankstats(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """).fetchone()[0]
 
     await update.message.reply_text(
-        f"📊 <b>ITACHI'S SECURE BANK — Global Stats</b>\n"
-        f"👥 Investors: {total_users}\n📦 Total Assets Held: {total_assets}\n"
-        f"💰 Daily Passive Income Potential: {total_income} coins",
+        f"ðŸ“Š <b>ITACHI'S SECURE BANK â€” Global Stats</b>\n"
+        f"ðŸ‘¥ Investors: {total_users}\nðŸ“¦ Total Assets Held: {total_assets}\n"
+        f"ðŸ’° Daily Passive Income Potential: {total_income} coins",
         parse_mode="HTML"
     )
 
 
 async def assetcompare(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if len(context.args) < 2:
-        return await update.message.reply_text("📊 Usage: /assetcompare <Asset A> | <Asset B>")
+        return await update.message.reply_text("ðŸ“Š Usage: /assetcompare <Asset A> | <Asset B>")
 
     raw = " ".join(context.args)
     parts = [p.strip() for p in raw.split("|")]
     if len(parts) != 2:
-        return await update.message.reply_text("🚫 Format: Asset A | Asset B")
+        return await update.message.reply_text("ðŸš« Format: Asset A | Asset B")
 
     a_name, b_name = parts
     assets = get_asset_market()
@@ -1043,29 +1043,29 @@ async def assetcompare(update: Update, context: ContextTypes.DEFAULT_TYPE):
     b = next((x for x in assets if x[0].lower() == b_name.lower()), None)
 
     if not a or not b:
-        return await update.message.reply_text("❌ One or both assets not found.")
+        return await update.message.reply_text("âŒ One or both assets not found.")
 
     def format_asset(data):
         name, type_, cost, yield_, risk = data
-        return f"<b>{name}</b>\n💰 Cost: {cost}\n📈 Yield: {yield_}/day\n⚠️ Risk: {risk}\n🏷️ Type: {type_}"
+        return f"<b>{name}</b>\nðŸ’° Cost: {cost}\nðŸ“ˆ Yield: {yield_}/day\nâš ï¸ Risk: {risk}\nðŸ·ï¸ Type: {type_}"
 
     await update.message.reply_text(
-        f"📊 <b>Asset Comparison</b>\n\n{format_asset(a)}\n\n🆚\n\n{format_asset(b)}",
+        f"ðŸ“Š <b>Asset Comparison</b>\n\n{format_asset(a)}\n\nðŸ†š\n\n{format_asset(b)}",
         parse_mode="HTML"
     )
 
 
 async def assetlore(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not context.args:
-        return await update.message.reply_text("📜 Usage: /assetlore <asset_name>")
+        return await update.message.reply_text("ðŸ“œ Usage: /assetlore <asset_name>")
 
     asset_name = " ".join(context.args).strip()
     lore = ASSET_LORE.get(asset_name.title())
 
     if not lore:
-        return await update.message.reply_text(f"❌ No lore found for '{asset_name}'.")
+        return await update.message.reply_text(f"âŒ No lore found for '{asset_name}'.")
 
-    await update.message.reply_text(f"📜 <b>{asset_name.title()} Lore</b>\n{lore}", parse_mode="HTML")
+    await update.message.reply_text(f"ðŸ“œ <b>{asset_name.title()} Lore</b>\n{lore}", parse_mode="HTML")
 
 
 def parse_duration(s: str) -> int:
@@ -1082,19 +1082,19 @@ async def _end_flash_sale(context: ContextTypes.DEFAULT_TYPE):
     flash_sales.pop(asset_name, None)
     success = remove_flash_discount(asset_name)
     if success:
-        print(f"⏰ Flash sale ended: {asset_name} price restored to base cost.")
+        print(f"â° Flash sale ended: {asset_name} price restored to base cost.")
     else:
-        print(f"⚠️ Flash sale cleanup failed: asset '{asset_name}' not found.")
+        print(f"âš ï¸ Flash sale cleanup failed: asset '{asset_name}' not found.")
 
 
 async def flashsale(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     if user.id not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Only admins can trigger flash sales.")
+        return await update.message.reply_text("â›” Only admins can trigger flash sales.")
 
     if len(context.args) != 3:
         return await update.message.reply_text(
-            "🛍️ Usage: /flashsale <asset_name> <discount%> <duration>\n"
+            "ðŸ›ï¸ Usage: /flashsale <asset_name> <discount%> <duration>\n"
             "Example: /flashsale BITCOIN 25 30m"
         )
 
@@ -1102,11 +1102,11 @@ async def flashsale(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         discount = int(context.args[1])
     except ValueError:
-        return await update.message.reply_text("🚫 Discount must be a number.")
+        return await update.message.reply_text("ðŸš« Discount must be a number.")
 
     duration_sec = parse_duration(context.args[2])
     if duration_sec <= 0:
-        return await update.message.reply_text("🚫 Invalid duration. Use 30m, 2h, or seconds.")
+        return await update.message.reply_text("ðŸš« Invalid duration. Use 30m, 2h, or seconds.")
 
     from bank_utils import apply_flash_discount
     apply_flash_discount(asset_name, discount)
@@ -1116,8 +1116,8 @@ async def flashsale(update: Update, context: ContextTypes.DEFAULT_TYPE):
     context.job_queue.run_once(_end_flash_sale, when=duration_sec, data=asset_name)
 
     await update.message.reply_text(
-        f"🔥 FLASH SALE! {asset_name} is {discount}% off for the next {context.args[2]}.\n"
-        f"🏦 Available at ITACHI'S SECURE BANK.",
+        f"ðŸ”¥ FLASH SALE! {asset_name} is {discount}% off for the next {context.args[2]}.\n"
+        f"ðŸ¦ Available at ITACHI'S SECURE BANK.",
         parse_mode="HTML"
     )
 
@@ -1148,10 +1148,10 @@ def scheduled_asset_appreciation():
 
 async def runbankengine(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user.id not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Admin only.")
+        return await update.message.reply_text("â›” Admin only.")
     auto_collect_income()
     scheduled_asset_appreciation()
-    await update.message.reply_text("✅ Bank engine executed: income collected & asset prices updated.")
+    await update.message.reply_text("âœ… Bank engine executed: income collected & asset prices updated.")
 
 
 async def achievements(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -1162,15 +1162,15 @@ async def achievements(update: Update, context: ContextTypes.DEFAULT_TYPE):
         row = conn.execute("SELECT * FROM achievements WHERE uid=?", (uid,)).fetchone()
 
     if not row:
-        return await update.message.reply_text(f"📭 <b>{username}</b>, no achievements found yet.", parse_mode="HTML")
+        return await update.message.reply_text(f"ðŸ“­ <b>{username}</b>, no achievements found yet.", parse_mode="HTML")
 
     _, first, total, income, diversified = row
     join_date = time.strftime('%Y-%m-%d', time.localtime(first))
 
     await update.message.reply_text(
-        f"🏅 <b>{username}'s Achievements — ITACHI'S SECURE BANK</b>\n"
-        f"📆 First Investment: {join_date}\n📦 Assets Owned: {total}\n"
-        f"💰 Passive Income Potential: {income}/day\n🌐 Diversification Score: {diversified} types",
+        f"ðŸ… <b>{username}'s Achievements â€” ITACHI'S SECURE BANK</b>\n"
+        f"ðŸ“† First Investment: {join_date}\nðŸ“¦ Assets Owned: {total}\n"
+        f"ðŸ’° Passive Income Potential: {income}/day\nðŸŒ Diversification Score: {diversified} types",
         parse_mode="HTML"
     )
 
@@ -1181,20 +1181,20 @@ async def assettitle(update: Update, context: ContextTypes.DEFAULT_TYPE):
         row = conn.execute("SELECT max_income, diversified FROM achievements WHERE uid=?", (uid,)).fetchone()
 
     if not row:
-        return await update.message.reply_text("📭 No title yet. Start investing!")
+        return await update.message.reply_text("ðŸ“­ No title yet. Start investing!")
 
     income, diversified = row
     if income >= 500 and diversified >= 4:
-        title = "🌐 Shinobi Syndicate Leader"
+        title = "ðŸŒ Shinobi Syndicate Leader"
     elif income >= 250:
-        title = "📈 Strategic Tycoon"
+        title = "ðŸ“ˆ Strategic Tycoon"
     elif diversified >= 3:
-        title = "🌀 Multi-Asset Ninja"
+        title = "ðŸŒ€ Multi-Asset Ninja"
     else:
-        title = "💼 Rising Investor"
+        title = "ðŸ’¼ Rising Investor"
 
     await update.message.reply_text(
-        f"🏷️ <b>Your Title:</b> {title}\nKeep growing to unlock elite status!",
+        f"ðŸ·ï¸ <b>Your Title:</b> {title}\nKeep growing to unlock elite status!",
         parse_mode="HTML"
     )
 
@@ -1202,14 +1202,14 @@ async def assettitle(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def questbook(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     username = update.effective_user.username or update.effective_user.first_name
-    lines = [f"📖 <b>{username}'s Questbook — ITACHI'S SECURE BANK</b>:"]
+    lines = [f"ðŸ“– <b>{username}'s Questbook â€” ITACHI'S SECURE BANK</b>:"]
 
     with get_conn() as conn:
         for quest in get_all_quests():
             name = quest["name"]
             row = conn.execute("SELECT completed FROM quests WHERE uid=? AND quest_name=?", (uid, name)).fetchone()
-            status = "✅ Completed" if row and row[0] else "❌ Incomplete"
-            lines.append(f"🔹 <b>{name}</b>: {status}\n📝 {quest['description']}\n🎁 Reward: {quest['reward']} coins\n")
+            status = "âœ… Completed" if row and row[0] else "âŒ Incomplete"
+            lines.append(f"ðŸ”¹ <b>{name}</b>: {status}\nðŸ“ {quest['description']}\nðŸŽ Reward: {quest['reward']} coins\n")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -1231,8 +1231,8 @@ def complete_quest(uid: int, name: str, context):
         context.bot.send_message(
             chat_id=uid,
             text=(
-                f"🎯 <b>Quest Completed</b>\n✅ <b>{name}</b>\n"
-                f"🎁 Reward: {quest['reward']} coins added to your balance."
+                f"ðŸŽ¯ <b>Quest Completed</b>\nâœ… <b>{name}</b>\n"
+                f"ðŸŽ Reward: {quest['reward']} coins added to your balance."
             ),
             parse_mode="HTML"
         )
@@ -1246,21 +1246,21 @@ async def groupgoal(update: Update, context: ContextTypes.DEFAULT_TYPE):
         rows = conn.execute("SELECT goal_name, target, progress, completed FROM group_goals").fetchall()
 
     if not rows:
-        return await update.message.reply_text("📭 No group goals found.")
+        return await update.message.reply_text("ðŸ“­ No group goals found.")
 
-    lines = ["🏯 <b>Clan Goals — ITACHI'S SECURE BANK</b>:"]
+    lines = ["ðŸ¯ <b>Clan Goals â€” ITACHI'S SECURE BANK</b>:"]
     for name, target, progress, done in rows:
-        status = "✅ Completed" if done else f"🔄 {progress}/{target}"
-        lines.append(f"🔹 {name}: {status}")
+        status = "âœ… Completed" if done else f"ðŸ”„ {progress}/{target}"
+        lines.append(f"ðŸ”¹ {name}: {status}")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
 
 async def fluctuateprices(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user.id not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Admin only.")
+        return await update.message.reply_text("â›” Admin only.")
     fluctuate_asset_prices()
-    await update.message.reply_text("✅ Asset prices have been updated.")
+    await update.message.reply_text("âœ… Asset prices have been updated.")
 
 
 DAILY_TASKS = ["Filhal Berojgaron ke liya koi task nhi."]
@@ -1270,10 +1270,10 @@ user_missions = {}
 async def dailymission(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if uid in user_missions:
-        return await update.message.reply_text(f"📜 Your mission today:\n<b>{user_missions[uid]}</b>", parse_mode="HTML")
+        return await update.message.reply_text(f"ðŸ“œ Your mission today:\n<b>{user_missions[uid]}</b>", parse_mode="HTML")
     task = random.choice(DAILY_TASKS)
     user_missions[uid] = task
-    await update.message.reply_text(f"🎯 <b>Daily Mission</b>:\n{task}", parse_mode="HTML")
+    await update.message.reply_text(f"ðŸŽ¯ <b>Daily Mission</b>:\n{task}", parse_mode="HTML")
 
 
 def get_streak(uid):
@@ -1294,7 +1294,7 @@ async def claimstreak(update: Update, context: ContextTypes.DEFAULT_TYPE):
     day, last = get_streak(uid)
 
     if now - last < 86400:
-        return await update.message.reply_text("🕒 You've already claimed your streak today.")
+        return await update.message.reply_text("ðŸ•’ You've already claimed your streak today.")
 
     day = day + 1 if now - last < 172800 else 1
     reward = 50 + (day * 10)
@@ -1302,7 +1302,7 @@ async def claimstreak(update: Update, context: ContextTypes.DEFAULT_TYPE):
     update_streak(uid, day, now)
 
     await update.message.reply_text(
-        f"🔥 <b>Streak Day {day}</b>\nYou earned <b>{reward}</b> coins!",
+        f"ðŸ”¥ <b>Streak Day {day}</b>\nYou earned <b>{reward}</b> coins!",
         parse_mode="HTML"
     )
 
@@ -1317,22 +1317,22 @@ async def profilecard(update: Update, context: ContextTypes.DEFAULT_TYPE):
     day, _ = get_streak(uid)
 
     if wins >= 50 and karma >= 100:
-        title = "🌌 Shinobi Legend"
+        title = "ðŸŒŒ Shinobi Legend"
     elif wins >= 25:
-        title = "⚔️ Duel Master"
+        title = "âš”ï¸ Duel Master"
     elif karma >= 50:
-        title = "✨ Karma Sage"
+        title = "âœ¨ Karma Sage"
     else:
-        title = "🎴 Rising Shinobi"
+        title = "ðŸŽ´ Rising Shinobi"
 
     relics = get_user_relics(uid)
     artefacts = get_user_artefacts(uid)
     prestige = karma + len(relics) * 100 + len(artefacts) * 150
 
     await update.message.reply_text(
-        f"🧙 <b>{username}'s Profile Card</b>\n🏷️ Title: {title}\n💰 Coins: {coins}\n"
-        f"🌟 Karma: {format_karma(karma)}\n🏆 Wins: {wins} | ❌ Losses: {losses} | 🤝 Draws: {draws}\n"
-        f"🔥 Streak: {day} days\n🧠 Prestige Score: {prestige}",
+        f"ðŸ§™ <b>{username}'s Profile Card</b>\nðŸ·ï¸ Title: {title}\nðŸ’° Coins: {coins}\n"
+        f"ðŸŒŸ Karma: {format_karma(karma)}\nðŸ† Wins: {wins} | âŒ Losses: {losses} | ðŸ¤ Draws: {draws}\n"
+        f"ðŸ”¥ Streak: {day} days\nðŸ§  Prestige Score: {prestige}",
         parse_mode="HTML"
     )
 
@@ -1350,20 +1350,20 @@ async def bossfight(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     player_hp = 100
     boss_hp = boss["hp"]
-    log = [f"⚔️ <b>{username} vs {boss['name']}</b>"]
+    log = [f"âš”ï¸ <b>{username} vs {boss['name']}</b>"]
 
     while player_hp > 0 and boss_hp > 0:
         player_hit = random.randint(15, 35)
         boss_hit = boss["attack"]
         boss_hp -= player_hit
         player_hp -= boss_hit
-        log.append(f"🗡️ You hit for {player_hit} | 🧟 Boss hits for {boss_hit}")
+        log.append(f"ðŸ—¡ï¸ You hit for {player_hit} | ðŸ§Ÿ Boss hits for {boss_hit}")
 
     if player_hp > 0:
         update_balance(uid, boss["reward"])
-        log.append(f"\n🏆 Victory! You earned {boss['reward']} coins.")
+        log.append(f"\nðŸ† Victory! You earned {boss['reward']} coins.")
     else:
-        log.append("\n💀 Defeated! Better luck next time.")
+        log.append("\nðŸ’€ Defeated! Better luck next time.")
 
     await update.message.reply_text("\n".join(log), parse_mode="HTML")
 
@@ -1371,14 +1371,14 @@ async def bossfight(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def duelnews(update: Update, context: ContextTypes.DEFAULT_TYPE):
     top_duelists = get_duel_rank(limit=5)
     if not top_duelists:
-        return await update.message.reply_text("📭 No duel activity found.")
+        return await update.message.reply_text("ðŸ“­ No duel activity found.")
 
-    lines = ["📰 <b>Duel Arena News</b>:"]
+    lines = ["ðŸ“° <b>Duel Arena News</b>:"]
     for i, (uid, coins) in enumerate(top_duelists, start=1):
         username = get_username(uid)
-        lines.append(f"{i}. <b>{username}</b> — {coins} coins")
+        lines.append(f"{i}. <b>{username}</b> â€” {coins} coins")
 
-    lines.append("\n⚔️ Duel heat rising! Who will claim the top spot?")
+    lines.append("\nâš”ï¸ Duel heat rising! Who will claim the top spot?")
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
 
@@ -1391,12 +1391,12 @@ async def banknews(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """).fetchall()
 
     if not rows:
-        return await update.message.reply_text("📭 No recent asset activity.")
+        return await update.message.reply_text("ðŸ“­ No recent asset activity.")
 
-    lines = ["🏦 <b>Bank Market News</b>:"]
+    lines = ["ðŸ¦ <b>Bank Market News</b>:"]
     for name, price in rows:
-        lines.append(f"💹 <b>{name}</b> surged to <b>{price}</b> coins!")
-    lines.append("\n🔥 Flash sales may be coming soon. Stay alert!")
+        lines.append(f"ðŸ’¹ <b>{name}</b> surged to <b>{price}</b> coins!")
+    lines.append("\nðŸ”¥ Flash sales may be coming soon. Stay alert!")
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
 
@@ -1408,7 +1408,7 @@ async def npcvisit(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ]
     npc = random.choice(npcs)
     await update.message.reply_text(
-        f"👤 <b>{npc['name']} appears!</b>\n🗨️ \"{npc['quote']}\"",
+        f"ðŸ‘¤ <b>{npc['name']} appears!</b>\nðŸ—¨ï¸ \"{npc['quote']}\"",
         parse_mode="HTML"
     )
 
@@ -1416,7 +1416,7 @@ async def npcvisit(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def cardstats(update: Update, context: ContextTypes.DEFAULT_TYPE):
     cards = list_all_cards()
     if not cards:
-        return await update.message.reply_text("📭 No cards found in the vault.")
+        return await update.message.reply_text("ðŸ“­ No cards found in the vault.")
 
     total = len(cards)
     rarity_count = {}
@@ -1424,9 +1424,9 @@ async def cardstats(update: Update, context: ContextTypes.DEFAULT_TYPE):
         rarity = card.get("rarity", "Unknown").title()
         rarity_count[rarity] = rarity_count.get(rarity, 0) + 1
 
-    lines = [f"📊 <b>Card Vault Stats</b>\nTotal Cards: {total}"]
+    lines = [f"ðŸ“Š <b>Card Vault Stats</b>\nTotal Cards: {total}"]
     for rarity, count in rarity_count.items():
-        lines.append(f"🎴 {rarity}: {count}")
+        lines.append(f"ðŸŽ´ {rarity}: {count}")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -1434,15 +1434,15 @@ async def cardstats(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def prestigevault(update: Update, context: ContextTypes.DEFAULT_TYPE):
     cards = list_all_cards()
     if not cards:
-        return await update.message.reply_text("📭 No cards found.")
+        return await update.message.reply_text("ðŸ“­ No cards found.")
 
     filtered = [c for c in cards if c.get("rarity", "").lower() in ["legendary", "mythic", "special mythic"]]
     if not filtered:
-        return await update.message.reply_text("🔒 No prestige cards found.")
+        return await update.message.reply_text("ðŸ”’ No prestige cards found.")
 
-    lines = ["🏆 <b>Prestige Vault</b>:"]
+    lines = ["ðŸ† <b>Prestige Vault</b>:"]
     for card in filtered:
-        lines.append(f"• <b>{card['name']}</b> | 🔮 {card['power']} | 💥 {card['value']} | 🎴 {card['rarity'].title()}")
+        lines.append(f"â€¢ <b>{card['name']}</b> | ðŸ”® {card['power']} | ðŸ’¥ {card['value']} | ðŸŽ´ {card['rarity'].title()}")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -1459,7 +1459,7 @@ QUIZ_QUESTIONS = [
 async def shinobiquiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
     q = random.choice(QUIZ_QUESTIONS)
     await update.message.reply_text(
-        f"🧠 <b>Shinobi Quiz</b>\n{q['q']}\n\nReply with your answer!",
+        f"ðŸ§  <b>Shinobi Quiz</b>\n{q['q']}\n\nReply with your answer!",
         parse_mode="HTML"
     )
 
@@ -1469,12 +1469,12 @@ async def karmahall(update: Update, context: ContextTypes.DEFAULT_TYPE):
         rows = conn.execute("SELECT uid, karma FROM users ORDER BY karma DESC LIMIT 10").fetchall()
 
     if not rows:
-        return await update.message.reply_text("📭 No karma data found.")
+        return await update.message.reply_text("ðŸ“­ No karma data found.")
 
-    lines = ["🌟 <b>Karma Hall of Fame</b>:"]
+    lines = ["ðŸŒŸ <b>Karma Hall of Fame</b>:"]
     for i, (uid, karma) in enumerate(rows, start=1):
         username = get_username(uid)
-        lines.append(f"{i}. <b>{username}</b> — ✨ {format_karma(karma)}")
+        lines.append(f"{i}. <b>{username}</b> â€” âœ¨ {format_karma(karma)}")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -1486,16 +1486,16 @@ async def duelbadge(update: Update, context: ContextTypes.DEFAULT_TYPE):
     wins, _, _ = get_duel_rank(uid)
 
     if wins >= 100:
-        badge = "👑 Grandmaster Duelist"
+        badge = "ðŸ‘‘ Grandmaster Duelist"
     elif wins >= 50:
-        badge = "⚔️ Elite Shinobi"
+        badge = "âš”ï¸ Elite Shinobi"
     elif wins >= 25:
-        badge = "🥷 Rising Challenger"
+        badge = "ðŸ¥· Rising Challenger"
     else:
-        badge = "🎴 Novice Duelist"
+        badge = "ðŸŽ´ Novice Duelist"
 
     await update.message.reply_text(
-        f"🏅 <b>{username}'s Duel Badge</b>\nTitle: {badge}\nWins: {wins}",
+        f"ðŸ… <b>{username}'s Duel Badge</b>\nTitle: {badge}\nWins: {wins}",
         parse_mode="HTML"
     )
 
@@ -1508,9 +1508,9 @@ SHOP_ITEMS = [
 
 
 async def shinobishop(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    lines = ["🛍️ <b>Shinobi Prestige Shop</b>:"]
+    lines = ["ðŸ›ï¸ <b>Shinobi Prestige Shop</b>:"]
     for item in SHOP_ITEMS:
-        lines.append(f"• <b>{item['name']}</b> — 💰 {item['cost']} coins")
+        lines.append(f"â€¢ <b>{item['name']}</b> â€” ðŸ’° {item['cost']} coins")
     lines.append("Use /byitem &lt;item_name&gt; to purchase.")
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -1518,21 +1518,21 @@ async def shinobishop(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def byitem(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if not context.args:
-        return await update.message.reply_text("🛒 Usage: /byitem <item_name>")
+        return await update.message.reply_text("ðŸ›’ Usage: /byitem <item_name>")
 
     item_name = " ".join(context.args).strip().lower()
     item = next((i for i in SHOP_ITEMS if i["name"].lower() == item_name), None)
 
     if not item:
-        return await update.message.reply_text(f"❌ Item '{item_name}' not found in Shinobi Shop.")
+        return await update.message.reply_text(f"âŒ Item '{item_name}' not found in Shinobi Shop.")
 
     coins = get_balance(uid)
     if coins < item["cost"]:
-        return await update.message.reply_text(f"🚫 You need {item['cost']} coins to buy '{item['name']}'. You have {coins}.")
+        return await update.message.reply_text(f"ðŸš« You need {item['cost']} coins to buy '{item['name']}'. You have {coins}.")
 
     update_balance(uid, -item["cost"])
     await update.message.reply_text(
-        f"✅ Purchased <b>{item['name']}</b> for <b>{item['cost']}</b> coins!\n🎁 Use it wisely, shinobi.",
+        f"âœ… Purchased <b>{item['name']}</b> for <b>{item['cost']}</b> coins!\nðŸŽ Use it wisely, shinobi.",
         parse_mode="HTML"
     )
 
@@ -1544,22 +1544,22 @@ async def shinobititle(update: Update, context: ContextTypes.DEFAULT_TYPE):
     wins, _, _ = get_duel_rank(uid)  # FIX: pass uid not username
 
     if karma >= 100 and wins >= 50:
-        title = "🌌 Shinobi Legend"
+        title = "ðŸŒŒ Shinobi Legend"
     elif karma >= 50:
-        title = "✨ Karma Sage"
+        title = "âœ¨ Karma Sage"
     elif wins >= 25:
-        title = "⚔️ Duel Master"
+        title = "âš”ï¸ Duel Master"
     else:
-        title = "🎴 Novice Shinobi"
+        title = "ðŸŽ´ Novice Shinobi"
 
     await update.message.reply_text(
-        f"🏷️ <b>{username}'s Shinobi Title</b>\nTitle: {title}\n🌟 Karma: {format_karma(karma)}\n🏆 Wins: {wins}",
+        f"ðŸ·ï¸ <b>{username}'s Shinobi Title</b>\nTitle: {title}\nðŸŒŸ Karma: {format_karma(karma)}\nðŸ† Wins: {wins}",
         parse_mode="HTML"
     )
 
 
 KARMA_QUIZ = [
-    {"q": "What triggers karma gain in this bot?", "a": "Reply with +1 or 👍"},
+    {"q": "What triggers karma gain in this bot?", "a": "Reply with +1 or ðŸ‘"},
     {"q": "What command shows your karma?", "a": "/karma"},
     {"q": "What is karma used for?", "a": "Prestige, reputation, and titles"},
     {"q": "Can you give karma to yourself?", "a": "No"},
@@ -1570,7 +1570,7 @@ KARMA_QUIZ = [
 async def karmaquiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
     q = random.choice(KARMA_QUIZ)
     await update.message.reply_text(
-        f"🧠 <b>Karma Quiz</b>\n{q['q']}\n\nReply with your answer!",
+        f"ðŸ§  <b>Karma Quiz</b>\n{q['q']}\n\nReply with your answer!",
         parse_mode="HTML"
     )
 
@@ -1585,12 +1585,12 @@ async def shinobirank(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """).fetchall()
 
     if not rows:
-        return await update.message.reply_text("📭 No prestige data found.")
+        return await update.message.reply_text("ðŸ“­ No prestige data found.")
 
-    lines = ["🧭 <b>Shinobi Prestige Rank</b>:"]
+    lines = ["ðŸ§­ <b>Shinobi Prestige Rank</b>:"]
     for i, (uid, score) in enumerate(rows, start=1):
         username = get_username(uid)
-        lines.append(f"{i}. <b>{username}</b> — 🧠 Prestige: {score}")
+        lines.append(f"{i}. <b>{username}</b> â€” ðŸ§  Prestige: {score}")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -1603,16 +1603,16 @@ async def shinobibadge(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     badges = []
     if coins >= 10000:
-        badges.append("💰 Wealthy Shinobi")
+        badges.append("ðŸ’° Wealthy Shinobi")
     if karma >= 100:
-        badges.append("✨ Karma Master")
+        badges.append("âœ¨ Karma Master")
     if cards >= 20:
-        badges.append("🎴 Card Collector")
+        badges.append("ðŸŽ´ Card Collector")
     if not badges:
-        badges.append("🎴 Novice Shinobi")
+        badges.append("ðŸŽ´ Novice Shinobi")
 
     await update.message.reply_text(
-        f"🏅 <b>Your Shinobi Badges</b>\n" + "\n".join(badges),
+        f"ðŸ… <b>Your Shinobi Badges</b>\n" + "\n".join(badges),
         parse_mode="HTML"
     )
 
@@ -1624,12 +1624,12 @@ async def shinobichest(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if reward_type == "coins":
         amount = random.randint(100, 500)
         update_balance(uid, amount)
-        reward_msg = f"💰 You found <b>{amount}</b> coins!"
+        reward_msg = f"ðŸ’° You found <b>{amount}</b> coins!"
     elif reward_type == "karma":
         with get_conn() as conn:
             conn.execute("UPDATE users SET karma = karma + 5 WHERE uid=?", (uid,))
             conn.commit()
-        reward_msg = "✨ You gained <b>5 karma</b>!"
+        reward_msg = "âœ¨ You gained <b>5 karma</b>!"
     else:
         card = apply_rarity_bonus(get_random_card())
         with get_conn() as conn:
@@ -1638,21 +1638,21 @@ async def shinobichest(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 VALUES (?, ?, ?, ?, ?, ?, ?)
             """, (uid, card.get("file_id"), card.get("name"), card.get("power"),
                   card.get("value"), card.get("rarity"), int(time.time())))
-        reward_msg = f"🎴 You received a <b>{card['rarity'].title()}</b> card: <b>{card['name']}</b>!"
+        reward_msg = f"ðŸŽ´ You received a <b>{card['rarity'].title()}</b> card: <b>{card['name']}</b>!"
 
-    await update.message.reply_text(f"🎁 <b>Shinobi Chest Opened!</b>\n{reward_msg}", parse_mode="HTML")
+    await update.message.reply_text(f"ðŸŽ <b>Shinobi Chest Opened!</b>\n{reward_msg}", parse_mode="HTML")
 
 
 async def shinobiarena(update: Update, context: ContextTypes.DEFAULT_TYPE):
     top_duelists = get_duel_rank(limit=10)
     if not top_duelists:
-        return await update.message.reply_text("📭 No duel data found.")
+        return await update.message.reply_text("ðŸ“­ No duel data found.")
 
-    lines = ["⚔️ <b>Shinobi Arena</b> — Top Duelists:"]
+    lines = ["âš”ï¸ <b>Shinobi Arena</b> â€” Top Duelists:"]
     for i, (uid, wins) in enumerate(top_duelists, start=1):
         username = get_username(uid)
-        lines.append(f"{i}. <b>{username}</b> — 🏆 {wins} wins")
-    lines.append("\n🔥 Arena is open. Challenge someone with /duel <username>")
+        lines.append(f"{i}. <b>{username}</b> â€” ðŸ† {wins} wins")
+    lines.append("\nðŸ”¥ Arena is open. Challenge someone with /duel <username>")
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
 
@@ -1666,18 +1666,18 @@ user_tasks = {}
 async def shinobitask(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if uid in user_tasks:
-        return await update.message.reply_text(f"📜 Your current task:\n<b>{user_tasks[uid]}</b>", parse_mode="HTML")
+        return await update.message.reply_text(f"ðŸ“œ Your current task:\n<b>{user_tasks[uid]}</b>", parse_mode="HTML")
     task = random.choice(SHINOBI_TASKS)
     user_tasks[uid] = task
-    await update.message.reply_text(f"📜 <b>Shinobi Task</b>:\n{task}", parse_mode="HTML")
+    await update.message.reply_text(f"ðŸ“œ <b>Shinobi Task</b>:\n{task}", parse_mode="HTML")
 
 
 async def shinobiblessing(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     blessings = [
-        {"type": "karma", "amount": 5, "msg": "✨ You feel enlightened. +5 karma."},
-        {"type": "coins", "amount": 250, "msg": "💰 A hidden monk gifts you 250 coins."},
-        {"type": "title", "msg": "🌌 You are now known as 'Blessed Shinobi'."}
+        {"type": "karma", "amount": 5, "msg": "âœ¨ You feel enlightened. +5 karma."},
+        {"type": "coins", "amount": 250, "msg": "ðŸ’° A hidden monk gifts you 250 coins."},
+        {"type": "title", "msg": "ðŸŒŒ You are now known as 'Blessed Shinobi'."}
     ]
     blessing = random.choice(blessings)
 
@@ -1688,7 +1688,7 @@ async def shinobiblessing(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif blessing["type"] == "coins":
         update_balance(uid, blessing["amount"])
 
-    await update.message.reply_text(f"🙏 <b>Shinobi Blessing</b>\n{blessing['msg']}", parse_mode="HTML")
+    await update.message.reply_text(f"ðŸ™ <b>Shinobi Blessing</b>\n{blessing['msg']}", parse_mode="HTML")
 
 
 async def shinobiforge(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -1696,7 +1696,7 @@ async def shinobiforge(update: Update, context: ContextTypes.DEFAULT_TYPE):
     inventory = get_user_inventory(uid)
 
     if len(inventory) < 2:
-        return await update.message.reply_text("🛠️ You need at least 2 cards to forge.")
+        return await update.message.reply_text("ðŸ› ï¸ You need at least 2 cards to forge.")
 
     combo = random.sample(inventory, 2)
     new_card = {
@@ -1707,35 +1707,35 @@ async def shinobiforge(update: Update, context: ContextTypes.DEFAULT_TYPE):
     }
     save_card_to_user(uid, new_card)
     await update.message.reply_text(
-        f"🔨 <b>Forging Complete!</b>\nYou created a new card:\n<b>{new_card['name']}</b>\n🎴 Rarity: {new_card['rarity']}",
+        f"ðŸ”¨ <b>Forging Complete!</b>\nYou created a new card:\n<b>{new_card['name']}</b>\nðŸŽ´ Rarity: {new_card['rarity']}",
         parse_mode="HTML"
     )
 
 
 async def shinobitrade(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if len(context.args) < 2:
-        return await update.message.reply_text("🔁 Usage: /shinobitrade <@username> <amount>")
+        return await update.message.reply_text("ðŸ” Usage: /shinobitrade <@username> <amount>")
 
     target_username = context.args[0].lstrip("@")
     try:
         amount = int(context.args[1])
     except ValueError:
-        return await update.message.reply_text("🚫 Amount must be a number.")
+        return await update.message.reply_text("ðŸš« Amount must be a number.")
 
     sender_id = update.effective_user.id
     with get_conn() as conn:
         row = conn.execute("SELECT uid FROM users WHERE username=?", (target_username,)).fetchone()
     if not row:
-        return await update.message.reply_text("❌ User not found.")
+        return await update.message.reply_text("âŒ User not found.")
     receiver_id = row[0]
 
     if get_balance(sender_id) < amount:
-        return await update.message.reply_text("🚫 You don't have enough coins.")
+        return await update.message.reply_text("ðŸš« You don't have enough coins.")
 
     update_balance(sender_id, -amount)
     update_balance(receiver_id, amount)
     await update.message.reply_text(
-        f"✅ You sent <b>{amount}</b> coins to <b>@{target_username}</b>.",
+        f"âœ… You sent <b>{amount}</b> coins to <b>@{target_username}</b>.",
         parse_mode="HTML"
     )
 
@@ -1745,7 +1745,7 @@ async def shinobialtar(update: Update, context: ContextTypes.DEFAULT_TYPE):
     inventory = get_user_inventory(uid)
 
     if not inventory:
-        return await update.message.reply_text("🕯️ You have no cards to sacrifice.")
+        return await update.message.reply_text("ðŸ•¯ï¸ You have no cards to sacrifice.")
 
     card = random.choice(inventory)
     remove_card(uid, card["name"])
@@ -1756,7 +1756,7 @@ async def shinobialtar(update: Update, context: ContextTypes.DEFAULT_TYPE):
         conn.commit()
 
     await update.message.reply_text(
-        f"🕯️ <b>Altar Ritual</b>\nYou sacrificed <b>{card['name']}</b>.\n✨ Gained <b>{karma_gain}</b> karma.",
+        f"ðŸ•¯ï¸ <b>Altar Ritual</b>\nYou sacrificed <b>{card['name']}</b>.\nâœ¨ Gained <b>{karma_gain}</b> karma.",
         parse_mode="HTML"
     )
 
@@ -1769,9 +1769,9 @@ MARKET_ITEMS = [
 
 
 async def shinobimarket(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    lines = ["🏪 <b>Shinobi Market</b>:"]
+    lines = ["ðŸª <b>Shinobi Market</b>:"]
     for item in MARKET_ITEMS:
-        lines.append(f"• <b>{item['name']}</b> — 💰 {item['cost']} coins")
+        lines.append(f"â€¢ <b>{item['name']}</b> â€” ðŸ’° {item['cost']} coins")
     lines.append("Use /marketbuy &lt;item_name&gt; to purchase.")
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -1782,11 +1782,11 @@ async def shinobitomb(update: Update, context: ContextTypes.DEFAULT_TYPE):
         rows = conn.execute("SELECT name, rarity FROM tomb WHERE uid=?", (uid,)).fetchall()
 
     if not rows:
-        return await update.message.reply_text("⚰️ No fallen cards or sacrifices found.")
+        return await update.message.reply_text("âš°ï¸ No fallen cards or sacrifices found.")
 
-    lines = ["⚰️ <b>Shinobi Tomb</b> — Your Sacrifices:"]
+    lines = ["âš°ï¸ <b>Shinobi Tomb</b> â€” Your Sacrifices:"]
     for name, rarity in rows:
-        lines.append(f"• <b>{name}</b> — 🎴 {rarity}")
+        lines.append(f"â€¢ <b>{name}</b> â€” ðŸŽ´ {rarity}")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -1794,21 +1794,21 @@ async def shinobitomb(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def marketbuy(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if not context.args:
-        return await update.message.reply_text("🛒 Usage: /marketbuy <item_name>")
+        return await update.message.reply_text("ðŸ›’ Usage: /marketbuy <item_name>")
 
     item_name = " ".join(context.args).strip().lower()
     item = next((i for i in MARKET_ITEMS if i["name"].lower() == item_name), None)
 
     if not item:
-        return await update.message.reply_text(f"❌ Item '{item_name}' not found in Shinobi Market.")
+        return await update.message.reply_text(f"âŒ Item '{item_name}' not found in Shinobi Market.")
 
     coins = get_balance(uid)
     if coins < item["cost"]:
-        return await update.message.reply_text(f"🚫 You need {item['cost']} coins. You have {coins}.")
+        return await update.message.reply_text(f"ðŸš« You need {item['cost']} coins. You have {coins}.")
 
     update_balance(uid, -item["cost"])
     await update.message.reply_text(
-        f"✅ Purchased <b>{item['name']}</b> for <b>{item['cost']}</b> coins!",
+        f"âœ… Purchased <b>{item['name']}</b> for <b>{item['cost']}</b> coins!",
         parse_mode="HTML"
     )
 
@@ -1819,11 +1819,11 @@ async def tombstats(update: Update, context: ContextTypes.DEFAULT_TYPE):
         total = sum(count for _, count in rows)
 
     if not rows:
-        return await update.message.reply_text("⚰️ No sacrifices recorded yet.")
+        return await update.message.reply_text("âš°ï¸ No sacrifices recorded yet.")
 
-    lines = [f"⚰️ <b>Global Tomb Stats</b>\nTotal Sacrifices: {total}"]
+    lines = [f"âš°ï¸ <b>Global Tomb Stats</b>\nTotal Sacrifices: {total}"]
     for rarity, count in rows:
-        lines.append(f"• 🎴 {rarity.title()}: {count}")
+        lines.append(f"â€¢ ðŸŽ´ {rarity.title()}: {count}")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -1833,18 +1833,18 @@ async def shinobifusion(update: Update, context: ContextTypes.DEFAULT_TYPE):
     inventory = get_user_inventory(uid)
 
     if len(inventory) < 2:
-        return await update.message.reply_text("🧬 You need at least 2 cards to fuse.")
+        return await update.message.reply_text("ðŸ§¬ You need at least 2 cards to fuse.")
 
     combo = random.sample(inventory, 2)
     relic = {
-        "name": f"{combo[0]['name']} × {combo[1]['name']}",
+        "name": f"{combo[0]['name']} Ã— {combo[1]['name']}",
         "power": f"{combo[0]['power']} + {combo[1]['power']}",
         "value": combo[0]['value'] + combo[1]['value'] + random.randint(100, 300),
         "rarity": "Relic"
     }
     save_card_to_user(uid, relic)
     await update.message.reply_text(
-        f"🧬 <b>Fusion Complete!</b>\nCreated Relic: <b>{relic['name']}</b>\n🎴 Rarity: {relic['rarity']}",
+        f"ðŸ§¬ <b>Fusion Complete!</b>\nCreated Relic: <b>{relic['name']}</b>\nðŸŽ´ Rarity: {relic['rarity']}",
         parse_mode="HTML"
     )
 
@@ -1854,21 +1854,21 @@ async def shinobibattle(update: Update, context: ContextTypes.DEFAULT_TYPE):
     opponent = random.choice(["Shadow Itachi", "Rogue Trader", "Mystic Monk"])
     player_hp = 100
     enemy_hp = 120
-    log = [f"⚔️ <b>You vs {opponent}</b>"]
+    log = [f"âš”ï¸ <b>You vs {opponent}</b>"]
 
     while player_hp > 0 and enemy_hp > 0:
         hit = random.randint(20, 35)
         enemy_hit = random.randint(15, 30)
         enemy_hp -= hit
         player_hp -= enemy_hit
-        log.append(f"🗡️ You hit {hit} | 👊 {opponent} hits {enemy_hit}")
+        log.append(f"ðŸ—¡ï¸ You hit {hit} | ðŸ‘Š {opponent} hits {enemy_hit}")
 
     if player_hp > 0:
         reward = random.randint(300, 600)
         update_balance(uid, reward)
-        log.append(f"\n🏆 Victory! You earned {reward} coins.")
+        log.append(f"\nðŸ† Victory! You earned {reward} coins.")
     else:
-        log.append("\n💀 Defeated! Train harder, shinobi.")
+        log.append("\nðŸ’€ Defeated! Train harder, shinobi.")
 
     await update.message.reply_text("\n".join(log), parse_mode="HTML")
 
@@ -1878,11 +1878,11 @@ async def shinobirelic(update: Update, context: ContextTypes.DEFAULT_TYPE):
     relics = get_user_relics(uid)
 
     if not relics:
-        return await update.message.reply_text("🗿 No relics found in your vault.")
+        return await update.message.reply_text("ðŸ—¿ No relics found in your vault.")
 
-    lines = ["🗿 <b>Your Shinobi Relics</b>:"]
+    lines = ["ðŸ—¿ <b>Your Shinobi Relics</b>:"]
     for relic in relics:
-        lines.append(f"• <b>{relic['name']}</b> | 🔮 {relic['power']} | 💥 {relic['value']}")
+        lines.append(f"â€¢ <b>{relic['name']}</b> | ðŸ”® {relic['power']} | ðŸ’¥ {relic['value']}")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -1892,11 +1892,11 @@ async def shinobiartefact(update: Update, context: ContextTypes.DEFAULT_TYPE):
     artefacts = get_user_artefacts(uid)
 
     if not artefacts:
-        return await update.message.reply_text("🗝️ No artefacts found in your vault.")
+        return await update.message.reply_text("ðŸ—ï¸ No artefacts found in your vault.")
 
-    lines = ["🗝️ <b>Your Shinobi Artefacts</b>:"]
+    lines = ["ðŸ—ï¸ <b>Your Shinobi Artefacts</b>:"]
     for artefact in artefacts:
-        lines.append(f"• <b>{artefact['name']}</b> — 🧠 {artefact['effect']}")
+        lines.append(f"â€¢ <b>{artefact['name']}</b> â€” ðŸ§  {artefact['effect']}")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -1907,12 +1907,12 @@ async def shinobiblessingvault(update: Update, context: ContextTypes.DEFAULT_TYP
         rows = conn.execute("SELECT blessing, received_at FROM blessings WHERE uid=?", (uid,)).fetchall()
 
     if not rows:
-        return await update.message.reply_text("🙌 No blessings recorded yet.")
+        return await update.message.reply_text("ðŸ™Œ No blessings recorded yet.")
 
-    lines = ["🙌 <b>Your Blessing Vault</b>:"]
+    lines = ["ðŸ™Œ <b>Your Blessing Vault</b>:"]
     for blessing, ts in rows:
         date = time.strftime('%Y-%m-%d', time.localtime(ts))
-        lines.append(f"• {blessing} — 🕒 {date}")
+        lines.append(f"â€¢ {blessing} â€” ðŸ•’ {date}")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -1926,32 +1926,32 @@ async def shinobilegacy(update: Update, context: ContextTypes.DEFAULT_TYPE):
     score = coins + karma + len(relics) * 100 + len(artefacts) * 150
 
     lines = [
-        "🧘 <b>Your Shinobi Legacy</b>",
-        f"💰 Coins: {coins}", f"✨ Karma: {karma}",
-        f"🗿 Relics: {len(relics)}", f"🗝️ Artefacts: {len(artefacts)}",
-        f"\n🧠 <b>Legacy Score:</b> {score}"
+        "ðŸ§˜ <b>Your Shinobi Legacy</b>",
+        f"ðŸ’° Coins: {coins}", f"âœ¨ Karma: {karma}",
+        f"ðŸ—¿ Relics: {len(relics)}", f"ðŸ—ï¸ Artefacts: {len(artefacts)}",
+        f"\nðŸ§  <b>Legacy Score:</b> {score}"
     ]
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
 
-# ── Heart / Proposal ──────────────────────────────────────────────────────────
+# â”€â”€ Heart / Proposal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async def sendheart(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if uid not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Only admins can use /sendheart.")
+        return await update.message.reply_text("â›” Only admins can use /sendheart.")
 
     if len(context.args) < 2:
-        return await update.message.reply_text("💌 Usage: /sendheart @username <your message>")
+        return await update.message.reply_text("ðŸ’Œ Usage: /sendheart @username <your message>")
 
     target = context.args[0]
     message = " ".join(context.args[1:])
     if not target.startswith("@"):
-        return await update.message.reply_text("💘 First argument must be an @username")
+        return await update.message.reply_text("ðŸ’˜ First argument must be an @username")
 
     with get_conn() as conn:
         row = conn.execute("SELECT uid FROM users WHERE username=?", (target[1:],)).fetchone()
         if not row:
-            return await update.message.reply_text("❌ Target not found in bot database.")
+            return await update.message.reply_text("âŒ Target not found in bot database.")
 
     target_uid = row[0]
     pending_heart[uid] = {"target_uid": target_uid, "target_username": target, "message": message}
@@ -1960,14 +1960,14 @@ async def sendheart(update: Update, context: ContextTypes.DEFAULT_TYPE):
         groups = conn.execute("SELECT chat_id, title FROM known_groups").fetchall()
 
     if not groups:
-        return await update.message.reply_text("📭 No groups found.")
+        return await update.message.reply_text("ðŸ“­ No groups found.")
 
-    keyboard = [[InlineKeyboardButton(f"📢 {title}", callback_data=f"heart_gc:{chat_id}")]
+    keyboard = [[InlineKeyboardButton(f"ðŸ“¢ {title}", callback_data=f"heart_gc:{chat_id}")]
                 for chat_id, title in groups]
-    keyboard.append([InlineKeyboardButton("❌ Cancel", callback_data="heart_cancel")])
+    keyboard.append([InlineKeyboardButton("âŒ Cancel", callback_data="heart_cancel")])
 
     await update.message.reply_text(
-        f"🩷 Choose a group to deliver your message for {target}:",
+        f"ðŸ©· Choose a group to deliver your message for {target}:",
         reply_markup=InlineKeyboardMarkup(keyboard)
     )
 
@@ -1978,63 +1978,63 @@ async def heart_confirm_handler(update: Update, context: ContextTypes.DEFAULT_TY
     uid = query.from_user.id
 
     if uid not in pending_heart:
-        return await query.edit_message_text("⚠️ No pending heart message.")
+        return await query.edit_message_text("âš ï¸ No pending heart message.")
 
     data = pending_heart.pop(uid)
-    msg = f"💌 <b>Someone left you a note:</b>\n🩷 \"{data['message']}\""
+    msg = f"ðŸ’Œ <b>Someone left you a note:</b>\nðŸ©· \"{data['message']}\""
 
     if query.data.startswith("heart_gc:"):
         group_id = int(query.data.split(":")[1])
         try:
             await context.bot.send_message(
                 chat_id=group_id,
-                text=f"{data['target_username']} —\n{msg}",
+                text=f"{data['target_username']} â€”\n{msg}",
                 parse_mode="HTML"
             )
-            await query.edit_message_text("📢 Heart posted in selected group 💘")
+            await query.edit_message_text("ðŸ“¢ Heart posted in selected group ðŸ’˜")
         except Exception:
-            await query.edit_message_text("❌ Failed to send message to group.")
+            await query.edit_message_text("âŒ Failed to send message to group.")
     else:
-        await query.edit_message_text("❌ Heart canceled.")
+        await query.edit_message_text("âŒ Heart canceled.")
 
 
 async def propose(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if uid not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Only admins can use /propose.")
+        return await update.message.reply_text("â›” Only admins can use /propose.")
 
     if len(context.args) < 2:
-        return await update.message.reply_text("💍 Usage: /propose @username <your message>")
+        return await update.message.reply_text("ðŸ’ Usage: /propose @username <your message>")
 
     target = context.args[0]
     message = " ".join(context.args[1:])
     if not target.startswith("@"):
-        return await update.message.reply_text("💘 First argument must be an @username")
+        return await update.message.reply_text("ðŸ’˜ First argument must be an @username")
 
     with get_conn() as conn:
         row = conn.execute("SELECT uid FROM users WHERE username=?", (target[1:],)).fetchone()
         if not row:
-            return await update.message.reply_text("❌ Target not found in bot database.")
+            return await update.message.reply_text("âŒ Target not found in bot database.")
 
     target_uid = row[0]
     sender_name = update.effective_user.first_name
     pending_proposal[target_uid] = {"sender_id": uid, "sender_name": sender_name, "message": message}
 
     keyboard = [[
-        InlineKeyboardButton("💖 Accept", callback_data="proposal_accept"),
-        InlineKeyboardButton("💔 Reject", callback_data="proposal_reject")
+        InlineKeyboardButton("ðŸ’– Accept", callback_data="proposal_accept"),
+        InlineKeyboardButton("ðŸ’” Reject", callback_data="proposal_reject")
     ]]
 
     await context.bot.send_message(
         chat_id=target_uid,
         text=(
-            f"💌 <b>@{update.effective_user.username}</b> has proposed to you:\n"
-            f"🩷 \"{message}\""
+            f"ðŸ’Œ <b>@{update.effective_user.username}</b> has proposed to you:\n"
+            f"ðŸ©· \"{message}\""
         ),
         reply_markup=InlineKeyboardMarkup(keyboard),
         parse_mode="HTML"
     )
-    await update.message.reply_text(f"✅ Proposal sent to {target} 💘")
+    await update.message.reply_text(f"âœ… Proposal sent to {target} ðŸ’˜")
 
 
 async def proposal_response_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -2043,26 +2043,26 @@ async def proposal_response_handler(update: Update, context: ContextTypes.DEFAUL
     uid = query.from_user.id
 
     if uid not in pending_proposal:
-        return await query.edit_message_text("⚠️ No pending proposal.")
+        return await query.edit_message_text("âš ï¸ No pending proposal.")
 
     data = pending_proposal.pop(uid)
     sender_name = data["sender_name"]
 
     if query.data == "proposal_accept":
         await query.edit_message_text(
-            f"💖 <b>{query.from_user.first_name}</b> accepted the proposal from <b>{sender_name}</b>!\n"
-            f"🌸 May your bond be stronger than any jutsu.",
+            f"ðŸ’– <b>{query.from_user.first_name}</b> accepted the proposal from <b>{sender_name}</b>!\n"
+            f"ðŸŒ¸ May your bond be stronger than any jutsu.",
             parse_mode="HTML"
         )
     else:
         await query.edit_message_text(
-            f"💔 <b>{query.from_user.first_name}</b> rejected the proposal.\n"
-            f"🥲 Better luck next time, shinobi.",
+            f"ðŸ’” <b>{query.from_user.first_name}</b> rejected the proposal.\n"
+            f"ðŸ¥² Better luck next time, shinobi.",
             parse_mode="HTML"
         )
 
 
-# ── Username / user tracking ──────────────────────────────────────────────────
+# â”€â”€ Username / user tracking â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 def get_ref_reward():
     with get_conn() as conn:
         row = conn.execute("SELECT value FROM settings WHERE key = 'ref_reward'").fetchone()
@@ -2120,18 +2120,18 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     """, (uid, referrer_id, int(time.time())))
                     conn.commit()
                 await update.message.reply_text(
-                    f"🌱 You were summoned through a sacred link.\n"
-                    f"✨ Your referrer has earned <b>{reward}</b> Echoes of Gratitude.",
+                    f"ðŸŒ± You were summoned through a sacred link.\n"
+                    f"âœ¨ Your referrer has earned <b>{reward}</b> Echoes of Gratitude.",
                     parse_mode="HTML"
                 )
         except ValueError:
             pass
 
     await update.message.reply_text(
-        f"👋 <b>Welcome, {username}</b>!\n\n"
-        "You've entered the realm of <b>ITACHI'S BOT</b>—a vault of memory, mischief, and meaning.\n\n"
-        "🔍 Use <code>/help</code> to explore, and earn.\n"
-        "🧙‍♂️ Every command is a spell. Every asset is a bond. Every ban is a reckoning.\n\n"
+        f"ðŸ‘‹ <b>Welcome, {username}</b>!\n\n"
+        "You've entered the realm of <b>ITACHI'S BOT</b>â€”a vault of memory, mischief, and meaning.\n\n"
+        "ðŸ” Use <code>/help</code> to explore, and earn.\n"
+        "ðŸ§™â€â™‚ï¸ Every command is a spell. Every asset is a bond. Every ban is a reckoning.\n\n"
         "Let the ritual begin.",
         parse_mode="HTML"
     )
@@ -2142,7 +2142,7 @@ async def balance(update: Update, context: ContextTypes.DEFAULT_TYPE):
     username = update.effective_user.username or update.effective_user.first_name
     coins = get_balance(uid) or 0
     await update.message.reply_text(
-        f"💰 <b>{username}</b>, your balance is <b>{coins}</b> coins.",
+        f"ðŸ’° <b>{username}</b>, your balance is <b>{coins}</b> coins.",
         parse_mode="HTML"
     )
 
@@ -2153,13 +2153,13 @@ async def earn(update: Update, context: ContextTypes.DEFAULT_TYPE):
     add_user(uid, username)
 
     if not can_earn(uid):
-        return await update.message.reply_text("🕒 Already claimed. Try again in 24 hours.")
+        return await update.message.reply_text("ðŸ•’ Already claimed. Try again in 24 hours.")
 
     amount = random.randint(100, 300)
     update_balance(uid, amount)
     update_earn_time(uid)
     new_total = get_balance(uid)
-    await update.message.reply_text(f"✅ You earned {amount} coins! You now have {new_total} coins.")
+    await update.message.reply_text(f"âœ… You earned {amount} coins! You now have {new_total} coins.")
 
 
 async def resolve_name(chat_id: int, uid: int, context) -> str:
@@ -2179,7 +2179,7 @@ async def resolve_name(chat_id: int, uid: int, context) -> str:
         return str(uid)
 
 
-# ── Party ─────────────────────────────────────────────────────────────────────
+# â”€â”€ Party â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async def party(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat = update.effective_chat
     now = int(time.time())
@@ -2198,25 +2198,25 @@ async def party(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """, (chat.id, now - active_window)).fetchall()
 
     if not rows:
-        return await update.message.reply_text("👻 No active members found in the last hour.")
+        return await update.message.reply_text("ðŸ‘» No active members found in the last hour.")
 
     mentions = [f'<a href="tg://user?id={uid}">{name}</a>' for uid, name in rows]
-    await update.message.reply_text("🎉 Party time!\n" + " ".join(mentions), parse_mode="HTML")
+    await update.message.reply_text("ðŸŽ‰ Party time!\n" + " ".join(mentions), parse_mode="HTML")
 
 
-# ── Schedule ──────────────────────────────────────────────────────────────────
+# â”€â”€ Schedule â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async def schedulemsg(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     chat = update.effective_chat
     member = await context.bot.get_chat_member(chat.id, user.id)
 
     if member.status not in ("administrator", "creator"):
-        return await update.message.reply_text("⛔ Only group admins can schedule messages.")
+        return await update.message.reply_text("â›” Only group admins can schedule messages.")
 
     raw = " ".join(context.args)
     parts = [p.strip() for p in raw.split("|")]
     if len(parts) != 2:
-        return await update.message.reply_text("📝 Usage: /schedulemsg <DD-MM HH:MM> | <your message>")
+        return await update.message.reply_text("ðŸ“ Usage: /schedulemsg <DD-MM HH:MM> | <your message>")
 
     try:
         now_dt = datetime.now()
@@ -2224,9 +2224,9 @@ async def schedulemsg(update: Update, context: ContextTypes.DEFAULT_TYPE):
         target_time = datetime.strptime(f"{date_str} {time_str}", "%d-%m %H:%M")
         target_time = target_time.replace(year=now_dt.year)
         if target_time < now_dt:
-            return await update.message.reply_text("⛔ Time must be in the future.")
+            return await update.message.reply_text("â›” Time must be in the future.")
     except Exception:
-        return await update.message.reply_text("⛔ Invalid format. Use DD-MM HH:MM (24h).")
+        return await update.message.reply_text("â›” Invalid format. Use DD-MM HH:MM (24h).")
 
     scheduled_messages.append({
         "chat_id": chat.id,
@@ -2234,7 +2234,7 @@ async def schedulemsg(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "timestamp": int(target_time.timestamp())
     })
     await update.message.reply_text(
-        f"✅ Message scheduled for {target_time.strftime('%d %b %Y • %H:%M')}.\nWill send: {parts[1]}"
+        f"âœ… Message scheduled for {target_time.strftime('%d %b %Y â€¢ %H:%M')}.\nWill send: {parts[1]}"
     )
 
 
@@ -2244,16 +2244,16 @@ async def viewschedule(update: Update, context: ContextTypes.DEFAULT_TYPE):
     member = await context.bot.get_chat_member(chat.id, user.id)
 
     if member.status not in ("administrator", "creator"):
-        return await update.message.reply_text("⛔ Only group admins can view scheduled messages.")
+        return await update.message.reply_text("â›” Only group admins can view scheduled messages.")
 
     upcoming = [msg for msg in scheduled_messages if msg["chat_id"] == chat.id]
     if not upcoming:
-        return await update.message.reply_text("📭 No scheduled messages for this group.")
+        return await update.message.reply_text("ðŸ“­ No scheduled messages for this group.")
 
-    lines = ["📅 <b>Scheduled Messages</b>:"]
+    lines = ["ðŸ“… <b>Scheduled Messages</b>:"]
     for msg in upcoming:
-        time_str = datetime.fromtimestamp(msg["timestamp"]).strftime("%d %b %Y • %H:%M")
-        lines.append(f"🕰️ <b>{time_str}</b>\n{msg['text']}\n")
+        time_str = datetime.fromtimestamp(msg["timestamp"]).strftime("%d %b %Y â€¢ %H:%M")
+        lines.append(f"ðŸ•°ï¸ <b>{time_str}</b>\n{msg['text']}\n")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -2264,21 +2264,21 @@ async def clearschedule(update: Update, context: ContextTypes.DEFAULT_TYPE):
     member = await context.bot.get_chat_member(chat.id, user.id)
 
     if member.status not in ("administrator", "creator"):
-        return await update.message.reply_text("⛔ Only group admins can clear scheduled messages.")
+        return await update.message.reply_text("â›” Only group admins can clear scheduled messages.")
 
     before = len(scheduled_messages)
     scheduled_messages[:] = [msg for msg in scheduled_messages if msg["chat_id"] != chat.id]
     removed = before - len(scheduled_messages)
 
     if removed == 0:
-        return await update.message.reply_text("📭 No scheduled messages found for this group.")
+        return await update.message.reply_text("ðŸ“­ No scheduled messages found for this group.")
     await update.message.reply_text(
-        f"🧹 Cleared <b>{removed}</b> scheduled message(s) for this group.",
+        f"ðŸ§¹ Cleared <b>{removed}</b> scheduled message(s) for this group.",
         parse_mode="HTML"
     )
 
 
-# ── Activity tracker ──────────────────────────────────────────────────────────
+# â”€â”€ Activity tracker â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async def activity_tracker(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message and update.message.from_user:
         uid = update.message.from_user.id
@@ -2290,20 +2290,20 @@ async def activity_tracker(update: Update, context: ContextTypes.DEFAULT_TYPE):
             conn.commit()
 
 
-# ── Broadcast ─────────────────────────────────────────────────────────────────
+# â”€â”€ Broadcast â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async def broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if uid not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Only admins can use /broadcast.")
+        return await update.message.reply_text("â›” Only admins can use /broadcast.")
 
     if update.message.reply_to_message:
         msg = update.message.reply_to_message.text
     else:
         msg = " ".join(context.args).strip()
         if not msg:
-            return await update.message.reply_text("📝 Your message can't be empty.")
+            return await update.message.reply_text("ðŸ“ Your message can't be empty.")
 
-    final_msg = f"<b>📢 Broadcast</b>\n\n{msg}\n\n<i>— Reverse System</i>"
+    final_msg = f"<b>ðŸ“¢ Broadcast</b>\n\n{msg}\n\n<i>â€” Reverse System</i>"
     user_ids = get_all_user_ids()
     group_ids = get_all_group_ids()
     targets = user_ids + group_ids
@@ -2317,11 +2317,11 @@ async def broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             success += 1
         except Exception as e:
-            print(f"⚠️ Failed to send to {target}: {e}")
+            print(f"âš ï¸ Failed to send to {target}: {e}")
             fail += 1
 
     return await update.message.reply_text(
-        f"✅ Broadcast completed.\n📩 Sent: {success}\n❌ Failed: {fail}"
+        f"âœ… Broadcast completed.\nðŸ“© Sent: {success}\nâŒ Failed: {fail}"
     )
 
 
@@ -2335,13 +2335,13 @@ async def broadcaststatus(update: Update, context: ContextTypes.DEFAULT_TYPE):
         """)
         failed_groups = conn.execute("SELECT chat_id, title, last_failed FROM broadcast_failures").fetchall()
 
-    lines = ["📡 <b>Broadcast Status</b>",
-             f"✅ Total Groups: <b>{total_groups}</b>",
-             f"❌ Failed Deliveries: <b>{len(failed_groups)}</b>\n"]
+    lines = ["ðŸ“¡ <b>Broadcast Status</b>",
+             f"âœ… Total Groups: <b>{total_groups}</b>",
+             f"âŒ Failed Deliveries: <b>{len(failed_groups)}</b>\n"]
 
     for chat_id, title, last_failed in failed_groups:
         timestamp = time.strftime('%Y-%m-%d %H:%M', time.localtime(last_failed))
-        lines.append(f"• {title} — <code>{chat_id}</code> (Last failed: {timestamp})")
+        lines.append(f"â€¢ {title} â€” <code>{chat_id}</code> (Last failed: {timestamp})")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -2354,7 +2354,7 @@ async def broadcast_to_all(context, chat_ids, message):
             sent += 1
         except Exception as e:
             failed += 1
-            print(f"❌ Failed to send to {chat_id}: {e}")
+            print(f"âŒ Failed to send to {chat_id}: {e}")
             with get_conn() as conn:
                 conn.execute("""
                     CREATE TABLE IF NOT EXISTS broadcast_failures (
@@ -2371,15 +2371,15 @@ async def broadcast_to_all(context, chat_ids, message):
 async def mentionall(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat = update.effective_chat
     if chat.type not in ("group", "supergroup"):
-        return await update.message.reply_text("🤔 This only works in a group.")
+        return await update.message.reply_text("ðŸ¤” This only works in a group.")
 
     if not context.args:
-        return await update.message.reply_text("🛑 Usage: /mentionall <your message here>")
+        return await update.message.reply_text("ðŸ›‘ Usage: /mentionall <your message here>")
 
     broadcast_text = " ".join(context.args)
     all_uids = get_all_user_ids()
     if not all_uids:
-        return await update.message.reply_text("👥 No users to mention.")
+        return await update.message.reply_text("ðŸ‘¥ No users to mention.")
 
     mentions = []
     for uid in all_uids:
@@ -2390,21 +2390,21 @@ async def mentionall(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(text, parse_mode="HTML")
 
 
-# ── Karma ─────────────────────────────────────────────────────────────────────
+# â”€â”€ Karma â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async def karma(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     k = get_karma(uid)
-    await update.message.reply_text(f"🌟 Your karma: {format_karma(k)}")
+    await update.message.reply_text(f"ðŸŒŸ Your karma: {format_karma(k)}")
 
 
 async def duelrank(update: Update, context: ContextTypes.DEFAULT_TYPE):
     top_users = get_duel_rank(limit=10)
     if not top_users:
-        return await update.message.reply_text("📭 No leaderboard data.")
+        return await update.message.reply_text("ðŸ“­ No leaderboard data.")
 
-    lines = ["🏅 <b>Duel Leaderboard</b>:"]
+    lines = ["ðŸ… <b>Duel Leaderboard</b>:"]
     for i, (uid, coins) in enumerate(top_users, start=1):
-        lines.append(f"{i}. <b>{get_username(uid)}</b> — {coins} coins")
+        lines.append(f"{i}. <b>{get_username(uid)}</b> â€” {coins} coins")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -2413,14 +2413,14 @@ async def request_coins(update: Update, context: ContextTypes.DEFAULT_TYPE):
     requester = update.effective_user
 
     if not context.args or len(context.args) < 1:
-        return await update.message.reply_text("📦 Usage: /request <amount> [@username or UID] or reply to a message.")
+        return await update.message.reply_text("ðŸ“¦ Usage: /request <amount> [@username or UID] or reply to a message.")
 
     try:
         amount = int(context.args[0])
         if amount <= 0:
-            return await update.message.reply_text("🚫 Amount must be positive.")
+            return await update.message.reply_text("ðŸš« Amount must be positive.")
     except ValueError:
-        return await update.message.reply_text("🚫 Amount must be a number.")
+        return await update.message.reply_text("ðŸš« Amount must be a number.")
 
     if update.message.reply_to_message:
         target_user = update.message.reply_to_message.from_user
@@ -2438,13 +2438,13 @@ async def request_coins(update: Update, context: ContextTypes.DEFAULT_TYPE):
             try:
                 target_id = int(target)
             except ValueError:
-                return await update.message.reply_text("🚫 Invalid UID.")
+                return await update.message.reply_text("ðŸš« Invalid UID.")
     else:
-        return await update.message.reply_text("🧑 Specify who you're requesting from by replying or tagging.")
+        return await update.message.reply_text("ðŸ§‘ Specify who you're requesting from by replying or tagging.")
 
     target_name = get_username(target_id)
     await update.message.reply_text(
-        f"📨 <b>{requester.full_name}</b> is requesting <b>{amount}</b> coins from <b>{target_name}</b>!",
+        f"ðŸ“¨ <b>{requester.full_name}</b> is requesting <b>{amount}</b> coins from <b>{target_name}</b>!",
         parse_mode="HTML"
     )
 
@@ -2454,14 +2454,14 @@ async def send(update: Update, context: ContextTypes.DEFAULT_TYPE):
     sender_id = sender.id
 
     if not context.args or len(context.args) < 1:
-        return await update.message.reply_text("📦 Usage: /send <amount> [@username or UID] or reply to a message.")
+        return await update.message.reply_text("ðŸ“¦ Usage: /send <amount> [@username or UID] or reply to a message.")
 
     try:
         amount = int(context.args[0])
         if amount <= 0:
-            return await update.message.reply_text("🚫 Amount must be positive.")
+            return await update.message.reply_text("ðŸš« Amount must be positive.")
     except ValueError:
-        return await update.message.reply_text("🚫 Amount must be a number.")
+        return await update.message.reply_text("ðŸš« Amount must be a number.")
 
     receiver_id = None
     receiver_name = "Unknown"
@@ -2484,36 +2484,36 @@ async def send(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 receiver_id = int(target)
                 receiver_name = get_username(receiver_id)
             except ValueError:
-                return await update.message.reply_text("🚫 Invalid UID.")
+                return await update.message.reply_text("ðŸš« Invalid UID.")
     else:
-        return await update.message.reply_text("🧑 Specify a recipient by replying or using @username/UID.")
+        return await update.message.reply_text("ðŸ§‘ Specify a recipient by replying or using @username/UID.")
 
     if not receiver_id:
-        return await update.message.reply_text("❌ Recipient not found.")
+        return await update.message.reply_text("âŒ Recipient not found.")
 
     sender_balance = get_balance(sender_id)
     if sender_balance < amount:
-        return await update.message.reply_text("🚫 Not enough coins to send.")
+        return await update.message.reply_text("ðŸš« Not enough coins to send.")
 
     update_balance(sender_id, -amount)
     update_balance(receiver_id, amount)
     log_transfer(sender_id, receiver_id, amount)
     await update.message.reply_text(
-        f"✅ <b>{sender.full_name}</b> sent <b>{amount}</b> coins to <b>{receiver_name}</b>!",
+        f"âœ… <b>{sender.full_name}</b> sent <b>{amount}</b> coins to <b>{receiver_name}</b>!",
         parse_mode="HTML"
     )
 
 
 async def dumpusers(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user.id not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Admins only.")
+        return await update.message.reply_text("â›” Admins only.")
 
     with get_conn() as conn:
         rows = conn.execute("SELECT id, username, coins FROM users").fetchall()
 
-    lines = ["🗄️ <b>DB Users</b>:"]
+    lines = ["ðŸ—„ï¸ <b>DB Users</b>:"]
     for uid, usr, coins in rows:
-        lines.append(f"{uid} → '{usr}' — {coins} coins")
+        lines.append(f"{uid} â†’ '{usr}' â€” {coins} coins")
 
     chunk = ""
     for line in lines:
@@ -2528,31 +2528,31 @@ async def dumpusers(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def adjustcoins(update: Update, context: ContextTypes.DEFAULT_TYPE):
     admin_id = update.effective_user.id
     if admin_id not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Only admins can use this command.")
+        return await update.message.reply_text("â›” Only admins can use this command.")
 
     if len(context.args) < 2:
-        return await update.message.reply_text("🧾 Usage: /adjustcoins <@username|user_id> <amount>")
+        return await update.message.reply_text("ðŸ§¾ Usage: /adjustcoins <@username|user_id> <amount>")
 
     target_raw = context.args[0]
     try:
         amount = int(context.args[1])
         if amount < 0:
-            return await update.message.reply_text("🚫 Amount must be non-negative.")
+            return await update.message.reply_text("ðŸš« Amount must be non-negative.")
     except ValueError:
-        return await update.message.reply_text("🚫 Amount must be a valid integer.")
+        return await update.message.reply_text("ðŸš« Amount must be a valid integer.")
 
     if target_raw.startswith("@"):
         username = target_raw[1:]
         target_uid = get_user_by_username(username)
         if not target_uid:
-            return await update.message.reply_text(f"❌ User '@{username}' not found.")
+            return await update.message.reply_text(f"âŒ User '@{username}' not found.")
     else:
         try:
             target_uid = int(target_raw)
         except ValueError:
-            return await update.message.reply_text("🚫 First argument must be a @username or a numeric user ID.")
+            return await update.message.reply_text("ðŸš« First argument must be a @username or a numeric user ID.")
         if get_balance(target_uid) is None:
-            return await update.message.reply_text(f"❌ No user with ID {target_uid} found.")
+            return await update.message.reply_text(f"âŒ No user with ID {target_uid} found.")
 
     set_balance(target_uid, amount)
     new_bal = get_balance(target_uid)
@@ -2577,7 +2577,7 @@ async def adjustcoins(update: Update, context: ContextTypes.DEFAULT_TYPE):
             display = str(target_uid)
 
     await update.message.reply_text(
-        f"✅ {display}'s balance has been set to <b>{new_bal:,}</b> coins.",
+        f"âœ… {display}'s balance has been set to <b>{new_bal:,}</b> coins.",
         parse_mode="HTML"
     )
 
@@ -2585,10 +2585,10 @@ async def adjustcoins(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def adjusthistory(update: Update, context: ContextTypes.DEFAULT_TYPE):
     admin_id = update.effective_user.id
     if admin_id not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Only admins can view adjustment history.")
+        return await update.message.reply_text("â›” Only admins can view adjustment history.")
 
     if not adjust_log:
-        return await update.message.reply_text("📭 No adjustments have been made yet.")
+        return await update.message.reply_text("ðŸ“­ No adjustments have been made yet.")
 
     now = int(time.time())
     three_days_ago = now - (3 * 24 * 60 * 60)
@@ -2602,27 +2602,27 @@ async def adjusthistory(update: Update, context: ContextTypes.DEFAULT_TYPE):
     for entry in reversed(entries_to_show):
         ts = time.strftime("%d %b %Y %H:%M", time.localtime(entry["timestamp"]))
         lines.append(
-            f"🕒 <b>{ts}</b>\n"
-            f"👤 <a href='tg://user?id={entry['admin_id']}'>{entry['admin_name']}</a> "
+            f"ðŸ•’ <b>{ts}</b>\n"
+            f"ðŸ‘¤ <a href='tg://user?id={entry['admin_id']}'>{entry['admin_name']}</a> "
             f"set <b>{entry['target_name']}</b>'s balance to <b>{entry['amount']:,}</b> coins.\n"
         )
 
     await update.message.reply_text(
-        "📜 <b>Adjustment History:</b>\n\n" + "\n".join(lines),
+        "ðŸ“œ <b>Adjustment History:</b>\n\n" + "\n".join(lines),
         parse_mode="HTML"
     )
 
 
 async def listusers(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user.id not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Only admins can use this command.")
+        return await update.message.reply_text("â›” Only admins can use this command.")
 
     uids = get_all_user_ids()
     if not uids:
-        return await update.message.reply_text("📭 No users in the database.")
+        return await update.message.reply_text("ðŸ“­ No users in the database.")
 
     board = sorted([(uid, get_balance(uid)) for uid in uids], key=lambda x: x[1], reverse=True)
-    header = "📜 <b>All Bot Users & Balances</b>:\n"
+    header = "ðŸ“œ <b>All Bot Users & Balances</b>:\n"
     lines = []
 
     for rank, (uid, bal) in enumerate(board, start=1):
@@ -2637,7 +2637,7 @@ async def listusers(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 display = f"{name} ({uid})" if name else str(uid)
             except Exception:
                 display = str(uid)
-        lines.append(f"{rank}. <b>{display}</b> — 💰 {bal_str} coins")
+        lines.append(f"{rank}. <b>{display}</b> â€” ðŸ’° {bal_str} coins")
 
     chunk = header
     for line in lines:
@@ -2651,10 +2651,10 @@ async def listusers(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def checkbalance(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user.id not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Only admins can use this command.")
+        return await update.message.reply_text("â›” Only admins can use this command.")
 
     if not context.args:
-        return await update.message.reply_text("🧾 Usage: /checkbalance <@username or UID>")
+        return await update.message.reply_text("ðŸ§¾ Usage: /checkbalance <@username or UID>")
 
     target = context.args[0]
     uid = None
@@ -2669,38 +2669,38 @@ async def checkbalance(update: Update, context: ContextTypes.DEFAULT_TYPE):
         try:
             uid = int(target)
         except ValueError:
-            return await update.message.reply_text("🚫 Invalid UID.")
+            return await update.message.reply_text("ðŸš« Invalid UID.")
 
     if not uid:
-        return await update.message.reply_text("❌ User not found.")
+        return await update.message.reply_text("âŒ User not found.")
 
     coins = get_balance(uid)
     karma_val = get_karma(uid)
     username = get_username(uid)
     await update.message.reply_text(
-        f"🧾 <b>{username}</b>\n💰 Coins: {coins}\n✨ Karma: {format_karma(karma_val)}",
+        f"ðŸ§¾ <b>{username}</b>\nðŸ’° Coins: {coins}\nâœ¨ Karma: {format_karma(karma_val)}",
         parse_mode="HTML"
     )
 
 
 async def resetearn(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user.id not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Only admins can use this command.")
+        return await update.message.reply_text("â›” Only admins can use this command.")
 
     if len(context.args) != 1:
-        return await update.message.reply_text("🧾 Usage: /resetearn <@username|user_id>")
+        return await update.message.reply_text("ðŸ§¾ Usage: /resetearn <@username|user_id>")
 
     target_raw = context.args[0]
     if target_raw.startswith("@"):
         name = target_raw[1:]
         uid = get_user_by_username(name)
         if not uid:
-            return await update.message.reply_text(f"❌ User '@{name}' not found.")
+            return await update.message.reply_text(f"âŒ User '@{name}' not found.")
     else:
         try:
             uid = int(target_raw)
         except ValueError:
-            return await update.message.reply_text("🚫 First argument must be @username or numeric user ID.")
+            return await update.message.reply_text("ðŸš« First argument must be @username or numeric user ID.")
 
     with get_conn() as conn:
         conn.execute("DELETE FROM earn_times WHERE uid = ?", (uid,))
@@ -2708,22 +2708,22 @@ async def resetearn(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     last_itachi_reward.pop(uid, None)
     await update.message.reply_text(
-        f"✅ Cleared daily-earn cooldown for <b>{target_raw}</b>. They can now use /earn again.",
+        f"âœ… Cleared daily-earn cooldown for <b>{target_raw}</b>. They can now use /earn again.",
         parse_mode="HTML"
     )
 
 
 async def transferlog(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user.id not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Only admins can view the transfer log.")
+        return await update.message.reply_text("â›” Only admins can view the transfer log.")
 
     logs = get_transfer_logs(limit=10)
     if not logs:
-        return await update.message.reply_text("📭 No transfers found.")
+        return await update.message.reply_text("ðŸ“­ No transfers found.")
 
-    lines = ["📜 <b>Transfer Log</b>:"]
+    lines = ["ðŸ“œ <b>Transfer Log</b>:"]
     for sender, receiver, amount, ts in logs:
-        lines.append(f"💸 {get_username(sender)} → {get_username(receiver)}: {amount} coins")
+        lines.append(f"ðŸ’¸ {get_username(sender)} â†’ {get_username(receiver)}: {amount} coins")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -2733,14 +2733,14 @@ async def give(update: Update, context: ContextTypes.DEFAULT_TYPE):
     sender_id = sender.id
 
     if not context.args or len(context.args) < 1:
-        return await update.message.reply_text("📦 Usage: /give <amount> [@username or UID] or reply to a message.")
+        return await update.message.reply_text("ðŸ“¦ Usage: /give <amount> [@username or UID] or reply to a message.")
 
     try:
         amount = int(context.args[0])
         if amount <= 0:
-            return await update.message.reply_text("🚫 Amount must be positive.")
+            return await update.message.reply_text("ðŸš« Amount must be positive.")
     except ValueError:
-        return await update.message.reply_text("🚫 Amount must be a number.")
+        return await update.message.reply_text("ðŸš« Amount must be a number.")
 
     receiver_id = None
     if update.message.reply_to_message:
@@ -2758,23 +2758,23 @@ async def give(update: Update, context: ContextTypes.DEFAULT_TYPE):
             try:
                 receiver_id = int(target)
             except ValueError:
-                return await update.message.reply_text("🚫 Invalid UID.")
+                return await update.message.reply_text("ðŸš« Invalid UID.")
     else:
-        return await update.message.reply_text("🧑 Specify a recipient by replying or using @username/UID.")
+        return await update.message.reply_text("ðŸ§‘ Specify a recipient by replying or using @username/UID.")
 
     if not receiver_id:
-        return await update.message.reply_text("❌ Recipient not found.")
+        return await update.message.reply_text("âŒ Recipient not found.")
 
     sender_balance = get_balance(sender_id)
     if sender_balance < amount:
-        return await update.message.reply_text("🚫 Not enough coins to give.")
+        return await update.message.reply_text("ðŸš« Not enough coins to give.")
 
     update_balance(sender_id, -amount)
     update_balance(receiver_id, amount)
     log_transfer(sender_id, receiver_id, amount)
     receiver_name = get_username(receiver_id)
     await update.message.reply_text(
-        f"🎁 <b>{sender.full_name}</b> gave <b>{amount}</b> coins to <b>{receiver_name}</b>!",
+        f"ðŸŽ <b>{sender.full_name}</b> gave <b>{amount}</b> coins to <b>{receiver_name}</b>!",
         parse_mode="HTML"
     )
 
@@ -2792,7 +2792,7 @@ async def steal(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if thief_id in last_steal_time and now - last_steal_time[thief_id] < STEAL_COOLDOWN:
         wait = STEAL_COOLDOWN - (now - last_steal_time[thief_id])
         return await update.message.reply_text(
-            f"🕒 Chill out! You can steal again in {wait // 120}m {wait % 60}s."
+            f"ðŸ•’ Chill out! You can steal again in {wait // 120}m {wait % 60}s."
         )
 
     if update.message.reply_to_message:
@@ -2804,17 +2804,17 @@ async def steal(update: Update, context: ContextTypes.DEFAULT_TYPE):
         with get_conn() as conn:
             row = conn.execute("SELECT uid FROM users WHERE username=?", (uname,)).fetchone()
         if not row:
-            return await update.message.reply_text(f"❌ No user @{uname} found.")
+            return await update.message.reply_text(f"âŒ No user @{uname} found.")
         target_id = row[0]
         target_name = uname
     else:
         return await update.message.reply_text(
-            "📦 Usage:\n • Reply: `/steal` (to someone's message)\n • Tag:  `/steal @username`",
+            "ðŸ“¦ Usage:\n â€¢ Reply: `/steal` (to someone's message)\n â€¢ Tag:  `/steal @username`",
             parse_mode="Markdown"
         )
 
     if target_id == thief_id:
-        return await update.message.reply_text("🫣 You can't steal from yourself.")
+        return await update.message.reply_text("ðŸ«£ You can't steal from yourself.")
 
     steal_amt = random.randint(0, MAX_STEAL)
     victim_balance = get_balance(target_id)
@@ -2823,11 +2823,11 @@ async def steal(update: Update, context: ContextTypes.DEFAULT_TYPE):
     update_balance(target_id, -actual)
     update_balance(thief_id, actual)
     last_steal_time[thief_id] = now
-    await update.message.reply_text(f"💰 You stole {actual} coins from {target_name}!")
+    await update.message.reply_text(f"ðŸ’° You stole {actual} coins from {target_name}!")
     try:
         await context.bot.send_message(
             chat_id=target_id,
-            text=f"😠 {thief.username or thief.first_name} stole {actual} coins from you!"
+            text=f"ðŸ˜  {thief.username or thief.first_name} stole {actual} coins from you!"
         )
     except Exception:
         pass
@@ -2835,10 +2835,10 @@ async def steal(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def reverse(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if get_balance(update.effective_user.id) < 25:
-        return await update.message.reply_text("🚫 You need 25 coins to reverse.")
+        return await update.message.reply_text("ðŸš« You need 25 coins to reverse.")
     target = context.args[0] if context.args else "@someone"
     update_balance(update.effective_user.id, -25)
-    await update.message.reply_text(f"🔁 You reversed {target}'s move!")
+    await update.message.reply_text(f"ðŸ” You reversed {target}'s move!")
 
 
 async def checkcards(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -2851,24 +2851,24 @@ async def checkcards(update: Update, context: ContextTypes.DEFAULT_TYPE):
     missing = user_ids - deck_ids
 
     if not missing:
-        return await update.message.reply_text("✅ All drawn cards exist in the deck.")
+        return await update.message.reply_text("âœ… All drawn cards exist in the deck.")
 
-    lines = ["⚠️ Missing cards in deck:"]
+    lines = ["âš ï¸ Missing cards in deck:"]
     for fid in missing:
-        lines.append(f"• {fid}")
+        lines.append(f"â€¢ {fid}")
     await update.message.reply_text("\n".join(lines))
 
 
 async def cardlist(update: Update, context: ContextTypes.DEFAULT_TYPE):
     cards = list_all_cards()
     if not cards:
-        return await update.message.reply_text("📭 No cards available in the bot.")
+        return await update.message.reply_text("ðŸ“­ No cards available in the bot.")
 
-    lines = ["📜 <b>Available Cards</b>:"]
+    lines = ["ðŸ“œ <b>Available Cards</b>:"]
     for i, card in enumerate(cards, start=1):
         lines.append(
-            f"{i}. <b>{card.get('name', 'Unknown')}</b> | 🔮 {card.get('power', 'Unknown')} "
-            f"| 💥 {card.get('value', 0)} | 🎴 {card.get('rarity', 'Common')}"
+            f"{i}. <b>{card.get('name', 'Unknown')}</b> | ðŸ”® {card.get('power', 'Unknown')} "
+            f"| ðŸ’¥ {card.get('value', 0)} | ðŸŽ´ {card.get('rarity', 'Common')}"
         )
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -2891,14 +2891,14 @@ async def top(update: Update, context: ContextTypes.DEFAULT_TYPE):
         title_text = "Global"
 
     if not target_uids:
-        return await update.message.reply_text("📭 No users found.")
+        return await update.message.reply_text("ðŸ“­ No users found.")
 
     board = sorted([(uid, get_balance(uid)) for uid in target_uids], key=lambda x: x[1], reverse=True)[:10]
 
     if not any(balance for _, balance in board):
-        return await update.message.reply_text("📭 No one has coins yet.")
+        return await update.message.reply_text("ðŸ“­ No one has coins yet.")
 
-    lines = [f"🏆 <b>Top Coin Holders — {title_text}</b>:"]
+    lines = [f"ðŸ† <b>Top Coin Holders â€” {title_text}</b>:"]
     for rank, (uid, bal) in enumerate(board, start=1):
         bal_str = f"{bal:,}"
         username = get_username(uid)
@@ -2911,7 +2911,7 @@ async def top(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 display = f"{full} ({uid})" if full else str(uid)
             except Exception:
                 display = str(uid)
-        lines.append(f"{rank}. <b>{display}</b> — 💰 {bal_str} coins")
+        lines.append(f"{rank}. <b>{display}</b> â€” ðŸ’° {bal_str} coins")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
@@ -2919,14 +2919,14 @@ async def top(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def btop(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uids = get_all_user_ids()
     if not uids:
-        return await update.message.reply_text("📭 No users found.")
+        return await update.message.reply_text("ðŸ“­ No users found.")
 
     board = sorted([(uid, get_balance(uid)) for uid in uids], key=lambda x: x[1], reverse=True)[:10]
 
     if not any(balance for _, balance in board):
-        return await update.message.reply_text("📭 No one has coins yet.")
+        return await update.message.reply_text("ðŸ“­ No one has coins yet.")
 
-    lines = ["🌐 <b>Global Top Coin Holders</b>:"]
+    lines = ["ðŸŒ <b>Global Top Coin Holders</b>:"]
     for rank, (uid, bal) in enumerate(board, start=1):
         bal_str = f"{bal:,}"
         username = get_username(uid)
@@ -2939,26 +2939,26 @@ async def btop(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 display = f"{full} ({uid})" if full else str(uid)
             except Exception:
                 display = str(uid)
-        lines.append(f"{rank}. <b>{display}</b> — 💰 {bal_str} coins")
+        lines.append(f"{rank}. <b>{display}</b> â€” ðŸ’° {bal_str} coins")
 
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
 
 async def cardvault(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user.id not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Only admins can access the card vault.")
+        return await update.message.reply_text("â›” Only admins can access the card vault.")
 
     cards = list_all_cards()
     if not cards:
-        return await update.message.reply_text("📭 No cards found.")
+        return await update.message.reply_text("ðŸ“­ No cards found.")
 
     for card in cards:
         name = card.get("name", "Unknown")
         power = card.get("power", "Unknown")
         value = card.get("value", 0)
         rarity = card.get("rarity", "Common")
-        text = f"🃏 <b>{name}</b>\n🔮 Power: {power}\n💥 Value: {value}\n🎴 Rarity: {rarity}"
-        keyboard = [[InlineKeyboardButton("🗑️ Delete", callback_data=f"removecard:{name}")]]
+        text = f"ðŸƒ <b>{name}</b>\nðŸ”® Power: {power}\nðŸ’¥ Value: {value}\nðŸŽ´ Rarity: {rarity}"
+        keyboard = [[InlineKeyboardButton("ðŸ—‘ï¸ Delete", callback_data=f"removecard:{name}")]]
         await update.message.reply_text(text, parse_mode="HTML", reply_markup=InlineKeyboardMarkup(keyboard))
 
 
@@ -2968,109 +2968,109 @@ async def deletecard_callback(update: Update, context: ContextTypes.DEFAULT_TYPE
     await query.answer()
 
     if uid not in ADMIN_IDS:
-        return await query.edit_message_text("⛔ Only admins can delete cards.")
+        return await query.edit_message_text("â›” Only admins can delete cards.")
 
     if query.data.startswith("removecard:"):
         card_name = query.data.split(":", 1)[1]
         success = remove_card_by_name(card_name)
         if success:
-            await query.edit_message_text(f"✅ Card '<b>{card_name}</b>' removed from the bot.", parse_mode="HTML")
+            await query.edit_message_text(f"âœ… Card '<b>{card_name}</b>' removed from the bot.", parse_mode="HTML")
         else:
-            await query.edit_message_text(f"⚠️ Failed to remove card '<b>{card_name}</b>'. Not found.", parse_mode="HTML")
+            await query.edit_message_text(f"âš ï¸ Failed to remove card '<b>{card_name}</b>'. Not found.", parse_mode="HTML")
 
 
 async def deletecardbyindex(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if uid not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Only admins can delete cards.")
+        return await update.message.reply_text("â›” Only admins can delete cards.")
 
     if not context.args:
-        return await update.message.reply_text("🗑️ Usage: /deletecardbyindex <index>")
+        return await update.message.reply_text("ðŸ—‘ï¸ Usage: /deletecardbyindex <index>")
 
     try:
         index = int(context.args[0])
     except ValueError:
-        return await update.message.reply_text("🚫 Index must be a valid number.")
+        return await update.message.reply_text("ðŸš« Index must be a valid number.")
 
     cards = list_all_cards()
     if not cards:
-        return await update.message.reply_text("📭 No cards found in the database.")
+        return await update.message.reply_text("ðŸ“­ No cards found in the database.")
 
     if index < 0 or index >= len(cards):
-        return await update.message.reply_text("⚠️ Invalid index. Use /viewcards to see valid indexes.")
+        return await update.message.reply_text("âš ï¸ Invalid index. Use /viewcards to see valid indexes.")
 
     card = cards[index]
     name = card.get("name", "Unknown")
     success = remove_card_by_name(name)
     if success:
-        await update.message.reply_text(f"✅ Card <b>{name}</b> deleted successfully.", parse_mode="HTML")
+        await update.message.reply_text(f"âœ… Card <b>{name}</b> deleted successfully.", parse_mode="HTML")
     else:
-        await update.message.reply_text("❌ Failed to delete the card.")
+        await update.message.reply_text("âŒ Failed to delete the card.")
 
 
 async def viewcards(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if uid not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Only admins can view all cards.")
+        return await update.message.reply_text("â›” Only admins can view all cards.")
 
     cards = list_all_cards()
     if not cards:
-        return await update.message.reply_text("📭 No cards found in the database.")
+        return await update.message.reply_text("ðŸ“­ No cards found in the database.")
 
-    message = "🃏 <b>Card Vault Overview</b>\n"
+    message = "ðŸƒ <b>Card Vault Overview</b>\n"
     for i, card in enumerate(cards, start=1):
         message += (
-            f"{i}. <b>{card.get('name', 'Unknown')}</b> | 🔮 {card.get('power', 'Unknown')} "
-            f"| 💥 {card.get('value', 0)} | 🎴 {card.get('rarity', 'Common')}\n"
+            f"{i}. <b>{card.get('name', 'Unknown')}</b> | ðŸ”® {card.get('power', 'Unknown')} "
+            f"| ðŸ’¥ {card.get('value', 0)} | ðŸŽ´ {card.get('rarity', 'Common')}\n"
         )
-    message += "\n🗑️ Use /deletecardbyindex <index> to delete a card."
+    message += "\nðŸ—‘ï¸ Use /deletecardbyindex <index> to delete a card."
     await update.message.reply_text(message, parse_mode="HTML")
 
 
 async def removeuser(update: Update, context: ContextTypes.DEFAULT_TYPE):
     admin_id = update.effective_user.id
     if admin_id not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Only admins can use this command.")
+        return await update.message.reply_text("â›” Only admins can use this command.")
 
     if len(context.args) != 1:
-        return await update.message.reply_text("🗑️ Usage: /removeuser <@username|user_id>")
+        return await update.message.reply_text("ðŸ—‘ï¸ Usage: /removeuser <@username|user_id>")
 
     target = context.args[0]
     if target.startswith("@"):
         name = target[1:]
         uid = get_user_by_username(name)
         if not uid:
-            return await update.message.reply_text(f"❌ User '@{name}' not found.")
+            return await update.message.reply_text(f"âŒ User '@{name}' not found.")
         ok = remove_user_by_id(uid)
     else:
         try:
             uid = int(target)
         except ValueError:
-            return await update.message.reply_text("🚫 Must be @username or numeric ID.")
+            return await update.message.reply_text("ðŸš« Must be @username or numeric ID.")
         ok = remove_user_by_id(uid)
 
     if ok:
-        await update.message.reply_text(f"✅ User <b>{target}</b> has been removed from the bot.", parse_mode="HTML")
+        await update.message.reply_text(f"âœ… User <b>{target}</b> has been removed from the bot.", parse_mode="HTML")
     else:
-        await update.message.reply_text(f"⚠️ No record found for <b>{target}</b>.", parse_mode="HTML")
+        await update.message.reply_text(f"âš ï¸ No record found for <b>{target}</b>.", parse_mode="HTML")
 
 
 async def purgecardbyindex(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if uid not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Only admins can purge cards.")
+        return await update.message.reply_text("â›” Only admins can purge cards.")
 
     if not context.args:
-        return await update.message.reply_text("🛑 Usage: /purgecardbyindex <index>")
+        return await update.message.reply_text("ðŸ›‘ Usage: /purgecardbyindex <index>")
 
     try:
         idx = int(context.args[0])
     except ValueError:
-        return await update.message.reply_text("🚫 Index must be a number.")
+        return await update.message.reply_text("ðŸš« Index must be a number.")
 
     cards = list_all_cards()
     if idx < 1 or idx > len(cards):
-        return await update.message.reply_text("⚠️ Invalid index. Use /admincards to see valid indexes.")
+        return await update.message.reply_text("âš ï¸ Invalid index. Use /admincards to see valid indexes.")
 
     card = cards[idx - 1]
     name = card.get("name", "Untitled")
@@ -3087,40 +3087,40 @@ async def purgecardbyindex(update: Update, context: ContextTypes.DEFAULT_TYPE):
         conn.execute("DELETE FROM tomb WHERE LOWER(name) = ?", (name.lower(),))
         conn.commit()
 
-    await update.message.reply_text(f"🧨 Card <b>{name}</b> purged from all bot tables.", parse_mode="HTML")
+    await update.message.reply_text(f"ðŸ§¨ Card <b>{name}</b> purged from all bot tables.", parse_mode="HTML")
 
 
 async def deletebyname(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user.id not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Only admins can use this command.")
+        return await update.message.reply_text("â›” Only admins can use this command.")
 
     if not context.args:
-        return await update.message.reply_text("🗑️ Usage: /deletebyname <card_name>")
+        return await update.message.reply_text("ðŸ—‘ï¸ Usage: /deletebyname <card_name>")
 
     card_name = " ".join(context.args).strip()
     success = remove_card_by_name(card_name)
 
     if success:
-        await update.message.reply_text(f"✅ Card '<b>{card_name}</b>' deleted from the database.", parse_mode="HTML")
+        await update.message.reply_text(f"âœ… Card '<b>{card_name}</b>' deleted from the database.", parse_mode="HTML")
     else:
-        await update.message.reply_text(f"⚠️ Card '<b>{card_name}</b>' not found or deletion failed.", parse_mode="HTML")
+        await update.message.reply_text(f"âš ï¸ Card '<b>{card_name}</b>' not found or deletion failed.", parse_mode="HTML")
 
 
 async def getcoins(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if uid not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Only admins can use this command.")
+        return await update.message.reply_text("â›” Only admins can use this command.")
 
     try:
         amount = int(context.args[0]) if context.args else 100000
         if amount <= 0:
-            return await update.message.reply_text("🚫 Amount must be positive.")
+            return await update.message.reply_text("ðŸš« Amount must be positive.")
     except (ValueError, IndexError):
-        return await update.message.reply_text("🚫 Usage: /getcoins <amount>")
+        return await update.message.reply_text("ðŸš« Usage: /getcoins <amount>")
 
     update_balance(uid, amount)
     await update.message.reply_text(
-        f"✅ You received <b>{amount}</b> coins, shinobi banker!",
+        f"âœ… You received <b>{amount}</b> coins, shinobi banker!",
         parse_mode="HTML"
     )
 
@@ -3132,7 +3132,7 @@ TAX_RATE = 0.10
 async def sellcard(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if not context.args:
-        return await update.message.reply_text("📦 Usage: /sellcard <card name>")
+        return await update.message.reply_text("ðŸ“¦ Usage: /sellcard <card name>")
 
     name = " ".join(context.args).lower()
     with get_conn() as conn:
@@ -3140,7 +3140,7 @@ async def sellcard(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "SELECT name, value FROM user_cards WHERE uid=? AND LOWER(name)=?", (uid, name)
         ).fetchone()
         if not row:
-            return await update.message.reply_text(f"🔍 No card named '{name}' found.")
+            return await update.message.reply_text(f"ðŸ” No card named '{name}' found.")
         card_name, value = row
         conn.execute("DELETE FROM user_cards WHERE uid=? AND LOWER(name)=?", (uid, name))
         conn.commit()
@@ -3151,7 +3151,7 @@ async def sellcard(update: Update, context: ContextTypes.DEFAULT_TYPE):
     deposit_tax(tax)
 
     await update.message.reply_text(
-        f"✅ Sold <b>{card_name}</b>\n💰 Gross: {value} coins\n💸 Tax: {tax} coins\n🏦 You receive: {payout}",
+        f"âœ… Sold <b>{card_name}</b>\nðŸ’° Gross: {value} coins\nðŸ’¸ Tax: {tax} coins\nðŸ¦ You receive: {payout}",
         parse_mode="HTML"
     )
 
@@ -3160,40 +3160,40 @@ def distribute_tax_rewards():
     with get_conn() as conn:
         total = conn.execute("SELECT SUM(amount) FROM tax_bank").fetchone()[0] or 0
         if total == 0:
-            return "🚫 Tax pool is empty."
+            return "ðŸš« Tax pool is empty."
         top5 = conn.execute("SELECT uid FROM balance ORDER BY coins DESC LIMIT 5").fetchall()
         if not top5:
-            return "🚫 No players to reward."
+            return "ðŸš« No players to reward."
         share = total // len(top5)
         for (uid,) in top5:
             update_balance(uid, share)
         conn.execute("DELETE FROM tax_bank")
         conn.commit()
-        return f"🏆 Distributed {total} coins: {share} each to top 5."
+        return f"ðŸ† Distributed {total} coins: {share} each to top 5."
 
 
 async def distribute_tax(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user.id not in ADMIN_IDS:
-        return await update.message.reply_text("🚫 You're not authorized.")
+        return await update.message.reply_text("ðŸš« You're not authorized.")
 
     try:
         amount = int(context.args[0])
         top_count = int(context.args[1])
         if amount <= 0 or top_count <= 0:
-            return await update.message.reply_text("⚠️ Enter valid amount and top count.")
+            return await update.message.reply_text("âš ï¸ Enter valid amount and top count.")
 
         with get_conn() as conn:
             tax_pool = conn.execute("SELECT coins FROM banktax WHERE id = 1").fetchone()
             if not tax_pool or tax_pool[0] < amount:
                 avail = tax_pool[0] if tax_pool else 0
-                return await update.message.reply_text(f"❌ Not enough tax in pool. Available: {avail}")
+                return await update.message.reply_text(f"âŒ Not enough tax in pool. Available: {avail}")
 
             top_users = conn.execute(
                 "SELECT id FROM bank WHERE coins > 0 ORDER BY coins DESC LIMIT ?", (top_count,)
             ).fetchall()
 
             if not top_users:
-                return await update.message.reply_text("⚠️ No eligible users to receive tax.")
+                return await update.message.reply_text("âš ï¸ No eligible users to receive tax.")
 
             share = amount // len(top_users)
             for (uid,) in top_users:
@@ -3202,48 +3202,48 @@ async def distribute_tax(update: Update, context: ContextTypes.DEFAULT_TYPE):
             conn.commit()
 
         await update.message.reply_text(
-            f"✅ Distributed {amount} coins to top {len(top_users)} users.\nEach received {share} coins."
+            f"âœ… Distributed {amount} coins to top {len(top_users)} users.\nEach received {share} coins."
         )
     except Exception:
-        await update.message.reply_text("⚠️ Usage:\n/distribute_tax <amount> <top_count>")
+        await update.message.reply_text("âš ï¸ Usage:\n/distribute_tax <amount> <top_count>")
 
 
 async def taxpool(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     if uid not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Only admins can view the tax pool.")
+        return await update.message.reply_text("â›” Only admins can view the tax pool.")
     amount = get_tax_pool()
-    await update.message.reply_text(f"🏦 <b>Current Tax Pool:</b> ₹{amount} coins", parse_mode="HTML")
+    await update.message.reply_text(f"ðŸ¦ <b>Current Tax Pool:</b> â‚¹{amount} coins", parse_mode="HTML")
 
 
 async def debugvault(update: Update, context: ContextTypes.DEFAULT_TYPE):
     cards = list_all_cards()
     total = len(cards)
-    lines = [f"📦 Found {total} cards in vault."]
+    lines = [f"ðŸ“¦ Found {total} cards in vault."]
     for c in cards:
-        lines.append(f"• {c.get('name')} | 🎴 {c.get('rarity')} | 💥 {c.get('value')}")
+        lines.append(f"â€¢ {c.get('name')} | ðŸŽ´ {c.get('rarity')} | ðŸ’¥ {c.get('value')}")
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
 
 async def adminpanel(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user.id not in ADMIN_IDS:
-        return await update.message.reply_text("⛔ Only admins can access the panel.")
+        return await update.message.reply_text("â›” Only admins can access the panel.")
 
     buttons = [
-        [InlineKeyboardButton("💰 Adjust Coins", callback_data="adjustcoins")],
-        [InlineKeyboardButton("🔍 Check Balance", callback_data="checkbalance")],
-        [InlineKeyboardButton("📜 Transfer Log", callback_data="transferlog")],
-        [InlineKeyboardButton("🏅 Leaderboard", callback_data="leaderboard")],
-        [InlineKeyboardButton("🃏 Manage Cards", callback_data="managecards")],
+        [InlineKeyboardButton("ðŸ’° Adjust Coins", callback_data="adjustcoins")],
+        [InlineKeyboardButton("ðŸ” Check Balance", callback_data="checkbalance")],
+        [InlineKeyboardButton("ðŸ“œ Transfer Log", callback_data="transferlog")],
+        [InlineKeyboardButton("ðŸ… Leaderboard", callback_data="leaderboard")],
+        [InlineKeyboardButton("ðŸƒ Manage Cards", callback_data="managecards")],
     ]
-    await update.message.reply_text("🛠️ Admin Control Panel:", reply_markup=InlineKeyboardMarkup(buttons))
+    await update.message.reply_text("ðŸ› ï¸ Admin Control Panel:", reply_markup=InlineKeyboardMarkup(buttons))
 
 
 async def getfileid(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not update.message.reply_to_message or not update.message.reply_to_message.photo:
-        return await update.message.reply_text("📸 Reply to a photo to get its file ID.")
+        return await update.message.reply_text("ðŸ“¸ Reply to a photo to get its file ID.")
     photo = update.message.reply_to_message.photo[-1]
-    await update.message.reply_text(f"🆔 File ID: <code>{photo.file_id}</code>", parse_mode="HTML")
+    await update.message.reply_text(f"ðŸ†” File ID: <code>{photo.file_id}</code>", parse_mode="HTML")
 
 
 async def panel_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -3252,40 +3252,40 @@ async def panel_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = query.from_user.id
 
     if uid not in ADMIN_IDS:
-        return await query.edit_message_text("⛔ Admin access only.")
+        return await query.edit_message_text("â›” Admin access only.")
 
     data = query.data
     if data == "adjustcoins":
-        return await query.edit_message_text("💰 Use /adjustcoins <@username or UID> <amount>")
+        return await query.edit_message_text("ðŸ’° Use /adjustcoins <@username or UID> <amount>")
     elif data == "checkbalance":
-        return await query.edit_message_text("🔍 Use /checkbalance <@username or UID>")
+        return await query.edit_message_text("ðŸ” Use /checkbalance <@username or UID>")
     elif data == "transferlog":
         logs = get_transfer_logs(limit=10)
         if not logs:
-            return await query.edit_message_text("📭 No transfers found.")
-        lines = ["📜 <b>Transfer Log</b>:"]
+            return await query.edit_message_text("ðŸ“­ No transfers found.")
+        lines = ["ðŸ“œ <b>Transfer Log</b>:"]
         for sender, receiver, amount, ts in logs:
-            lines.append(f"💸 {get_username(sender)} → {get_username(receiver)}: {amount} coins")
+            lines.append(f"ðŸ’¸ {get_username(sender)} â†’ {get_username(receiver)}: {amount} coins")
         await query.edit_message_text("\n".join(lines), parse_mode="HTML")
     elif data == "leaderboard":
         top_users = get_duel_rank(limit=10)
         if not top_users:
-            return await query.edit_message_text("📭 No leaderboard data.")
-        lines = ["🏅 <b>Leaderboard</b>:"]
+            return await query.edit_message_text("ðŸ“­ No leaderboard data.")
+        lines = ["ðŸ… <b>Leaderboard</b>:"]
         for i, (uid, coins) in enumerate(top_users, start=1):
-            lines.append(f"{i}. <b>{get_username(uid)}</b> — {coins} coins")
+            lines.append(f"{i}. <b>{get_username(uid)}</b> â€” {coins} coins")
         await query.edit_message_text("\n".join(lines), parse_mode="HTML")
     elif data == "managecards":
         cards = list_all_cards()
         if not cards:
-            return await query.edit_message_text("📭 No cards found.")
-        lines = ["🃏 <b>Card Vault</b>:"]
+            return await query.edit_message_text("ðŸ“­ No cards found.")
+        lines = ["ðŸƒ <b>Card Vault</b>:"]
         for i, card in enumerate(cards, start=1):
             lines.append(f"{i}. <b>{card['name']}</b> | {card['power']} | {card['value']} | {card['rarity']}")
         await query.edit_message_text("\n".join(lines), parse_mode="HTML")
 
 
-KARMA_TRIGGERS = ["+1", "++", "+karma", "👍", "👍🏼", "✨"]
+KARMA_TRIGGERS = ["+1", "++", "+karma", "ðŸ‘", "ðŸ‘ðŸ¼", "âœ¨"]
 
 
 async def karma_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -3298,7 +3298,7 @@ async def karma_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     receiver = msg.reply_to_message.from_user
 
     if giver.id == receiver.id:
-        return await msg.reply_text("🫣 You can't karma boost yourself.")
+        return await msg.reply_text("ðŸ«£ You can't karma boost yourself.")
 
     track_user(giver.id, giver.username)
     track_user(receiver.id, receiver.username)
@@ -3318,30 +3318,30 @@ async def karma_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     karma_val = get_karma(receiver.id)
     await msg.reply_text(
-        f"🌟 <b>{receiver.full_name}</b> gained <b>{karma_boost}</b> karma!\nTotal Karma: <b>{format_karma(karma_val)}</b>",
+        f"ðŸŒŸ <b>{receiver.full_name}</b> gained <b>{karma_boost}</b> karma!\nTotal Karma: <b>{format_karma(karma_val)}</b>",
         parse_mode="HTML"
     )
 
 
 async def handle_manage_showroom(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("🚗 Showroom management: Use /admin_showroom for full access.")
+    await update.message.reply_text("ðŸš— Showroom management: Use /admin_showroom for full access.")
 
 
 async def handle_remove_bike(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("🚗 Use /admin_removeitem_from for item removal.")
+    await update.message.reply_text("ðŸš— Use /admin_removeitem_from for item removal.")
 
 
 async def handle_show_all_owners(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("👤 Use /admin_owners for owner listing.")
+    await update.message.reply_text("ðŸ‘¤ Use /admin_owners for owner listing.")
 
 
 async def groupstats(update: Update, context: ContextTypes.DEFAULT_TYPE):
     groups = get_all_group_ids()
     if not groups:
-        return await update.message.reply_text("📭 No groups tracked yet.")
-    lines = ["📊 Tracked Groups:"]
+        return await update.message.reply_text("ðŸ“­ No groups tracked yet.")
+    lines = ["ðŸ“Š Tracked Groups:"]
     for gid in groups:
-        lines.append(f"• Group ID: <code>{gid}</code>")
+        lines.append(f"â€¢ Group ID: <code>{gid}</code>")
     await update.message.reply_text("\n".join(lines), parse_mode="HTML")
 
 
@@ -3368,23 +3368,23 @@ from telegram.error import BadRequest
 
 
 async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
-    logging.error("⚠️ Exception while handling update:", exc_info=context.error)
+    logging.error("âš ï¸ Exception while handling update:", exc_info=context.error)
     try:
         if hasattr(update, "callback_query") and update.callback_query:
             message = update.callback_query.message
             try:
-                await message.edit_text("⚠️ Something went wrong. The devs have been notified.")
+                await message.edit_text("âš ï¸ Something went wrong. The devs have been notified.")
             except BadRequest:
                 try:
-                    await message.edit_caption("⚠️ Something went wrong.")
+                    await message.edit_caption("âš ï¸ Something went wrong.")
                 except Exception as e:
-                    logging.error("🧨 Failed to edit caption:", exc_info=e)
+                    logging.error("ðŸ§¨ Failed to edit caption:", exc_info=e)
         else:
             chat = getattr(update, "effective_chat", None)
             if chat:
-                await context.bot.send_message(chat.id, "⚠️ Something went wrong.")
+                await context.bot.send_message(chat.id, "âš ï¸ Something went wrong.")
     except Exception as e:
-        logging.error("🧨 Failed to send error message:", exc_info=e)
+        logging.error("ðŸ§¨ Failed to send error message:", exc_info=e)
 
 
 async def unified_message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -3419,9 +3419,9 @@ async def manager_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await msg.reply_text("I AM SELF DEPENDENT")
 
 
-# ══════════════════════════════════════════════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 #  APPLICATION SETUP
-# ══════════════════════════════════════════════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 application = ApplicationBuilder().token(BOT_TOKEN).build()
 
@@ -3436,7 +3436,7 @@ application.add_handler(
 )
 application.add_handler(reaction_handler, group=2)
 
-# ── Core commands ─────────────────────────────────────────────────────────────
+# â”€â”€ Core commands â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 commands = {
     "start": start,
     "help": help_command,
@@ -3590,7 +3590,7 @@ commands = {
 for cmd, func in commands.items():
     application.add_handler(CommandHandler(cmd, func))
 
-# ── Callbacks ─────────────────────────────────────────────────────────────────
+# â”€â”€ Callbacks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 application.add_handler(CallbackQueryHandler(heart_confirm_handler, pattern="^heart_"))
 application.add_handler(CallbackQueryHandler(deletecard_callback, pattern="^removecard:"))
 application.add_handler(CallbackQueryHandler(button_handler, pattern="^(accept|reject):"))
@@ -3604,7 +3604,7 @@ application.add_handler(CallbackQueryHandler(status_callback_handler,
 application.add_handler(CallbackQueryHandler(card_callback, pattern="^card_"))
 application.add_handler(CallbackQueryHandler(panel_callback))   # catch-all, must be last
 
-# ── Inline text pattern handlers ──────────────────────────────────────────────
+# â”€â”€ Inline text pattern handlers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 application.add_handler(MessageHandler(
     filters.TEXT & filters.REPLY & filters.Regex(r"(?i)\bowner\b"), owner_handler
 ))
@@ -3612,7 +3612,7 @@ application.add_handler(MessageHandler(
     filters.TEXT & filters.REPLY & filters.Regex(r"(?i)\bmanager\b"), manager_handler
 ))
 
-# ── Extra command aliases ─────────────────────────────────────────────────────
+# â”€â”€ Extra command aliases â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 application.add_handler(CommandHandler("startwordgame", startwordgame))
 application.add_handler(CommandHandler("ithink", guess))
 application.add_handler(CommandHandler("hint", hint))
@@ -3735,7 +3735,7 @@ application.add_handler(CommandHandler("endbulk", endbulk))
 application.add_handler(MessageHandler(filters.PHOTO & filters.Caption(), handle_bulk_photo))
 application.add_handler(CommandHandler("mentionall", mentionall))
 
-# ── Catch-all / low-priority handlers (group=5 and group=10) ─────────────────
+# â”€â”€ Catch-all / low-priority handlers (group=5 and group=10) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 application.add_handler(
     MessageHandler(filters.TEXT & ~filters.COMMAND, unified_message_handler), group=5
 )
@@ -3750,7 +3750,7 @@ application.add_handler(
     MessageHandler(filters.TEXT & ~filters.COMMAND, activity_tracker), group=10
 )
 
-# ── Group management & welcome ────────────────────────────────────────────────
+# â”€â”€ Group management & welcome â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 for handler in get_groupmanage_handlers():
     application.add_handler(handler)
 
@@ -3761,11 +3761,11 @@ application.add_handler(MessageHandler(filters.TEXT & filters.REPLY, karma_handl
 
 application.add_error_handler(error_handler)
 
-# FIX: register_admin_commands with correct bot object — called at startup
+# FIX: register_admin_commands with correct bot object â€” called at startup
 register_admin_commands(application.bot)
 
 
-# ── Scheduled message loop ────────────────────────────────────────────────────
+# â”€â”€ Scheduled message loop â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async def check_scheduled_messages(app):
     while True:
         now = int(time.time())
@@ -3774,36 +3774,36 @@ async def check_scheduled_messages(app):
             try:
                 await app.bot.send_message(msg["chat_id"], msg["text"])
             except Exception as e:
-                print(f"⚠️ Failed to send scheduled message: {e}")
+                print(f"âš ï¸ Failed to send scheduled message: {e}")
             scheduled_messages.remove(msg)
         await asyncio.sleep(60)
 
 
-# ── Lifecycle hooks ───────────────────────────────────────────────────────────
+# â”€â”€ Lifecycle hooks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async def on_startup(app):
     await send_alive_logger(app.bot, "Itachi Bot")
-    print("🚀 Scheduler started.")
+    print("ðŸš€ Scheduler started.")
     asyncio.create_task(check_scheduled_messages(app))
 
 
 async def on_shutdown(app):
     await send_shutdown_logger(app.bot, "Itachi Bot")
-    print("👋 Shutdown triggered. Cleaning up…")
+    print("ðŸ‘‹ Shutdown triggered. Cleaning upâ€¦")
 
 
 application.post_init = on_startup
 application.post_shutdown = on_shutdown
 
 
-# ══════════════════════════════════════════════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 #  ENTRY POINT
-# ══════════════════════════════════════════════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 if __name__ == "__main__":
-    print("✅ Itachi Bot is running... (Press Ctrl+C to stop)")
+    print("âœ… Itachi Bot is running... (Press Ctrl+C to stop)")
     try:
         # FIX: removed stop_signals=None so Ctrl+C (SIGINT) works correctly
         application.run_polling(allowed_updates=Update.ALL_TYPES)
     except KeyboardInterrupt:
-        print("\n🛑 Bot stopped by user.")
+        print("\nðŸ›‘ Bot stopped by user.")
     finally:
-        print("✅ Cleanup done.")
+        print("âœ… Cleanup done.")

@@ -1,4 +1,4 @@
-from card_utils import (
+﻿from card_utils import (
     get_random_card,
     apply_rarity_bonus,
     update_duel_stats,
@@ -28,14 +28,14 @@ async def run_duel(context, chat_id, player1_id, player2_id):
         update_balance(winner_id, DUEL_REWARD)
 
     result = (
-        f"🧙 Player 1 cast <b>{name1}</b> ({power1})\n"
-        f"🧙 Player 2 cast <b>{name2}</b> ({power2})\n\n"
+        f"ðŸ§™ Player 1 cast <b>{name1}</b> ({power1})\n"
+        f"ðŸ§™ Player 2 cast <b>{name2}</b> ({power2})\n\n"
     )
     result += (
-        f"🏆 <b>Winner:</b> <a href='tg://user?id={winner_id}'>The mightier mage!</a>\n"
-        f"💰 Reward: {DUEL_REWARD} coins"
+        f"ðŸ† <b>Winner:</b> <a href='tg://user?id={winner_id}'>The mightier mage!</a>\n"
+        f"ðŸ’° Reward: {DUEL_REWARD} coins"
         if winner_id else
-        "⚖️ <b>It's a draw!</b> Balanced battle between equals."
+        "âš–ï¸ <b>It's a draw!</b> Balanced battle between equals."
     )
 
     await context.bot.send_message(chat_id=chat_id, text=result, parse_mode="HTML")

@@ -1,4 +1,4 @@
-from database import get_conn
+﻿from database import get_conn
 
 with get_conn() as conn:
     broken = conn.execute("""
@@ -10,4 +10,4 @@ with get_conn() as conn:
         conn.execute("DELETE FROM deck WHERE file_id = ?", (row[0],))
     conn.commit()
 
-print(f"🧹 Removed {len(broken)} broken deck entries.")
+print(f"ðŸ§¹ Removed {len(broken)} broken deck entries.")
